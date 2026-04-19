@@ -1,0 +1,86 @@
+{
+  "name": "Qatar Airways — Dashboard Directory",
+  "dataColors": [
+    "#5C0632",
+    "#C8A96E",
+    "#7A0842",
+    "#E5CFA0",
+    "#3C021F",
+    "#9C8990",
+    "#A05000",
+    "#6E146E"
+  ],
+  "background": "#FDF9F4",
+  "foreground": "#1A1012",
+  "tableAccent": "#5C0632",
+  "good": "#007840",
+  "neutral": "#C8A96E",
+  "bad": "#A0252A",
+  "maximum": "#3C021F",
+  "center": "#C8A96E",
+  "minimum": "#FDF9F4",
+  "null": "#EBE3DC",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 22,
+      "color": "#5C0632"
+    },
+    "header": {
+      "fontFace": "Segoe UI",
+      "fontSize": 11,
+      "color": "#5C4A52"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#1A1012"
+    },
+    "callout": {
+      "fontFace": "Georgia",
+      "fontSize": 36,
+      "color": "#3C021F"
+    },
+    "largeTitle": {
+      "fontFace": "Georgia",
+      "fontSize": 28,
+      "color": "#3C021F"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }],
+        "border": [{ "color": { "solid": { "color": "#EBE3DC" } }, "radius": 6, "show": true }],
+        "visualHeader": [{ "show": false }]
+      }
+    },
+    "card": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }]
+      }
+    },
+    "button": {
+      "*": {
+        "fill": [{ "show": true, "fillColor": { "solid": { "color": "#5C0632" } }, "transparency": 0 }],
+        "text": [{ "show": true, "fontColor": { "solid": { "color": "#FDF9F4" } }, "fontFamily": "Segoe UI Semibold", "fontSize": 10, "horizontalAlignment": "center" }],
+        "outline": [{ "show": false }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#FDF9F4" } } }],
+        "border": [{ "color": { "solid": { "color": "#D6C9BE" } }, "show": true, "radius": 4 }]
+      }
+    },
+    "pivotTable": {
+      "*": {
+        "columnHeaders": [{ "fontColor": { "solid": { "color": "#5C4A52" } }, "backColor": { "solid": { "color": "#F7EFE5" } }, "fontFamily": "Segoe UI", "fontSize": 9, "bold": true }],
+        "values":       [{ "fontColor": { "solid": { "color": "#1A1012" } }, "backColor": { "solid": { "color": "#FFFFFF" } }, "fontFamily": "Segoe UI", "fontSize": 12 }],
+        "grid":         [{ "gridHorizontal": true, "gridVertical": false, "gridHorizontalColor": { "solid": { "color": "#EBE3DC" } }, "gridHorizontalWeight": 1 }],
+        "total":        [{ "show": false }]
+      }
+    }
+  }
+}

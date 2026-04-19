@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Your Dashboard — Qatar Airways</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --maroon:        #5C0632;
+      --maroon-dark:   #3C021F;
+      --maroon-mid:    #7A0842;
+      --maroon-soft:   rgba(92,6,50,0.08);
+      --gold:          #C8A96E;
+      --gold-light:    #E5CFA0;
+      --cream:         #FDF9F4;
+      --cream-warm:    #F7EFE5;
+      --white:         #FFFFFF;
+      --border:        #EBE3DC;
+      --border-mid:    #D6C9BE;
+      --text:          #1A1012;
+      --text-mid:      #5C4A52;
+      --text-light:    #9C8990;
+      --link-visited:  #4A0424;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ──────────── Thin top ribbon ──────────── */
+    .ribbon {
+      background: var(--maroon-dark);
+      color: rgba(253,249,244,0.75);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 6px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+    }
+    .ribbon-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ribbon-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold);
+    }
+    .ribbon-right {
+      color: rgba(253,249,244,0.45);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+    }
+
+    /* ──────────── Page container — PBI-style report canvas ──────────── */
+    .report {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 0 40px;
+      background: var(--cream);
+    }
+
+    /* ──────────── Banner (gradient maroon, like a PBI page header) ──────────── */
+    .banner {
+      background: linear-gradient(135deg, var(--maroon-dark) 0%, var(--maroon) 55%, var(--maroon-mid) 100%);
+      color: var(--cream);
+      padding: 44px 56px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle arabesque watermark */
+    .banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(200%2C169%2C110%2C0.09)' stroke-width='0.6'%3E%3Cpolygon points='50%2C6 90%2C28 90%2C72 50%2C94 10%2C72 10%2C28'/%3E%3Ccircle cx='50' cy='50' r='14'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 100px 100px;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    /* Right-side gold accent bar */
+    .banner::after {
+      content: '';
+      position: absolute;
+      top: 44px; bottom: 44px; right: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    }
+
+    .banner-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      opacity: 0.9;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 22px; height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    .title {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 44px;
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.005em;
+      margin-bottom: 10px;
+    }
+    .title em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--gold-light);
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+      font-weight: 400;
+      color: rgba(253,249,244,0.65);
+      letter-spacing: 0.02em;
+    }
+
+    /* ──────────── White content panel (like a PBI content card) ──────────── */
+    .panel {
+      background: var(--white);
+      margin: -20px 40px 0;
+      border-radius: 6px;
+      box-shadow: 0 8px 32px rgba(60,2,31,0.10), 0 1px 3px rgba(60,2,31,0.06);
+      padding: 32px 40px 36px;
+      position: relative;
+      z-index: 2;
+      border: 1px solid var(--border);
+    }
+
+    /* ──────────── Search section ──────────── */
+    .search-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 10px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--cream);
+      border: 1.5px solid var(--border-mid);
+      border-radius: 4px;
+      padding: 0 14px;
+      height: 44px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      max-width: 620px;
+      margin-bottom: 6px;
+    }
+    .search-box:focus-within {
+      border-color: var(--maroon);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(92,6,50,0.08);
+    }
+    .search-icon {
+      color: var(--maroon);
+      opacity: 0.55;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    .search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 13.5px;
+      color: var(--text);
+      outline: none;
+      height: 100%;
+    }
+    .search-input::placeholder {
+      color: var(--text-light);
+    }
+
+    .search-hint {
+      font-size: 11.5px;
+      color: var(--text-light);
+      font-style: italic;
+      margin-bottom: 26px;
+    }
+    .search-hint b {
+      font-style: normal;
+      color: var(--maroon);
+      font-weight: 600;
+      background: var(--maroon-soft);
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin: 0 2px;
+    }
+
+    /* ──────────── Category buttons (2 rows × 6) ──────────── */
+    .cat-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 12px;
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .cat-btn {
+      background: var(--maroon);
+      color: var(--cream);
+      border: none;
+      border-radius: 4px;
+      padding: 10px 8px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cat-btn:hover {
+      background: var(--maroon-mid);
+    }
+    .cat-btn:active {
+      transform: translateY(1px);
+    }
+    .cat-btn.active {
+      background: var(--gold);
+      color: var(--maroon-dark);
+    }
+
+    /* ──────────── Results table ──────────── */
+    .results-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--maroon);
+    }
+    .results-title {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--maroon-dark);
+      letter-spacing: 0.01em;
+    }
+    .results-count {
+      font-size: 11.5px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    .results-count strong {
+      color: var(--maroon);
+      font-weight: 700;
+    }
+
+    table.results {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    table.results thead th {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--cream-warm);
+      border-bottom: 1px solid var(--border-mid);
+    }
+    table.results tbody td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    table.results tbody tr:hover {
+      background: var(--cream);
+    }
+    table.results tbody tr:hover .dash-link {
+      color: var(--maroon-dark);
+    }
+
+    .col-desc {
+      width: 48%;
+      color: var(--text-mid);
+      line-height: 1.55;
+      font-size: 13px;
+    }
+    .col-desc .desc-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-right: 8px;
+      padding: 1px 6px;
+      background: rgba(200,169,110,0.12);
+      border-radius: 3px;
+    }
+    .col-desc .desc-tag.question {
+      color: var(--maroon);
+      background: var(--maroon-soft);
+    }
+
+    .col-link {
+      width: 42%;
+    }
+    .dash-link {
+      color: var(--maroon);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      font-weight: 600;
+      font-size: 13.5px;
+      transition: color 0.15s;
+    }
+    .dash-link:hover {
+      color: var(--maroon-mid);
+      text-decoration-thickness: 2px;
+    }
+    .dash-link:visited {
+      color: var(--link-visited);
+    }
+
+    .col-cat {
+      width: 10%;
+      white-space: nowrap;
+    }
+    .cat-chip {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: 50px;
+      background: var(--cream);
+      color: var(--text-mid);
+      border: 1px solid var(--border-mid);
+    }
+
+    /* ──────────── Footer ──────────── */
+    .footer-bar {
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-light);
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-bar .page-indicator {
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-bar .pbi-note {
+      font-style: italic;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pbi-mark {
+      width: 10px; height: 10px; border-radius: 2px;
+      background: #F2C811;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Thin top ribbon -->
+  <div class="ribbon">
+    <div class="ribbon-left">
+      <span class="ribbon-dot"></span>
+      <span>Qatar Airways &nbsp;·&nbsp; Dashboard Directory</span>
+    </div>
+    <div class="ribbon-right">Internal Use Only</div>
+  </div>
+
+  <main class="report">
+
+    <!-- Banner header -->
+    <section class="banner">
+      <div class="banner-inner">
+        <span class="eyebrow">Business Intelligence Portal</span>
+        <h1 class="title">Find Your <em>Dashboard.</em></h1>
+        <p class="subtitle">Search by dashboard name, keyword or business description.</p>
+      </div>
+    </section>
+
+    <!-- White panel -->
+    <section class="panel">
+
+      <!-- Search -->
+      <div class="search-label">Search</div>
+      <div class="search-box">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input class="search-input" type="text" placeholder="Try a dashboard name, a keyword, or a business question…">
+      </div>
+      <div class="search-hint">
+        Examples: <b>OTP</b> <b>Delay</b> <b>GLP code</b> <b>roster</b> <b>fuel uplift</b> &nbsp;— or browse by category below.
+      </div>
+
+      <!-- Categories -->
+      <div class="cat-label">Browse by Category</div>
+      <div class="cat-grid">
+        <button class="cat-btn">Crew Control</button>
+        <button class="cat-btn">Crew Hotels</button>
+        <button class="cat-btn">Fleet Management</button>
+        <button class="cat-btn">Flight Data</button>
+        <button class="cat-btn active">Flight Ops</button>
+        <button class="cat-btn">Fuel</button>
+        <button class="cat-btn">IOC</button>
+        <button class="cat-btn">Navigation</button>
+        <button class="cat-btn">Network Ops</button>
+        <button class="cat-btn">Technical</button>
+        <button class="cat-btn">TOPS</button>
+        <button class="cat-btn">Training</button>
+      </div>
+
+      <!-- Results -->
+      <div class="results-header">
+        <h2 class="results-title">Available Dashboards</h2>
+        <span class="results-count"><strong>12</strong> dashboards in <strong>Flight Ops</strong></span>
+      </div>
+
+      <table class="results">
+        <thead>
+          <tr>
+            <th>Description / Sample Question</th>
+            <th>Dashboard</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-desc"><span class="desc-tag question">Question</span>What is the GLP Code for A7-ACU?</td>
+            <td class="col-link"><a class="dash-link" href="#">Aircraft Performance and Weight &amp; Balance Info</a></td>
+            <td class="col-cat"><span class="cat-chip">Flight Ops</span></td>
+          </tr>
+          <tr>
+            <td class="col-desc"><span class="desc-tag">Dashboard</span>Crew Control Department Productivity Dashboard</td>
+            <td class="col-link"><a class="dash-link" href="#">Crew Control Department Productivity</a></td>
+            <td class="col-cat"><span class="cat-chip">Crew Control</span></td>
+          </tr>
+          <tr>
+            <td class="col-desc"><span class="desc-tag">Dashboard</span>Rules engine configuration and change log for the Crew Control system.</td>
+            <td class="col-link"><a class="dash-link" href="#">Crew Control Rule Setting Dashboard</a></td>
+            <td class="col-cat"><span class="cat-chip">Crew Control</span></td>
+          </tr>
+          <tr>
+            <td class="col-desc"><span class="desc-tag question">Question</span>How many flights are running behind schedule today?</td>
+            <td class="col-link"><a class="dash-link" href="#">OTP &amp; Delay Analysis</a></td>
+            <td class="col-cat"><span class="cat-chip">Flight Ops</span></td>
+          </tr>
+          <tr>
+            <td class="col-desc"><span class="desc-tag">Dashboard</span>Fuel uplift, burn variance and cost per block hour across the network.</td>
+            <td class="col-link"><a class="dash-link" href="#">Fuel Performance Dashboard</a></td>
+            <td class="col-cat"><span class="cat-chip">Fuel</span></td>
+          </tr>
+          <tr>
+            <td class="col-desc"><span class="desc-tag question">Question</span>Which hotels are crew currently assigned to in DOH?</td>
+            <td class="col-link"><a class="dash-link" href="#">Crew Hotel Allocation Overview</a></td>
+            <td class="col-cat"><span class="cat-chip">Crew Hotels</span></td>
+          </tr>
+          <tr>
+            <td class="col-desc"><span class="desc-tag">Dashboard</span>Aircraft availability, AOG events and MRO turnaround summary.</td>
+            <td class="col-link"><a class="dash-link" href="#">Fleet Availability Tracker</a></td>
+            <td class="col-cat"><span class="cat-chip">Fleet Mgmt</span></td>
+          </tr>
+          <tr>
+            <td class="col-desc"><span class="desc-tag">Dashboard</span>IOC operational status board — active disruptions, diversions and controller actions.</td>
+            <td class="col-link"><a class="dash-link" href="#">IOC Live Operations Board</a></td>
+            <td class="col-cat"><span class="cat-chip">IOC</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Footer -->
+      <div class="footer-bar">
+        <span class="page-indicator">Page 1 of 3</span>
+        <span class="pbi-note">
+          <span class="pbi-mark"></span>
+          Powered by Power BI &nbsp;·&nbsp; Last refresh: 19 Apr 2026, 10:02 AM
+        </span>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    // Simple toggle for category buttons (visual only — PBI would use slicer / bookmarks)
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

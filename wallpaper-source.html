@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>QA Wallpaper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:1280px; height:820px; overflow:hidden; background:#FDF9F4; font-family:'Segoe UI', sans-serif; }
+  .canvas { position:relative; width:1280px; height:820px; }
+
+  .ribbon {
+    position:absolute; top:0; left:0; right:0; height:28px;
+    background:#3C021F; display:flex; align-items:center; justify-content:space-between;
+    padding:0 24px; color:rgba(253,249,244,0.75); font-size:11px; letter-spacing:0.14em;
+    text-transform:uppercase; font-weight:500;
+  }
+  .dot { width:6px; height:6px; border-radius:50%; background:#C8A96E; display:inline-block; margin-right:10px; vertical-align:middle; }
+  .ribbon-right { color:rgba(253,249,244,0.5); font-size:10px; letter-spacing:0.2em; }
+
+  .banner {
+    position:absolute; top:28px; left:0; right:0; height:200px;
+    background:linear-gradient(135deg,#3C021F 0%,#5C0632 55%,#7A0842 100%);
+    overflow:hidden;
+  }
+  .banner::before {
+    content:''; position:absolute; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(200,169,110,0.09)' stroke-width='0.6'%3E%3Cpolygon points='50,6 90,28 90,72 50,94 10,72 10,28'/%3E%3Ccircle cx='50' cy='50' r='14'/%3E%3C/g%3E%3C/svg%3E");
+    background-size:100px 100px;
+  }
+  .gold-accent {
+    position:absolute; top:72px; right:0; width:3px; height:152px;
+    background:linear-gradient(to bottom, transparent, #C8A96E, transparent);
+  }
+  .banner-inner {
+    position:absolute; top:76px; left:56px; z-index:1;
+  }
+  .eyebrow {
+    color:#C8A96E; font-size:10px; font-weight:600; letter-spacing:0.3em;
+    text-transform:uppercase; margin-bottom:14px; opacity:0.9;
+  }
+  .eyebrow::before { content:''; display:inline-block; width:22px; height:1px; background:#C8A96E; opacity:0.6; vertical-align:middle; margin-right:10px; }
+  .title {
+    font-family:'Cormorant Garamond','Georgia',serif;
+    font-size:44px; font-weight:500; line-height:1.05; color:#FDF9F4;
+    letter-spacing:-0.005em; margin-bottom:10px;
+  }
+  .title em { font-style:italic; font-weight:400; color:#E5CFA0; }
+  .subtitle {
+    font-size:13.5px; color:rgba(253,249,244,0.65); letter-spacing:0.02em;
+  }
+
+  .panel-shadow {
+    position:absolute; top:208px; left:40px; width:1200px; height:560px;
+    background:#FFFFFF;
+    border-radius:6px; border:1px solid #EBE3DC;
+    box-shadow:0 8px 32px rgba(60,2,31,0.10), 0 1px 3px rgba(60,2,31,0.06);
+  }
+
+  /* Footer line */
+  .footer-sep {
+    position:absolute; bottom:40px; left:112px; right:112px; height:1px;
+    background:#EBE3DC;
+  }
+  .footer-left {
+    position:absolute; bottom:18px; left:112px;
+    font-size:11px; font-weight:600; letter-spacing:0.08em;
+    text-transform:uppercase; color:#9C8990;
+  }
+  .footer-right {
+    position:absolute; bottom:18px; right:112px;
+    font-size:11px; color:#9C8990; font-style:italic;
+    display:flex; align-items:center; gap:6px;
+  }
+  .pbi-mark { width:10px; height:10px; border-radius:2px; background:#F2C811; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="ribbon">
+    <span><span class="dot"></span>Qatar Airways &nbsp;·&nbsp; Dashboard Directory</span>
+    <span class="ribbon-right">Internal Use Only</span>
+  </div>
+
+  <div class="banner">
+    <div class="gold-accent"></div>
+    <div class="banner-inner">
+      <div class="eyebrow">BUSINESS INTELLIGENCE PORTAL</div>
+      <h1 class="title">Find Your <em>Dashboard.</em></h1>
+      <p class="subtitle">Search by dashboard name, keyword or business description.</p>
+    </div>
+  </div>
+
+  <div class="panel-shadow"></div>
+
+  <div class="footer-sep"></div>
+  <div class="footer-left">Page 1 of 3</div>
+  <div class="footer-right">
+    <span class="pbi-mark"></span>
+    Powered by Power BI
+  </div>
+</div>
+</body>
+</html>

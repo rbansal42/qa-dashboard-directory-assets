@@ -1,0 +1,40 @@
+-- ============================================================
+-- DAX measures for "Find Your Dashboard" Power BI page
+-- ============================================================
+-- Place these in the DashboardDirectory table.
+-- ============================================================
+
+
+-- Dynamic result count — shown to the right of "Available Dashboards"
+ResultsCount =
+VAR _cat = SELECTEDVALUE(DashboardDirectory[Category], "All categories")
+VAR _n   = COUNTROWS(DashboardDirectory)
+RETURN
+    _n & " dashboards in " & _cat
+
+
+-- Last refresh timestamp — shown in the footer
+LastRefresh =
+"Last refresh: " & FORMAT(NOW(), "dd mmm yyyy, HH:MM")
+
+
+-- Pretty-formatted count with bold hints (for rich-text card visuals)
+ResultsCount_Rich =
+VAR _cat = SELECTEDVALUE(DashboardDirectory[Category], "All categories")
+VAR _n   = COUNTROWS(DashboardDirectory)
+RETURN
+    "**" & _n & "** dashboards in **" & _cat & "**"
+
+
+-- Has any filter been applied? (useful for conditional tooltip text)
+IsFiltered =
+IF (
+    ISFILTERED(DashboardDirectory[Category]),
+    "Filtered by category",
+    "Showing all categories"
+)
+
+
+-- Total dashboards across the directory (static benchmark)
+TotalDashboards =
+CALCULATE(COUNTROWS(DashboardDirectory), ALL(DashboardDirectory))

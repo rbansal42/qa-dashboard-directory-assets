@@ -1,0 +1,14 @@
+DashboardName,Description,Category,Type,URL,Keywords,LastUpdated
+Aircraft Performance and Weight & Balance Info,"What is the GLP Code for A7-ACU?",Flight Ops,Question,https://app.powerbi.com/groups/me/reports/sample-1,"glp, aircraft, weight, balance, performance, a7",2026-04-12
+Crew Control Department Productivity,"Crew Control Department Productivity Dashboard",Crew Control,Dashboard,https://app.powerbi.com/groups/me/reports/sample-2,"crew, productivity, department, control",2026-04-15
+Crew Control Rule Setting Dashboard,"Rules engine configuration and change log for the Crew Control system.",Crew Control,Dashboard,https://app.powerbi.com/groups/me/reports/sample-3,"crew, rules, configuration, control",2026-04-10
+OTP & Delay Analysis,"How many flights are running behind schedule today?",Flight Ops,Question,https://app.powerbi.com/groups/me/reports/sample-4,"otp, delay, punctuality, schedule, flight",2026-04-18
+Fuel Performance Dashboard,"Fuel uplift, burn variance and cost per block hour across the network.",Fuel,Dashboard,https://app.powerbi.com/groups/me/reports/sample-5,"fuel, uplift, burn, block hour, cost",2026-04-14
+Crew Hotel Allocation Overview,"Which hotels are crew currently assigned to in DOH?",Crew Hotels,Question,https://app.powerbi.com/groups/me/reports/sample-6,"hotel, crew, accommodation, allocation",2026-04-17
+Fleet Availability Tracker,"Aircraft availability, AOG events and MRO turnaround summary.",Fleet Management,Dashboard,https://app.powerbi.com/groups/me/reports/sample-7,"fleet, aog, mro, availability, aircraft",2026-04-09
+IOC Live Operations Board,"IOC operational status board — active disruptions, diversions and controller actions.",IOC,Dashboard,https://app.powerbi.com/groups/me/reports/sample-8,"ioc, disruption, diversion, operations",2026-04-19
+Network Schedule Viewer,"Published and planned network schedule with slot allocation notes.",Network Ops,Dashboard,https://app.powerbi.com/groups/me/reports/sample-9,"network, schedule, slot, planning",2026-04-11
+Technical Logbook Summary,"Aircraft technical log entries grouped by ATA chapter and severity.",Technical,Dashboard,https://app.powerbi.com/groups/me/reports/sample-10,"technical, logbook, ata, engineering",2026-04-08
+TOPS Performance,"Takeoff performance calculations and runway analysis trend.",TOPS,Dashboard,https://app.powerbi.com/groups/me/reports/sample-11,"tops, takeoff, performance, runway",2026-04-07
+Training Compliance Tracker,"Pilot and cabin crew training currency and upcoming expiries.",Training,Dashboard,https://app.powerbi.com/groups/me/reports/sample-12,"training, compliance, currency, pilot, cabin",2026-04-16
+Navigation Database Health,"Current NAV cycle, upcoming cutover and affected airports.",Navigation,Dashboard,https://app.powerbi.com/groups/me/reports/sample-13,"nav, navigation, cycle, airac, database",2026-04-05
