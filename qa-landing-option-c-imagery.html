@@ -62,11 +62,11 @@
 
     .report { max-width: 1280px; margin: 0 auto; background: var(--cream); }
 
-    /* ── Banner (Doha skyline hero) ── */
+    /* ── Banner (Qatar 777 FIFA livery · plane is the hero on the right) ── */
     .banner {
       background:
-        linear-gradient(110deg, rgba(42,3,17,0.85) 0%, rgba(67,6,31,0.55) 50%, rgba(89,16,41,0.35) 100%),
-        url("doha-skyline.jpg") center 45% / cover no-repeat;
+        linear-gradient(95deg, rgba(26,3,14,0.96) 0%, rgba(42,3,17,0.90) 32%, rgba(42,3,17,0.55) 55%, rgba(42,3,17,0.22) 80%, rgba(42,3,17,0.10) 100%),
+        url("qatar-777-worldcup.jpg") center 55% / cover no-repeat;
       color: var(--cream-title);
       padding: 40px 40px 36px;
       position: relative;
@@ -77,24 +77,48 @@
       content: '';
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 75% 100%, rgba(184,137,58,0.18) 0%, transparent 55%),
-        linear-gradient(180deg, rgba(31,3,16,0.12) 0%, rgba(31,3,16,0) 40%);
+        radial-gradient(ellipse 45% 60% at 78% 50%, rgba(184,137,58,0.10) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(26,3,14,0.28) 0%, rgba(26,3,14,0) 30%, rgba(26,3,14,0) 70%, rgba(26,3,14,0.28) 100%);
       pointer-events: none;
     }
     .banner::after {
       content: '';
       position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(184,137,58,0.55), transparent);
+      background: linear-gradient(90deg, transparent, rgba(217,178,104,0.65), transparent);
+    }
+    /* Contrast boosts for banner elements over photo */
+    .banner .title { text-shadow: 0 2px 14px rgba(0,0,0,0.55); }
+    .banner .subtitle { color: rgba(247,235,212,0.85); text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+    .banner .eyebrow { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+    .banner .eyebrow::before { background: var(--honey); opacity: 0.9; }
+    .banner .pinned-label { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+    .banner .pin-slot {
+      background: rgba(26,3,14,0.55);
+      border: 1px solid rgba(217,178,104,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .banner .pin-slot:hover {
+      background: rgba(26,3,14,0.72);
+      border-color: var(--amber-light);
+    }
+    .banner .pin-slot-name { color: var(--cream-title); text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+    .banner .pin-slot-cat { color: var(--honey); }
+    .banner .bs-label { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+    .banner .bs-box {
+      background: rgba(251,246,236,0.97);
+      border: 1.5px solid rgba(217,178,104,0.7);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
     }
 
-    /* Cinematic brand strip between nav and panel */
+    /* Cinematic brand strip between nav and panel — now uses Doha aerial */
     .brand-strip {
       position: relative;
-      height: 64px;
+      height: 68px;
       margin: 0;
       background:
-        linear-gradient(90deg, rgba(42,3,17,0.85) 0%, rgba(67,6,31,0.55) 45%, rgba(89,16,41,0.25) 100%),
-        url("qatar-cabin.jpg") center 60% / cover no-repeat;
+        linear-gradient(90deg, rgba(42,3,17,0.88) 0%, rgba(67,6,31,0.55) 45%, rgba(89,16,41,0.25) 100%),
+        url("doha-aerial.jpg") center 55% / cover no-repeat;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -155,8 +179,8 @@
     /* Cinematic image strip at the bottom of the panel */
     .gallery-strip {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
       margin-top: 24px;
       padding-top: 20px;
       border-top: 1px solid var(--border);
@@ -781,27 +805,41 @@
 
       </div>
 
-      <!-- Cinematic gallery strip -->
+      <!-- Cinematic gallery strip · 5 facets of the operation -->
       <div class="gallery-strip">
         <div class="gal-tile">
-          <img src="doha-skyline.jpg" alt="Doha skyline">
+          <img src="doha-aerial.jpg" alt="Doha aerial view">
           <div class="gal-tile-overlay">
             <div class="gal-tile-eyebrow">Network Ops</div>
-            <div class="gal-tile-title">Doha hub · <em>live operations</em></div>
+            <div class="gal-tile-title">Doha hub · <em>daytime</em></div>
+          </div>
+        </div>
+        <div class="gal-tile">
+          <img src="doha-skyline.jpg" alt="Doha skyline at dusk">
+          <div class="gal-tile-overlay">
+            <div class="gal-tile-eyebrow">IOC</div>
+            <div class="gal-tile-title">Dusk <em>operations</em></div>
+          </div>
+        </div>
+        <div class="gal-tile">
+          <img src="qatar-777-worldcup.jpg" alt="Qatar Airways 777 World Cup livery">
+          <div class="gal-tile-overlay">
+            <div class="gal-tile-eyebrow">Fleet</div>
+            <div class="gal-tile-title">777 <em>World Cup livery</em></div>
           </div>
         </div>
         <div class="gal-tile">
           <img src="qatar-cabin.jpg" alt="Qatar Airways cabin">
           <div class="gal-tile-overlay">
             <div class="gal-tile-eyebrow">Flight Ops</div>
-            <div class="gal-tile-title">Cabin <em>&amp; crew</em> excellence</div>
+            <div class="gal-tile-title">Cabin <em>&amp; crew</em></div>
           </div>
         </div>
         <div class="gal-tile">
           <img src="qatar-qsuite.jpg" alt="Qatar Airways Qsuite">
           <div class="gal-tile-overlay">
             <div class="gal-tile-eyebrow">Customer</div>
-            <div class="gal-tile-title">Qsuite · <em>premium product</em></div>
+            <div class="gal-tile-title">Qsuite · <em>premium</em></div>
           </div>
         </div>
       </div>
