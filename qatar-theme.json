@@ -1,57 +1,57 @@
 {
-  "name": "Qatar Airways — Dashboard Directory",
+  "name": "Qatar Airways — Dashboard Directory (v2)",
   "dataColors": [
-    "#5C0632",
-    "#C8A96E",
-    "#7A0842",
-    "#E5CFA0",
-    "#3C021F",
-    "#9C8990",
-    "#A05000",
-    "#6E146E"
+    "#43061F",
+    "#B8893A",
+    "#591029",
+    "#D9B268",
+    "#2A0311",
+    "#8E7355",
+    "#7A4E1A",
+    "#4E1E3A"
   ],
-  "background": "#FDF9F4",
-  "foreground": "#1A1012",
-  "tableAccent": "#5C0632",
-  "good": "#007840",
-  "neutral": "#C8A96E",
-  "bad": "#A0252A",
-  "maximum": "#3C021F",
-  "center": "#C8A96E",
-  "minimum": "#FDF9F4",
-  "null": "#EBE3DC",
+  "background": "#FBF6EC",
+  "foreground": "#1A0D12",
+  "tableAccent": "#43061F",
+  "good": "#2E7D4F",
+  "neutral": "#B8893A",
+  "bad": "#8C1E2A",
+  "maximum": "#2A0311",
+  "center": "#B8893A",
+  "minimum": "#FBF6EC",
+  "null": "#E8DFD0",
   "textClasses": {
     "title": {
       "fontFace": "Segoe UI Semibold",
       "fontSize": 22,
-      "color": "#5C0632"
+      "color": "#43061F"
     },
     "header": {
       "fontFace": "Segoe UI",
       "fontSize": 11,
-      "color": "#5C4A52"
+      "color": "#524148"
     },
     "label": {
       "fontFace": "Segoe UI",
       "fontSize": 12,
-      "color": "#1A1012"
+      "color": "#1A0D12"
     },
     "callout": {
       "fontFace": "Georgia",
       "fontSize": 36,
-      "color": "#3C021F"
+      "color": "#2A0311"
     },
     "largeTitle": {
       "fontFace": "Georgia",
       "fontSize": 28,
-      "color": "#3C021F"
+      "color": "#2A0311"
     }
   },
   "visualStyles": {
     "*": {
       "*": {
         "background": [{ "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }],
-        "border": [{ "color": { "solid": { "color": "#EBE3DC" } }, "radius": 6, "show": true }],
+        "border": [{ "color": { "solid": { "color": "#E8DFD0" } }, "radius": 6, "show": true }],
         "visualHeader": [{ "show": false }]
       }
     },
@@ -63,22 +63,22 @@
     },
     "button": {
       "*": {
-        "fill": [{ "show": true, "fillColor": { "solid": { "color": "#5C0632" } }, "transparency": 0 }],
-        "text": [{ "show": true, "fontColor": { "solid": { "color": "#FDF9F4" } }, "fontFamily": "Segoe UI Semibold", "fontSize": 10, "horizontalAlignment": "center" }],
+        "fill": [{ "show": true, "fillColor": { "solid": { "color": "#43061F" } }, "transparency": 0 }],
+        "text": [{ "show": true, "fontColor": { "solid": { "color": "#F7EBD4" } }, "fontFamily": "Segoe UI Semibold", "fontSize": 10, "horizontalAlignment": "center" }],
         "outline": [{ "show": false }]
       }
     },
     "slicer": {
       "*": {
-        "background": [{ "show": true, "color": { "solid": { "color": "#FDF9F4" } } }],
-        "border": [{ "color": { "solid": { "color": "#D6C9BE" } }, "show": true, "radius": 4 }]
+        "background": [{ "show": true, "color": { "solid": { "color": "#FBF6EC" } } }],
+        "border": [{ "color": { "solid": { "color": "#D6C9B6" } }, "show": true, "radius": 4 }]
       }
     },
     "pivotTable": {
       "*": {
-        "columnHeaders": [{ "fontColor": { "solid": { "color": "#5C4A52" } }, "backColor": { "solid": { "color": "#F7EFE5" } }, "fontFamily": "Segoe UI", "fontSize": 9, "bold": true }],
-        "values":       [{ "fontColor": { "solid": { "color": "#1A1012" } }, "backColor": { "solid": { "color": "#FFFFFF" } }, "fontFamily": "Segoe UI", "fontSize": 12 }],
-        "grid":         [{ "gridHorizontal": true, "gridVertical": false, "gridHorizontalColor": { "solid": { "color": "#EBE3DC" } }, "gridHorizontalWeight": 1 }],
+        "columnHeaders": [{ "fontColor": { "solid": { "color": "#524148" } }, "backColor": { "solid": { "color": "#F3EADA" } }, "fontFamily": "Segoe UI", "fontSize": 9, "bold": true }],
+        "values":       [{ "fontColor": { "solid": { "color": "#1A0D12" } }, "backColor": { "solid": { "color": "#FFFFFF" } }, "fontFamily": "Segoe UI", "fontSize": 12 }],
+        "grid":         [{ "gridHorizontal": true, "gridVertical": false, "gridHorizontalColor": { "solid": { "color": "#E8DFD0" } }, "gridHorizontalWeight": 1 }],
         "total":        [{ "show": false }]
       }
     }
