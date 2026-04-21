@@ -62,10 +62,10 @@
 
     .report { max-width: 1280px; margin: 0 auto; background: var(--cream); }
 
-    /* ── Banner (Doha skyline at dusk with oxblood overlay) ── */
+    /* ── Banner (Doha skyline at dusk · layered scrim for contrast) ── */
     .banner {
       background:
-        linear-gradient(110deg, rgba(42,3,17,0.85) 0%, rgba(67,6,31,0.55) 50%, rgba(89,16,41,0.35) 100%),
+        linear-gradient(110deg, rgba(26,3,14,0.92) 0%, rgba(42,3,17,0.82) 35%, rgba(42,3,17,0.72) 65%, rgba(42,3,17,0.78) 100%),
         url("doha-skyline.jpg") center 45% / cover no-repeat;
       color: var(--cream-title);
       padding: 40px 40px 36px;
@@ -77,14 +77,45 @@
       content: '';
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 75% 100%, rgba(184,137,58,0.18) 0%, transparent 55%),
-        linear-gradient(180deg, rgba(31,3,16,0.12) 0%, rgba(31,3,16,0) 40%);
+        /* subtle amber glow in bottom-right corner */
+        radial-gradient(ellipse 65% 50% at 85% 100%, rgba(184,137,58,0.12) 0%, transparent 60%),
+        /* vertical scrim: darker top, darker bottom, middle slightly lighter so the skyline peeks */
+        linear-gradient(180deg, rgba(26,3,14,0.25) 0%, rgba(26,3,14,0) 35%, rgba(26,3,14,0) 65%, rgba(26,3,14,0.22) 100%);
       pointer-events: none;
     }
     .banner::after {
       content: '';
       position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(184,137,58,0.55), transparent);
+      background: linear-gradient(90deg, transparent, rgba(217,178,104,0.65), transparent);
+    }
+
+    /* Contrast boosts — stronger shadows + slightly brighter text on this variant */
+    .banner .title { text-shadow: 0 2px 14px rgba(0,0,0,0.55); }
+    .banner .subtitle { color: rgba(247,235,212,0.82); text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+    .banner .eyebrow { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+    .banner .eyebrow::before { background: var(--honey); opacity: 0.9; }
+
+    /* Pinned tiles: stronger glass */
+    .banner .pinned-label { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+    .banner .pin-slot {
+      background: rgba(26,3,14,0.55);
+      border: 1px solid rgba(217,178,104,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .banner .pin-slot:hover {
+      background: rgba(26,3,14,0.72);
+      border-color: var(--amber-light);
+    }
+    .banner .pin-slot-name { color: var(--cream-title); text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+    .banner .pin-slot-cat { color: var(--honey); }
+
+    /* Search box: darker glass, cream input area */
+    .banner .bs-label { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+    .banner .bs-box {
+      background: rgba(251,246,236,0.97);
+      border: 1.5px solid rgba(217,178,104,0.7);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
     }
     .banner-grid {
       position: relative; z-index: 1;
