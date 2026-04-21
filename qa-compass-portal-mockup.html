@@ -11,25 +11,26 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --maroon:        #5C0632;
-      --maroon-dark:   #3C021F;
-      --maroon-mid:    #7A0842;
-      --maroon-soft:   rgba(92,6,50,0.08);
-      --gold:          #C8A96E;
-      --gold-light:    #E5CFA0;
-      --cream:         #FDF9F4;
-      --cream-warm:    #F7EFE5;
+      --ink:           #1F0310;    /* near-black ribbon */
+      --oxblood-0:     #2A0311;    /* banner top */
+      --oxblood-1:     #43061F;    /* banner primary */
+      --oxblood-2:     #591029;    /* banner bottom */
+      --amber:         #B8893A;    /* gold primary */
+      --amber-light:   #D9B268;    /* gold highlight */
+      --honey:         #E6C179;    /* italic title accent */
+      --cream:         #FBF6EC;    /* canvas */
+      --cream-warm:    #F3EADA;    /* table headers, hover */
+      --cream-title:   #F7EBD4;    /* banner title */
       --white:         #FFFFFF;
-      --border:        #EBE3DC;
-      --border-mid:    #D6C9BE;
-      --text:          #1A1012;
-      --text-mid:      #5C4A52;
-      --text-light:    #9C8990;
-      --link-visited:  #4A0424;
+      --border:        #E8DFD0;
+      --border-mid:    #D6C9B6;
+      --text:          #1A0D12;
+      --text-mid:      #524148;
+      --text-light:    #9C8680;
+      --link-visited:  #330418;
     }
 
     html, body { height: 100%; }
-
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--cream);
@@ -38,10 +39,10 @@
       line-height: 1.5;
     }
 
-    /* ──────────── Thin top ribbon ──────────── */
+    /* ── Thin top ribbon ── */
     .ribbon {
-      background: var(--maroon-dark);
-      color: rgba(253,249,244,0.75);
+      background: var(--ink);
+      color: rgba(247,235,212,0.78);
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -50,62 +51,46 @@
       justify-content: space-between;
       align-items: center;
       font-weight: 500;
+      border-bottom: 1px solid rgba(184,137,58,0.18);
     }
-    .ribbon-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .ribbon-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold);
-    }
-    .ribbon-right {
-      color: rgba(253,249,244,0.45);
-      font-size: 10px;
-      letter-spacing: 0.2em;
-    }
+    .ribbon-left { display: flex; align-items: center; gap: 10px; }
+    .ribbon-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
+    .ribbon-right { color: rgba(247,235,212,0.5); font-size: 10px; letter-spacing: 0.2em; }
 
-    /* ──────────── Page container — PBI-style report canvas ──────────── */
+    /* ── Report container ── */
     .report {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 0 40px;
       background: var(--cream);
     }
 
-    /* ──────────── Banner (gradient maroon, like a PBI page header) ──────────── */
+    /* ── Banner ── */
     .banner {
-      background: linear-gradient(135deg, var(--maroon-dark) 0%, var(--maroon) 55%, var(--maroon-mid) 100%);
-      color: var(--cream);
-      padding: 44px 56px 52px;
+      background: linear-gradient(135deg, var(--oxblood-0) 0%, var(--oxblood-1) 40%, var(--oxblood-2) 100%);
+      color: var(--cream-title);
+      padding: 36px 40px 32px;
       position: relative;
       overflow: hidden;
     }
-
-    /* Subtle arabesque watermark */
     .banner::before {
       content: '';
       position: absolute; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(200%2C169%2C110%2C0.09)' stroke-width='0.6'%3E%3Cpolygon points='50%2C6 90%2C28 90%2C72 50%2C94 10%2C72 10%2C28'/%3E%3Ccircle cx='50' cy='50' r='14'/%3E%3C/g%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(184%2C137%2C58%2C0.10)' stroke-width='0.6'%3E%3Cpolygon points='50%2C6 90%2C28 90%2C72 50%2C94 10%2C72 10%2C28'/%3E%3Ccircle cx='50' cy='50' r='14'/%3E%3C/g%3E%3C/svg%3E");
       background-size: 100px 100px;
-      opacity: 0.85;
       pointer-events: none;
     }
 
-    /* Right-side gold accent bar */
-    .banner::after {
-      content: '';
-      position: absolute;
-      top: 44px; bottom: 44px; right: 0;
-      width: 3px;
-      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-    }
-
-    .banner-inner {
+    .banner-grid {
       position: relative;
       z-index: 1;
-      max-width: 760px;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      grid-gap: 40px;
+      align-items: center;
+    }
+
+    .banner-left {
+      max-width: 520px;
     }
 
     .eyebrow {
@@ -116,279 +101,390 @@
       font-weight: 600;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 14px;
-      opacity: 0.9;
+      color: var(--amber-light);
+      margin-bottom: 12px;
     }
     .eyebrow::before {
       content: '';
       width: 22px; height: 1px;
-      background: var(--gold);
-      opacity: 0.6;
+      background: var(--amber);
+      opacity: 0.7;
     }
-
     .title {
       font-family: 'Cormorant Garamond', 'Georgia', serif;
-      font-size: 44px;
+      font-size: 40px;
       font-weight: 500;
-      line-height: 1.05;
-      letter-spacing: -0.005em;
-      margin-bottom: 10px;
+      line-height: 1.06;
+      margin-bottom: 8px;
+      color: var(--cream-title);
     }
     .title em {
       font-style: italic;
       font-weight: 400;
-      color: var(--gold-light);
+      color: var(--honey);
     }
-
     .subtitle {
-      font-size: 13.5px;
-      font-weight: 400;
-      color: rgba(253,249,244,0.65);
+      font-size: 13px;
+      color: rgba(247,235,212,0.60);
       letter-spacing: 0.02em;
     }
 
-    /* ──────────── White content panel (like a PBI content card) ──────────── */
-    .panel {
-      background: var(--white);
-      margin: -20px 40px 0;
-      border-radius: 6px;
-      box-shadow: 0 8px 32px rgba(60,2,31,0.10), 0 1px 3px rgba(60,2,31,0.06);
-      padding: 32px 40px 36px;
-      position: relative;
-      z-index: 2;
-      border: 1px solid var(--border);
+    /* ── Pinned chips (top-center of banner) ── */
+    .pinned {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
-
-    /* ──────────── Search section ──────────── */
-    .search-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
+    .pinned-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--text-mid);
-      margin-bottom: 10px;
+      color: rgba(217,178,104,0.75);
+      margin-bottom: 4px;
+    }
+    .pinned-row {
+      display: flex;
+      gap: 8px;
+    }
+    .pin-slot {
+      width: 96px; height: 36px;
+      background: rgba(247,235,212,0.06);
+      border: 1px solid rgba(217,178,104,0.28);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2px 6px;
+      text-align: center;
+    }
+    .pin-slot-name {
+      font-size: 10px;
+      color: var(--cream-title);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 90px;
+    }
+    .pin-slot-cat {
+      font-size: 8px;
+      color: rgba(217,178,104,0.65);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 1px;
     }
 
-    .search-box {
+    /* ── Search box (top-right of banner) ── */
+    .banner-search {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 260px;
+    }
+    .bs-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(217,178,104,0.75);
+    }
+    .bs-box {
       display: flex;
       align-items: center;
-      background: var(--cream);
-      border: 1.5px solid var(--border-mid);
+      background: rgba(251,246,236,0.95);
+      border: 1px solid rgba(217,178,104,0.4);
       border-radius: 4px;
-      padding: 0 14px;
-      height: 44px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      max-width: 620px;
-      margin-bottom: 6px;
+      height: 36px;
+      padding: 0 10px;
     }
-    .search-box:focus-within {
-      border-color: var(--maroon);
-      background: var(--white);
-      box-shadow: 0 0 0 3px rgba(92,6,50,0.08);
-    }
-    .search-icon {
-      color: var(--maroon);
-      opacity: 0.55;
-      margin-right: 10px;
-      flex-shrink: 0;
-    }
-    .search-input {
+    .bs-icon { color: var(--oxblood-1); opacity: 0.55; flex-shrink: 0; margin-right: 8px; }
+    .bs-input {
       flex: 1;
       border: none;
       background: transparent;
       font-family: inherit;
-      font-size: 13.5px;
+      font-size: 13px;
       color: var(--text);
       outline: none;
       height: 100%;
     }
-    .search-input::placeholder {
-      color: var(--text-light);
+    .bs-clear {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--border); border: none; cursor: pointer;
+      color: var(--text-mid); font-size: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
     }
 
-    .search-hint {
+    /* ── Navigation sub-bar (amber strip) ── */
+    .navstrip {
+      background: linear-gradient(180deg, rgba(184,137,58,0.22) 0%, rgba(184,137,58,0.08) 100%);
+      border-top: 1px solid rgba(184,137,58,0.35);
+      border-bottom: 1px solid rgba(184,137,58,0.2);
+      padding: 10px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-pill {
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border: 1px solid transparent;
+      border-radius: 50px;
+      color: var(--oxblood-1);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .nav-pill:hover { background: rgba(67,6,31,0.08); }
+    .nav-pill.active {
+      background: var(--oxblood-1);
+      color: var(--cream-title);
+      border-color: var(--oxblood-1);
+    }
+    .nav-count {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--oxblood-1);
+    }
+    .nav-count b { font-weight: 600; letter-spacing: 0.02em; }
+
+    /* ── White content panel ── */
+    .panel {
+      background: var(--white);
+      margin: 20px 32px;
+      border-radius: 6px;
+      box-shadow: 0 8px 32px rgba(42,3,17,0.08), 0 1px 3px rgba(42,3,17,0.05);
+      padding: 24px 32px 28px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── Examples row ── */
+    .examples-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .examples-label {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-mid);
+    }
+    .ex-chip {
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border-mid);
+      background: var(--cream-warm);
+      color: var(--oxblood-1);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ex-chip:hover {
+      background: var(--oxblood-1);
+      color: var(--cream-title);
+      border-color: var(--oxblood-1);
+    }
+    .examples-hint {
       font-size: 11.5px;
       color: var(--text-light);
       font-style: italic;
-      margin-bottom: 26px;
-    }
-    .search-hint b {
-      font-style: normal;
-      color: var(--maroon);
-      font-weight: 600;
-      background: var(--maroon-soft);
-      padding: 1px 6px;
-      border-radius: 3px;
-      margin: 0 2px;
+      margin-bottom: 22px;
+      padding-left: 2px;
     }
 
-    /* ──────────── Category buttons (2 rows × 6) ──────────── */
-    .cat-label {
-      font-size: 11px;
+    /* ── 3-column main area ── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1.15fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      min-height: 260px;
+    }
+    .card-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-title {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--oxblood-0);
+      letter-spacing: 0.01em;
+    }
+    .card-hint {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    /* ── Word cloud (column 1) ── */
+    .cloud {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      align-content: flex-start;
+      padding: 6px 2px;
+      line-height: 1;
+    }
+    .cloud span {
+      display: inline-block;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .cloud span:hover { opacity: 1 !important; transform: scale(1.05); }
+    .w-xl { font-size: 28px; font-family: 'Cormorant Garamond', serif; font-style: italic; }
+    .w-lg { font-size: 22px; }
+    .w-md { font-size: 17px; }
+    .w-sm { font-size: 14px; }
+    .w-xs { font-size: 12px; }
+    .c-primary    { color: var(--oxblood-1); }
+    .c-primary-d  { color: var(--oxblood-0); }
+    .c-primary-m  { color: var(--oxblood-2); }
+    .c-amber      { color: var(--amber); }
+    .c-amber-d    { color: #7A4E1A; }
+    .c-amber-l    { color: var(--amber-light); }
+    .c-mid        { color: var(--text-mid); }
+    .c-light      { color: var(--text-light); }
+
+    /* ── Visual stats placeholders (column 2) ── */
+    .viz-col { display: flex; flex-direction: column; gap: 20px; min-height: 260px; }
+    .viz-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .viz-hdr {
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--text-mid);
-      margin-bottom: 12px;
     }
-
-    .cat-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-      margin-bottom: 36px;
-    }
-    .cat-btn {
-      background: var(--maroon);
-      color: var(--cream);
-      border: none;
-      border-radius: 4px;
-      padding: 10px 8px;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      cursor: pointer;
-      text-align: center;
-      transition: background 0.15s, transform 0.1s;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .cat-btn:hover {
-      background: var(--maroon-mid);
-    }
-    .cat-btn:active {
-      transform: translateY(1px);
-    }
-    .cat-btn.active {
-      background: var(--gold);
-      color: var(--maroon-dark);
-    }
-
-    /* ──────────── Results table ──────────── */
-    .results-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid var(--maroon);
-    }
-    .results-title {
+    .viz-big {
       font-family: 'Cormorant Garamond', 'Georgia', serif;
-      font-size: 22px;
       font-weight: 600;
-      color: var(--maroon-dark);
-      letter-spacing: 0.01em;
+      font-size: 34px;
+      line-height: 1;
+      color: var(--oxblood-0);
     }
-    .results-count {
-      font-size: 11.5px;
-      color: var(--text-light);
-      font-weight: 500;
+    .viz-big em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--amber);
+      font-size: 22px;
+      margin-left: 4px;
     }
-    .results-count strong {
-      color: var(--maroon);
-      font-weight: 700;
-    }
+    .viz-sub { font-size: 11px; color: var(--text-light); line-height: 1.45; }
 
-    table.results {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
+    /* Mini bar chart */
+    .minibar { display: flex; align-items: flex-end; gap: 4px; height: 48px; }
+    .minibar .b {
+      flex: 1;
+      background: linear-gradient(180deg, var(--oxblood-1), var(--oxblood-2));
+      border-radius: 2px 2px 0 0;
+      opacity: 0.85;
     }
-    table.results thead th {
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-mid);
-      text-align: left;
-      padding: 10px 14px;
-      background: var(--cream-warm);
-      border-bottom: 1px solid var(--border-mid);
+    .minibar .b.hi { background: linear-gradient(180deg, var(--amber), var(--amber-light)); opacity: 1; }
+    .mb-x { display: flex; justify-content: space-between; font-size: 9px; color: var(--text-light); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+    /* Donut-ish sparkline alt for second card */
+    .spark { height: 48px; display: flex; align-items: center; gap: 10px; }
+    .spark-svg { flex-shrink: 0; }
+    .spark-list { display: flex; flex-direction: column; gap: 3px; font-size: 11px; }
+    .spark-row { display: flex; align-items: center; gap: 6px; color: var(--text-mid); }
+    .spark-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+    /* ── Dashboard list (column 3) ── */
+    .dash-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
-    table.results tbody td {
-      padding: 12px 14px;
+    .dash-item {
+      padding: 10px 4px;
       border-bottom: 1px solid var(--border);
-      vertical-align: top;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      transition: background 0.1s;
+      cursor: pointer;
     }
-    table.results tbody tr:hover {
-      background: var(--cream);
-    }
-    table.results tbody tr:hover .dash-link {
-      color: var(--maroon-dark);
-    }
-
-    .col-desc {
-      width: 48%;
-      color: var(--text-mid);
-      line-height: 1.55;
-      font-size: 13px;
-    }
-    .col-desc .desc-tag {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-right: 8px;
-      padding: 1px 6px;
-      background: rgba(200,169,110,0.12);
-      border-radius: 3px;
-    }
-    .col-desc .desc-tag.question {
-      color: var(--maroon);
-      background: var(--maroon-soft);
-    }
-
-    .col-link {
-      width: 42%;
-    }
+    .dash-item:last-child { border-bottom: none; }
+    .dash-item:hover { background: var(--cream-warm); padding-left: 8px; padding-right: 8px; margin: 0 -4px; border-radius: 4px; }
     .dash-link {
-      color: var(--maroon);
+      color: var(--oxblood-1);
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
       font-weight: 600;
-      font-size: 13.5px;
-      transition: color 0.15s;
+      font-size: 13px;
+      line-height: 1.35;
     }
-    .dash-link:hover {
-      color: var(--maroon-mid);
-      text-decoration-thickness: 2px;
+    .dash-link:hover { color: var(--oxblood-0); text-decoration-thickness: 2px; }
+    .dash-link:visited { color: var(--link-visited); }
+    .dash-meta {
+      font-size: 10.5px;
+      color: var(--text-light);
+      font-style: italic;
     }
-    .dash-link:visited {
-      color: var(--link-visited);
-    }
-
-    .col-cat {
-      width: 10%;
-      white-space: nowrap;
-    }
-    .cat-chip {
-      display: inline-block;
-      font-size: 10px;
+    .dash-meta .dash-cat {
+      font-style: normal;
       font-weight: 600;
+      color: var(--amber);
       letter-spacing: 0.06em;
-      padding: 3px 10px;
-      border-radius: 50px;
-      background: var(--cream);
-      color: var(--text-mid);
-      border: 1px solid var(--border-mid);
+      text-transform: uppercase;
+      font-size: 9.5px;
     }
 
-    /* ──────────── Footer ──────────── */
+    /* ── Footer ── */
     .footer-bar {
-      margin-top: 24px;
+      margin: 0 32px;
+      padding: 14px 8px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 11px;
       color: var(--text-light);
-      padding-top: 14px;
       border-top: 1px solid var(--border);
     }
     .footer-bar .page-indicator {
@@ -398,20 +494,15 @@
     }
     .footer-bar .pbi-note {
       font-style: italic;
-      color: var(--text-light);
       display: flex;
       align-items: center;
       gap: 6px;
     }
-    .pbi-mark {
-      width: 10px; height: 10px; border-radius: 2px;
-      background: #F2C811;
-    }
+    .pbi-mark { width: 10px; height: 10px; border-radius: 2px; background: #F2C811; }
   </style>
 </head>
 <body>
 
-  <!-- Thin top ribbon -->
   <div class="ribbon">
     <div class="ribbon-left">
       <span class="ribbon-dot"></span>
@@ -422,122 +513,221 @@
 
   <main class="report">
 
-    <!-- Banner header -->
+    <!-- ───────── Banner with 3-column grid: title · pinned · search ───────── -->
     <section class="banner">
-      <div class="banner-inner">
-        <span class="eyebrow">Business Intelligence Portal</span>
-        <h1 class="title">Find Your <em>Dashboard.</em></h1>
-        <p class="subtitle">Search by dashboard name, keyword or business description.</p>
+      <div class="banner-grid">
+
+        <div class="banner-left">
+          <span class="eyebrow">Business Intelligence Portal</span>
+          <h1 class="title">Find Your <em>Dashboard.</em></h1>
+          <p class="subtitle">Search by dashboard name, keyword or business description.</p>
+        </div>
+
+        <div class="pinned">
+          <div class="pinned-label">Pinned by you</div>
+          <div class="pinned-row">
+            <div class="pin-slot">
+              <div class="pin-slot-name">OTP Tracker</div>
+              <div class="pin-slot-cat">Flight Ops</div>
+            </div>
+            <div class="pin-slot">
+              <div class="pin-slot-name">Fuel Uplift</div>
+              <div class="pin-slot-cat">Fuel</div>
+            </div>
+            <div class="pin-slot">
+              <div class="pin-slot-name">Crew Roster</div>
+              <div class="pin-slot-cat">Crew Ctrl</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="banner-search">
+          <div class="bs-label">Search</div>
+          <div class="bs-box">
+            <svg class="bs-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input class="bs-input" value="flight dispatch" spellcheck="false">
+            <button class="bs-clear">✕</button>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- White panel -->
+    <!-- ───────── Navigation sub-bar ───────── -->
+    <section class="navstrip">
+      <div class="nav-pills">
+        <button class="nav-pill active">All Areas</button>
+        <button class="nav-pill">Crew Control</button>
+        <button class="nav-pill">Crew Hotels</button>
+        <button class="nav-pill">Fleet</button>
+        <button class="nav-pill">Flight Data</button>
+        <button class="nav-pill">Flight Ops</button>
+        <button class="nav-pill">Fuel</button>
+        <button class="nav-pill">IOC</button>
+        <button class="nav-pill">Navigation</button>
+        <button class="nav-pill">Network Ops</button>
+        <button class="nav-pill">Technical</button>
+        <button class="nav-pill">TOPS</button>
+        <button class="nav-pill">Training</button>
+      </div>
+      <div class="nav-count"><b>132</b> dashboards &nbsp;·&nbsp; <b>14</b> areas</div>
+    </section>
+
+    <!-- ───────── White panel: examples row + 3-column main ───────── -->
     <section class="panel">
 
-      <!-- Search -->
-      <div class="search-label">Search</div>
-      <div class="search-box">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        <input class="search-input" type="text" placeholder="Try a dashboard name, a keyword, or a business question…">
+      <div class="examples-row">
+        <span class="examples-label">Examples:</span>
+        <button class="ex-chip">OTP</button>
+        <button class="ex-chip">Delay</button>
+        <button class="ex-chip">Fuel uplift</button>
+        <button class="ex-chip">GLP code</button>
+        <button class="ex-chip">Crew roster</button>
       </div>
-      <div class="search-hint">
-        Examples: <b>OTP</b> <b>Delay</b> <b>GLP code</b> <b>roster</b> <b>fuel uplift</b> &nbsp;— or browse by category below.
+      <div class="examples-hint">— or choose one from the keyword cloud below</div>
+
+      <div class="main-grid">
+
+        <!-- ─── Column 1: Keyword cloud ─── -->
+        <div class="card">
+          <div class="card-hdr">
+            <span class="card-title">Keyword cloud</span>
+            <span class="card-hint">Click to filter</span>
+          </div>
+          <div class="cloud">
+            <span class="w-xl c-primary-d">flight dispatch</span>
+            <span class="w-lg c-amber-d">otp</span>
+            <span class="w-md c-mid">crew roster</span>
+            <span class="w-sm c-primary">delay</span>
+            <span class="w-md c-amber">fuel uplift</span>
+            <span class="w-sm c-mid">message</span>
+            <span class="w-xs c-light">apu</span>
+            <span class="w-lg c-primary-m">notam</span>
+            <span class="w-md c-amber-l">departure</span>
+            <span class="w-sm c-primary">flight planning</span>
+            <span class="w-xs c-mid">impacted flights</span>
+            <span class="w-sm c-amber-d">pnl</span>
+            <span class="w-xl c-primary" style="font-family:'Cormorant Garamond',serif;font-style:italic;">crew control</span>
+            <span class="w-sm c-light">remote</span>
+            <span class="w-md c-mid">irregular ops</span>
+            <span class="w-xs c-amber">jeppesen</span>
+            <span class="w-sm c-primary-d">crew training</span>
+            <span class="w-xs c-light">etops</span>
+            <span class="w-md c-amber-d">autoperformance</span>
+            <span class="w-sm c-primary">landing</span>
+            <span class="w-xs c-mid">fleet</span>
+            <span class="w-sm c-amber">block time</span>
+            <span class="w-xs c-light">block hour</span>
+            <span class="w-md c-primary-m">disruption</span>
+            <span class="w-xs c-amber-d">ditching</span>
+            <span class="w-sm c-mid">inspection</span>
+            <span class="w-xs c-light">currency</span>
+            <span class="w-xs c-primary">cost</span>
+            <span class="w-sm c-amber-l">doha</span>
+            <span class="w-xs c-mid">budget</span>
+          </div>
+        </div>
+
+        <!-- ─── Column 2: Two visual summaries ─── -->
+        <div class="viz-col">
+
+          <div class="viz-card">
+            <div class="viz-hdr">Directory usage — last 30 days</div>
+            <div class="viz-big">4,218<em>views</em></div>
+            <div class="viz-sub">Most-opened area: <b style="color:var(--text-mid)">Flight Ops</b> (37% of views)</div>
+            <div class="minibar">
+              <div class="b" style="height:35%"></div>
+              <div class="b" style="height:52%"></div>
+              <div class="b" style="height:48%"></div>
+              <div class="b" style="height:68%"></div>
+              <div class="b" style="height:61%"></div>
+              <div class="b" style="height:74%"></div>
+              <div class="b hi" style="height:92%"></div>
+              <div class="b" style="height:71%"></div>
+              <div class="b" style="height:83%"></div>
+              <div class="b" style="height:79%"></div>
+              <div class="b" style="height:86%"></div>
+              <div class="b hi" style="height:94%"></div>
+            </div>
+            <div class="mb-x"><span>Wk 13</span><span>Wk 17</span></div>
+          </div>
+
+          <div class="viz-card">
+            <div class="viz-hdr">Top areas this week</div>
+            <div class="spark">
+              <svg class="spark-svg" width="48" height="48" viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="18" fill="none" stroke="#E8DFD0" stroke-width="6"/>
+                <circle cx="24" cy="24" r="18" fill="none" stroke="#43061F" stroke-width="6"
+                        stroke-dasharray="42 113" stroke-dashoffset="0" transform="rotate(-90 24 24)"/>
+                <circle cx="24" cy="24" r="18" fill="none" stroke="#B8893A" stroke-width="6"
+                        stroke-dasharray="28 113" stroke-dashoffset="-42" transform="rotate(-90 24 24)"/>
+                <circle cx="24" cy="24" r="18" fill="none" stroke="#591029" stroke-width="6"
+                        stroke-dasharray="20 113" stroke-dashoffset="-70" transform="rotate(-90 24 24)"/>
+              </svg>
+              <div class="spark-list">
+                <div class="spark-row"><span class="spark-dot" style="background:#43061F"></span>Flight Ops &nbsp;<b style="color:var(--text)">37%</b></div>
+                <div class="spark-row"><span class="spark-dot" style="background:#B8893A"></span>Crew Control &nbsp;<b style="color:var(--text)">25%</b></div>
+                <div class="spark-row"><span class="spark-dot" style="background:#591029"></span>Fuel &nbsp;<b style="color:var(--text)">18%</b></div>
+                <div class="spark-row"><span class="spark-dot" style="background:#E8DFD0"></span>Other &nbsp;<b style="color:var(--text-mid)">20%</b></div>
+              </div>
+            </div>
+            <div class="viz-sub" style="margin-top:4px;">Share of opens · selected filters apply</div>
+          </div>
+
+        </div>
+
+        <!-- ─── Column 3: Dashboard list ─── -->
+        <div class="card" style="background:var(--white);">
+          <div class="card-hdr">
+            <span class="card-title">Dashboards matching "flight dispatch"</span>
+            <span class="card-hint">6 results</span>
+          </div>
+          <div class="dash-list">
+            <a class="dash-item" href="#">
+              <span class="dash-link">ADSB DOH Arrivals path comparison (by Points)</span>
+              <span class="dash-meta"><span class="dash-cat">Flight Ops</span> &nbsp;· Updated 2 days ago</span>
+            </a>
+            <a class="dash-item" href="#">
+              <span class="dash-link">European Priority Connections</span>
+              <span class="dash-meta"><span class="dash-cat">Network Ops</span> &nbsp;· Updated yesterday</span>
+            </a>
+            <a class="dash-item" href="#">
+              <span class="dash-link">FIR or Waypoint Closure</span>
+              <span class="dash-meta"><span class="dash-cat">Navigation</span> &nbsp;· Updated 1 week ago</span>
+            </a>
+            <a class="dash-item" href="#">
+              <span class="dash-link">Flight Dispatch Cost Savings</span>
+              <span class="dash-meta"><span class="dash-cat">Flight Ops</span> &nbsp;· Updated 3 days ago</span>
+            </a>
+            <a class="dash-item" href="#">
+              <span class="dash-link">Dispatch Release Turnaround</span>
+              <span class="dash-meta"><span class="dash-cat">Flight Ops</span> &nbsp;· Updated today</span>
+            </a>
+            <a class="dash-item" href="#">
+              <span class="dash-link">NOTAM Exposure by Route</span>
+              <span class="dash-meta"><span class="dash-cat">Flight Data</span> &nbsp;· Updated 4 days ago</span>
+            </a>
+          </div>
+        </div>
+
       </div>
-
-      <!-- Categories -->
-      <div class="cat-label">Browse by Category</div>
-      <div class="cat-grid">
-        <button class="cat-btn">Crew Control</button>
-        <button class="cat-btn">Crew Hotels</button>
-        <button class="cat-btn">Fleet Management</button>
-        <button class="cat-btn">Flight Data</button>
-        <button class="cat-btn active">Flight Ops</button>
-        <button class="cat-btn">Fuel</button>
-        <button class="cat-btn">IOC</button>
-        <button class="cat-btn">Navigation</button>
-        <button class="cat-btn">Network Ops</button>
-        <button class="cat-btn">Technical</button>
-        <button class="cat-btn">TOPS</button>
-        <button class="cat-btn">Training</button>
-      </div>
-
-      <!-- Results -->
-      <div class="results-header">
-        <h2 class="results-title">Available Dashboards</h2>
-        <span class="results-count"><strong>12</strong> dashboards in <strong>Flight Ops</strong></span>
-      </div>
-
-      <table class="results">
-        <thead>
-          <tr>
-            <th>Description / Sample Question</th>
-            <th>Dashboard</th>
-            <th>Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="col-desc"><span class="desc-tag question">Question</span>What is the GLP Code for A7-ACU?</td>
-            <td class="col-link"><a class="dash-link" href="#">Aircraft Performance and Weight &amp; Balance Info</a></td>
-            <td class="col-cat"><span class="cat-chip">Flight Ops</span></td>
-          </tr>
-          <tr>
-            <td class="col-desc"><span class="desc-tag">Dashboard</span>Crew Control Department Productivity Dashboard</td>
-            <td class="col-link"><a class="dash-link" href="#">Crew Control Department Productivity</a></td>
-            <td class="col-cat"><span class="cat-chip">Crew Control</span></td>
-          </tr>
-          <tr>
-            <td class="col-desc"><span class="desc-tag">Dashboard</span>Rules engine configuration and change log for the Crew Control system.</td>
-            <td class="col-link"><a class="dash-link" href="#">Crew Control Rule Setting Dashboard</a></td>
-            <td class="col-cat"><span class="cat-chip">Crew Control</span></td>
-          </tr>
-          <tr>
-            <td class="col-desc"><span class="desc-tag question">Question</span>How many flights are running behind schedule today?</td>
-            <td class="col-link"><a class="dash-link" href="#">OTP &amp; Delay Analysis</a></td>
-            <td class="col-cat"><span class="cat-chip">Flight Ops</span></td>
-          </tr>
-          <tr>
-            <td class="col-desc"><span class="desc-tag">Dashboard</span>Fuel uplift, burn variance and cost per block hour across the network.</td>
-            <td class="col-link"><a class="dash-link" href="#">Fuel Performance Dashboard</a></td>
-            <td class="col-cat"><span class="cat-chip">Fuel</span></td>
-          </tr>
-          <tr>
-            <td class="col-desc"><span class="desc-tag question">Question</span>Which hotels are crew currently assigned to in DOH?</td>
-            <td class="col-link"><a class="dash-link" href="#">Crew Hotel Allocation Overview</a></td>
-            <td class="col-cat"><span class="cat-chip">Crew Hotels</span></td>
-          </tr>
-          <tr>
-            <td class="col-desc"><span class="desc-tag">Dashboard</span>Aircraft availability, AOG events and MRO turnaround summary.</td>
-            <td class="col-link"><a class="dash-link" href="#">Fleet Availability Tracker</a></td>
-            <td class="col-cat"><span class="cat-chip">Fleet Mgmt</span></td>
-          </tr>
-          <tr>
-            <td class="col-desc"><span class="desc-tag">Dashboard</span>IOC operational status board — active disruptions, diversions and controller actions.</td>
-            <td class="col-link"><a class="dash-link" href="#">IOC Live Operations Board</a></td>
-            <td class="col-cat"><span class="cat-chip">IOC</span></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Footer -->
-      <div class="footer-bar">
-        <span class="page-indicator">Page 1 of 3</span>
-        <span class="pbi-note">
-          <span class="pbi-mark"></span>
-          Powered by Power BI &nbsp;·&nbsp; Last refresh: 19 Apr 2026, 10:02 AM
-        </span>
-      </div>
-
     </section>
+
+    <div class="footer-bar">
+      <span class="page-indicator">Page 1 of 3</span>
+      <span class="pbi-note">
+        <span class="pbi-mark"></span>
+        Powered by Power BI &nbsp;·&nbsp; Last refresh: 19 Apr 2026, 10:02 AM
+      </span>
+    </div>
   </main>
 
   <script>
-    // Simple toggle for category buttons (visual only — PBI would use slicer / bookmarks)
-    document.querySelectorAll('.cat-btn').forEach(btn => {
+    document.querySelectorAll('.nav-pill').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
       });
     });
