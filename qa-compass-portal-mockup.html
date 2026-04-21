@@ -11,16 +11,16 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:           #1F0310;    /* near-black ribbon */
-      --oxblood-0:     #2A0311;    /* banner top */
-      --oxblood-1:     #43061F;    /* banner primary */
-      --oxblood-2:     #591029;    /* banner bottom */
-      --amber:         #B8893A;    /* gold primary */
-      --amber-light:   #D9B268;    /* gold highlight */
-      --honey:         #E6C179;    /* italic title accent */
-      --cream:         #FBF6EC;    /* canvas */
-      --cream-warm:    #F3EADA;    /* table headers, hover */
-      --cream-title:   #F7EBD4;    /* banner title */
+      --ink:           #1F0310;
+      --oxblood-0:     #2A0311;
+      --oxblood-1:     #43061F;
+      --oxblood-2:     #591029;
+      --amber:         #B8893A;
+      --amber-light:   #D9B268;
+      --honey:         #E6C179;
+      --cream:         #FBF6EC;
+      --cream-warm:    #F3EADA;
+      --cream-title:   #F7EBD4;
       --white:         #FFFFFF;
       --border:        #E8DFD0;
       --border-mid:    #D6C9B6;
@@ -39,7 +39,7 @@
       line-height: 1.5;
     }
 
-    /* ── Thin top ribbon ── */
+    /* Ribbon */
     .ribbon {
       background: var(--ink);
       color: rgba(247,235,212,0.78);
@@ -57,14 +57,9 @@
     .ribbon-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
     .ribbon-right { color: rgba(247,235,212,0.5); font-size: 10px; letter-spacing: 0.2em; }
 
-    /* ── Report container ── */
-    .report {
-      max-width: 1280px;
-      margin: 0 auto;
-      background: var(--cream);
-    }
+    .report { max-width: 1280px; margin: 0 auto; background: var(--cream); }
 
-    /* ── Banner ── */
+    /* Banner */
     .banner {
       background: linear-gradient(135deg, var(--oxblood-0) 0%, var(--oxblood-1) 40%, var(--oxblood-2) 100%);
       color: var(--cream-title);
@@ -79,148 +74,90 @@
       background-size: 100px 100px;
       pointer-events: none;
     }
-
     .banner-grid {
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
       display: grid;
       grid-template-columns: 1fr auto auto;
-      grid-gap: 40px;
+      gap: 40px;
       align-items: center;
     }
-
-    .banner-left {
-      max-width: 520px;
-    }
-
+    .banner-left { max-width: 520px; }
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--amber-light);
-      margin-bottom: 12px;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--amber-light); margin-bottom: 12px;
     }
-    .eyebrow::before {
-      content: '';
-      width: 22px; height: 1px;
-      background: var(--amber);
-      opacity: 0.7;
-    }
+    .eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--amber); opacity: 0.7; }
     .title {
-      font-family: 'Cormorant Garamond', 'Georgia', serif;
-      font-size: 40px;
-      font-weight: 500;
-      line-height: 1.06;
-      margin-bottom: 8px;
-      color: var(--cream-title);
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-size: 40px; font-weight: 500; line-height: 1.06;
+      color: var(--cream-title); margin-bottom: 8px;
     }
-    .title em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--honey);
-    }
+    .title em { font-style: italic; font-weight: 400; color: var(--honey); }
     .subtitle {
-      font-size: 13px;
-      color: rgba(247,235,212,0.60);
-      letter-spacing: 0.02em;
+      font-size: 13px; color: rgba(247,235,212,0.60); letter-spacing: 0.02em;
     }
 
-    /* ── Pinned chips (top-center of banner) ── */
-    .pinned {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    /* Pinned tiles (clickable) */
+    .pinned { display: flex; flex-direction: column; gap: 6px; }
     .pinned-label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(217,178,104,0.75);
-      margin-bottom: 4px;
+      font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(217,178,104,0.75); margin-bottom: 4px;
     }
-    .pinned-row {
-      display: flex;
-      gap: 8px;
-    }
+    .pinned-row { display: flex; gap: 8px; }
     .pin-slot {
       width: 96px; height: 36px;
       background: rgba(247,235,212,0.06);
       border: 1px solid rgba(217,178,104,0.28);
       border-radius: 4px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2px 6px;
-      text-align: center;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 2px 6px; text-align: center; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
     }
+    .pin-slot:hover { background: rgba(217,178,104,0.14); border-color: var(--amber-light); }
     .pin-slot-name {
-      font-size: 10px;
-      color: var(--cream-title);
-      font-weight: 600;
-      letter-spacing: 0.02em;
+      font-size: 10px; color: var(--cream-title); font-weight: 600;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px;
       line-height: 1.15;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 90px;
     }
     .pin-slot-cat {
-      font-size: 8px;
-      color: rgba(217,178,104,0.65);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-top: 1px;
+      font-size: 8px; color: rgba(217,178,104,0.65);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1px;
     }
 
-    /* ── Search box (top-right of banner) ── */
-    .banner-search {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 260px;
-    }
+    /* Banner search */
+    .banner-search { display: flex; flex-direction: column; gap: 6px; min-width: 260px; }
     .bs-label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(217,178,104,0.75);
+      font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(217,178,104,0.75);
     }
     .bs-box {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       background: rgba(251,246,236,0.95);
       border: 1px solid rgba(217,178,104,0.4);
-      border-radius: 4px;
-      height: 36px;
-      padding: 0 10px;
+      border-radius: 4px; height: 36px; padding: 0 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .bs-box:focus-within {
+      border-color: var(--amber-light);
+      box-shadow: 0 0 0 2px rgba(217,178,104,0.25);
     }
     .bs-icon { color: var(--oxblood-1); opacity: 0.55; flex-shrink: 0; margin-right: 8px; }
     .bs-input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      font-family: inherit;
-      font-size: 13px;
-      color: var(--text);
-      outline: none;
-      height: 100%;
+      flex: 1; border: none; background: transparent;
+      font-family: inherit; font-size: 13px; color: var(--text);
+      outline: none; height: 100%;
     }
     .bs-clear {
       width: 18px; height: 18px; border-radius: 50%;
       background: var(--border); border: none; cursor: pointer;
       color: var(--text-mid); font-size: 10px;
-      display: flex; align-items: center; justify-content: center;
+      display: none; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
+    .bs-clear.show { display: flex; }
 
-    /* ── Navigation sub-bar (amber strip) ── */
+    /* Navigation strip — these are the interactive category filters */
     .navstrip {
       background: linear-gradient(180deg, rgba(184,137,58,0.22) 0%, rgba(184,137,58,0.08) 100%);
       border-top: 1px solid rgba(184,137,58,0.35);
@@ -229,39 +166,29 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    .nav-pills {
-      display: flex;
-      gap: 6px;
       flex-wrap: wrap;
+      gap: 10px;
     }
+    .nav-pills { display: flex; gap: 6px; flex-wrap: wrap; }
     .nav-pill {
-      padding: 5px 12px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      border: 1px solid transparent;
-      border-radius: 50px;
-      color: var(--oxblood-1);
-      background: transparent;
-      cursor: pointer;
-      transition: all 0.15s;
+      padding: 5px 12px; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.04em; border: 1px solid transparent; border-radius: 50px;
+      color: var(--oxblood-1); background: transparent; cursor: pointer;
+      transition: all 0.15s; font-family: inherit;
     }
     .nav-pill:hover { background: rgba(67,6,31,0.08); }
     .nav-pill.active {
-      background: var(--oxblood-1);
-      color: var(--cream-title);
+      background: var(--oxblood-1); color: var(--cream-title);
       border-color: var(--oxblood-1);
+      box-shadow: 0 1px 4px rgba(42,3,17,0.25);
     }
     .nav-count {
-      font-family: 'Cormorant Garamond', 'Georgia', serif;
-      font-style: italic;
-      font-size: 14px;
-      color: var(--oxblood-1);
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-style: italic; font-size: 14px; color: var(--oxblood-1);
     }
     .nav-count b { font-weight: 600; letter-spacing: 0.02em; }
 
-    /* ── White content panel ── */
+    /* Panel */
     .panel {
       background: var(--white);
       margin: 20px 32px;
@@ -270,234 +197,160 @@
       padding: 24px 32px 28px;
       border: 1px solid var(--border);
     }
-
-    /* ── Examples row ── */
     .examples-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 8px; flex-wrap: wrap;
     }
     .examples-label {
-      font-family: 'Cormorant Garamond', 'Georgia', serif;
-      font-style: italic;
-      font-size: 15px;
-      color: var(--text-mid);
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-style: italic; font-size: 15px; color: var(--text-mid);
     }
     .ex-chip {
-      padding: 5px 14px;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1px solid var(--border-mid);
-      background: var(--cream-warm);
-      color: var(--oxblood-1);
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.15s;
+      padding: 5px 14px; font-size: 12px; font-weight: 600;
+      border: 1px solid var(--border-mid); background: var(--cream-warm);
+      color: var(--oxblood-1); border-radius: 50px;
+      cursor: pointer; transition: all 0.15s; font-family: inherit;
     }
     .ex-chip:hover {
-      background: var(--oxblood-1);
-      color: var(--cream-title);
-      border-color: var(--oxblood-1);
+      background: var(--oxblood-1); color: var(--cream-title); border-color: var(--oxblood-1);
     }
     .examples-hint {
-      font-size: 11.5px;
-      color: var(--text-light);
-      font-style: italic;
-      margin-bottom: 22px;
-      padding-left: 2px;
+      font-size: 11.5px; color: var(--text-light); font-style: italic;
+      margin-bottom: 22px; padding-left: 2px;
     }
 
-    /* ── 3-column main area ── */
+    /* Main grid */
     .main-grid {
       display: grid;
-      grid-template-columns: 1.25fr 1.15fr 1fr;
+      grid-template-columns: 1.25fr 1.15fr 1.1fr;
       gap: 20px;
     }
-
     .card {
       background: var(--cream);
       border: 1px solid var(--border);
       border-radius: 6px;
       padding: 14px 16px 16px;
-      display: flex;
-      flex-direction: column;
-      min-height: 260px;
+      display: flex; flex-direction: column;
+      min-height: 320px;
     }
     .card-hdr {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 10px; padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
     }
     .card-title {
-      font-family: 'Cormorant Garamond', 'Georgia', serif;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--oxblood-0);
-      letter-spacing: 0.01em;
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-size: 16px; font-weight: 600;
+      color: var(--oxblood-0); letter-spacing: 0.01em;
     }
+    .card-title mark { background: transparent; color: var(--amber-dark, #7A4E1A); font-weight: 600; }
     .card-hint {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-light);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-light);
     }
 
-    /* ── Word cloud (column 1) ── */
+    /* Cloud */
     .cloud {
-      flex: 1;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 10px;
-      align-content: flex-start;
-      padding: 6px 2px;
-      line-height: 1;
+      flex: 1; display: flex; flex-wrap: wrap; gap: 6px 10px;
+      align-content: flex-start; padding: 6px 2px; line-height: 1;
     }
     .cloud span {
-      display: inline-block;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      cursor: pointer;
-      transition: opacity 0.15s, transform 0.15s;
+      display: inline-block; font-weight: 600; letter-spacing: 0.01em;
+      cursor: pointer; transition: opacity 0.15s, transform 0.15s;
     }
     .cloud span:hover { opacity: 1 !important; transform: scale(1.05); }
-    .w-xl { font-size: 28px; font-family: 'Cormorant Garamond', serif; font-style: italic; }
+    .cloud span.dim { opacity: 0.3; }
+    .w-xl { font-size: 28px; font-family: 'Cormorant Garamond',serif; font-style: italic; }
     .w-lg { font-size: 22px; }
     .w-md { font-size: 17px; }
     .w-sm { font-size: 14px; }
     .w-xs { font-size: 12px; }
-    .c-primary    { color: var(--oxblood-1); }
-    .c-primary-d  { color: var(--oxblood-0); }
-    .c-primary-m  { color: var(--oxblood-2); }
-    .c-amber      { color: var(--amber); }
-    .c-amber-d    { color: #7A4E1A; }
-    .c-amber-l    { color: var(--amber-light); }
-    .c-mid        { color: var(--text-mid); }
-    .c-light      { color: var(--text-light); }
+    .c-primary   { color: var(--oxblood-1); }
+    .c-primary-d { color: var(--oxblood-0); }
+    .c-primary-m { color: var(--oxblood-2); }
+    .c-amber     { color: var(--amber); }
+    .c-amber-d   { color: #7A4E1A; }
+    .c-amber-l   { color: var(--amber-light); }
+    .c-mid       { color: var(--text-mid); }
+    .c-light     { color: var(--text-light); }
 
-    /* ── Visual stats placeholders (column 2) ── */
-    .viz-col { display: flex; flex-direction: column; gap: 20px; min-height: 260px; }
+    /* Stats */
+    .viz-col { display: flex; flex-direction: column; gap: 20px; min-height: 320px; }
     .viz-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 14px 16px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 6px; padding: 14px 16px;
+      flex: 1; display: flex; flex-direction: column; gap: 10px;
     }
     .viz-hdr {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-mid);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-mid);
     }
     .viz-big {
-      font-family: 'Cormorant Garamond', 'Georgia', serif;
-      font-weight: 600;
-      font-size: 34px;
-      line-height: 1;
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-weight: 600; font-size: 34px; line-height: 1;
       color: var(--oxblood-0);
     }
     .viz-big em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--amber);
-      font-size: 22px;
-      margin-left: 4px;
+      font-style: italic; font-weight: 400; color: var(--amber);
+      font-size: 22px; margin-left: 4px;
     }
     .viz-sub { font-size: 11px; color: var(--text-light); line-height: 1.45; }
-
-    /* Mini bar chart */
     .minibar { display: flex; align-items: flex-end; gap: 4px; height: 48px; }
     .minibar .b {
-      flex: 1;
-      background: linear-gradient(180deg, var(--oxblood-1), var(--oxblood-2));
-      border-radius: 2px 2px 0 0;
-      opacity: 0.85;
+      flex: 1; background: linear-gradient(180deg, var(--oxblood-1), var(--oxblood-2));
+      border-radius: 2px 2px 0 0; opacity: 0.85;
     }
     .minibar .b.hi { background: linear-gradient(180deg, var(--amber), var(--amber-light)); opacity: 1; }
-    .mb-x { display: flex; justify-content: space-between; font-size: 9px; color: var(--text-light); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
-
-    /* Donut-ish sparkline alt for second card */
+    .mb-x {
+      display: flex; justify-content: space-between; font-size: 9px;
+      color: var(--text-light); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px;
+    }
     .spark { height: 48px; display: flex; align-items: center; gap: 10px; }
-    .spark-svg { flex-shrink: 0; }
     .spark-list { display: flex; flex-direction: column; gap: 3px; font-size: 11px; }
     .spark-row { display: flex; align-items: center; gap: 6px; color: var(--text-mid); }
     .spark-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
 
-    /* ── Dashboard list (column 3) ── */
-    .dash-list {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
+    /* Dashboard list */
+    .dash-list { flex: 1; display: flex; flex-direction: column; gap: 0; overflow-y: auto; }
     .dash-item {
-      padding: 10px 4px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      transition: background 0.1s;
-      cursor: pointer;
+      padding: 10px 4px; border-bottom: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 3px;
+      transition: background 0.1s, padding 0.1s;
+      cursor: pointer; text-decoration: none;
     }
     .dash-item:last-child { border-bottom: none; }
-    .dash-item:hover { background: var(--cream-warm); padding-left: 8px; padding-right: 8px; margin: 0 -4px; border-radius: 4px; }
+    .dash-item:hover {
+      background: var(--cream-warm); padding-left: 8px; padding-right: 8px;
+      margin: 0 -4px; border-radius: 4px;
+    }
     .dash-link {
-      color: var(--oxblood-1);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
-      font-weight: 600;
-      font-size: 13px;
-      line-height: 1.35;
+      color: var(--oxblood-1); text-decoration: underline;
+      text-underline-offset: 3px; text-decoration-thickness: 1px;
+      font-weight: 600; font-size: 13px; line-height: 1.35;
     }
-    .dash-link:hover { color: var(--oxblood-0); text-decoration-thickness: 2px; }
-    .dash-link:visited { color: var(--link-visited); }
-    .dash-meta {
-      font-size: 10.5px;
-      color: var(--text-light);
-      font-style: italic;
+    .dash-link mark {
+      background: rgba(184,137,58,0.22); color: var(--oxblood-0);
+      padding: 0 2px; border-radius: 2px; font-weight: 700;
     }
+    .dash-item:hover .dash-link { color: var(--oxblood-0); text-decoration-thickness: 2px; }
+    .dash-meta { font-size: 10.5px; color: var(--text-light); font-style: italic; }
     .dash-meta .dash-cat {
-      font-style: normal;
-      font-weight: 600;
-      color: var(--amber);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-size: 9.5px;
+      font-style: normal; font-weight: 600; color: var(--amber);
+      letter-spacing: 0.06em; text-transform: uppercase; font-size: 9.5px;
+    }
+    .dash-empty {
+      padding: 32px 10px; text-align: center;
+      color: var(--text-light); font-size: 12px; font-style: italic;
     }
 
-    /* ── Footer ── */
+    /* Footer */
     .footer-bar {
-      margin: 0 32px;
-      padding: 14px 8px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      color: var(--text-light);
-      border-top: 1px solid var(--border);
+      margin: 0 32px; padding: 14px 8px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px; color: var(--text-light); border-top: 1px solid var(--border);
     }
-    .footer-bar .page-indicator {
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .footer-bar .pbi-note {
-      font-style: italic;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .footer-bar .page-indicator { font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    .footer-bar .pbi-note { font-style: italic; display: flex; align-items: center; gap: 6px; }
     .pbi-mark { width: 10px; height: 10px; border-radius: 2px; background: #F2C811; }
   </style>
 </head>
@@ -513,130 +366,64 @@
 
   <main class="report">
 
-    <!-- ───────── Banner with 3-column grid: title · pinned · search ───────── -->
     <section class="banner">
       <div class="banner-grid">
-
         <div class="banner-left">
           <span class="eyebrow">Business Intelligence Portal</span>
           <h1 class="title">Find Your <em>Dashboard.</em></h1>
           <p class="subtitle">Search by dashboard name, keyword or business description.</p>
         </div>
-
         <div class="pinned">
           <div class="pinned-label">Pinned by you</div>
-          <div class="pinned-row">
-            <div class="pin-slot">
-              <div class="pin-slot-name">OTP Tracker</div>
-              <div class="pin-slot-cat">Flight Ops</div>
-            </div>
-            <div class="pin-slot">
-              <div class="pin-slot-name">Fuel Uplift</div>
-              <div class="pin-slot-cat">Fuel</div>
-            </div>
-            <div class="pin-slot">
-              <div class="pin-slot-name">Crew Roster</div>
-              <div class="pin-slot-cat">Crew Ctrl</div>
-            </div>
+          <div class="pinned-row" id="pinnedRow">
+            <!-- populated by JS -->
           </div>
         </div>
-
         <div class="banner-search">
           <div class="bs-label">Search</div>
           <div class="bs-box">
             <svg class="bs-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
             </svg>
-            <input class="bs-input" value="flight dispatch" spellcheck="false">
-            <button class="bs-clear">✕</button>
+            <input class="bs-input" id="searchInput" spellcheck="false" placeholder="Try 'otp', 'delay', 'fuel'…" autocomplete="off">
+            <button class="bs-clear" id="searchClear" type="button" aria-label="Clear">✕</button>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- ───────── Navigation sub-bar ───────── -->
     <section class="navstrip">
-      <div class="nav-pills">
-        <button class="nav-pill active">All Areas</button>
-        <button class="nav-pill">Crew Control</button>
-        <button class="nav-pill">Crew Hotels</button>
-        <button class="nav-pill">Fleet</button>
-        <button class="nav-pill">Flight Data</button>
-        <button class="nav-pill">Flight Ops</button>
-        <button class="nav-pill">Fuel</button>
-        <button class="nav-pill">IOC</button>
-        <button class="nav-pill">Navigation</button>
-        <button class="nav-pill">Network Ops</button>
-        <button class="nav-pill">Technical</button>
-        <button class="nav-pill">TOPS</button>
-        <button class="nav-pill">Training</button>
-      </div>
-      <div class="nav-count"><b>132</b> dashboards &nbsp;·&nbsp; <b>14</b> areas</div>
+      <div class="nav-pills" id="navPills"><!-- populated by JS --></div>
+      <div class="nav-count" id="navCount"></div>
     </section>
 
-    <!-- ───────── White panel: examples row + 3-column main ───────── -->
     <section class="panel">
 
       <div class="examples-row">
         <span class="examples-label">Examples:</span>
-        <button class="ex-chip">OTP</button>
-        <button class="ex-chip">Delay</button>
-        <button class="ex-chip">Fuel uplift</button>
-        <button class="ex-chip">GLP code</button>
-        <button class="ex-chip">Crew roster</button>
+        <button class="ex-chip" data-q="otp">OTP</button>
+        <button class="ex-chip" data-q="delay">Delay</button>
+        <button class="ex-chip" data-q="fuel">Fuel uplift</button>
+        <button class="ex-chip" data-q="glp">GLP code</button>
+        <button class="ex-chip" data-q="crew">Crew roster</button>
       </div>
       <div class="examples-hint">— or choose one from the keyword cloud below</div>
 
       <div class="main-grid">
 
-        <!-- ─── Column 1: Keyword cloud ─── -->
         <div class="card">
           <div class="card-hdr">
             <span class="card-title">Keyword cloud</span>
             <span class="card-hint">Click to filter</span>
           </div>
-          <div class="cloud">
-            <span class="w-xl c-primary-d">flight dispatch</span>
-            <span class="w-lg c-amber-d">otp</span>
-            <span class="w-md c-mid">crew roster</span>
-            <span class="w-sm c-primary">delay</span>
-            <span class="w-md c-amber">fuel uplift</span>
-            <span class="w-sm c-mid">message</span>
-            <span class="w-xs c-light">apu</span>
-            <span class="w-lg c-primary-m">notam</span>
-            <span class="w-md c-amber-l">departure</span>
-            <span class="w-sm c-primary">flight planning</span>
-            <span class="w-xs c-mid">impacted flights</span>
-            <span class="w-sm c-amber-d">pnl</span>
-            <span class="w-xl c-primary" style="font-family:'Cormorant Garamond',serif;font-style:italic;">crew control</span>
-            <span class="w-sm c-light">remote</span>
-            <span class="w-md c-mid">irregular ops</span>
-            <span class="w-xs c-amber">jeppesen</span>
-            <span class="w-sm c-primary-d">crew training</span>
-            <span class="w-xs c-light">etops</span>
-            <span class="w-md c-amber-d">autoperformance</span>
-            <span class="w-sm c-primary">landing</span>
-            <span class="w-xs c-mid">fleet</span>
-            <span class="w-sm c-amber">block time</span>
-            <span class="w-xs c-light">block hour</span>
-            <span class="w-md c-primary-m">disruption</span>
-            <span class="w-xs c-amber-d">ditching</span>
-            <span class="w-sm c-mid">inspection</span>
-            <span class="w-xs c-light">currency</span>
-            <span class="w-xs c-primary">cost</span>
-            <span class="w-sm c-amber-l">doha</span>
-            <span class="w-xs c-mid">budget</span>
-          </div>
+          <div class="cloud" id="cloud"><!-- populated by JS --></div>
         </div>
 
-        <!-- ─── Column 2: Two visual summaries ─── -->
         <div class="viz-col">
-
           <div class="viz-card">
-            <div class="viz-hdr">Directory usage — last 30 days</div>
-            <div class="viz-big">4,218<em>views</em></div>
-            <div class="viz-sub">Most-opened area: <b style="color:var(--text-mid)">Flight Ops</b> (37% of views)</div>
+            <div class="viz-hdr" id="vizUsageHdr">Directory usage — last 30 days</div>
+            <div class="viz-big" id="vizUsageNum">4,218<em>views</em></div>
+            <div class="viz-sub" id="vizUsageSub">Most-opened area: <b style="color:var(--text-mid)">Flight Ops</b> (37% of views)</div>
             <div class="minibar">
               <div class="b" style="height:35%"></div>
               <div class="b" style="height:52%"></div>
@@ -657,14 +444,11 @@
           <div class="viz-card">
             <div class="viz-hdr">Top areas this week</div>
             <div class="spark">
-              <svg class="spark-svg" width="48" height="48" viewBox="0 0 48 48">
+              <svg width="48" height="48" viewBox="0 0 48 48">
                 <circle cx="24" cy="24" r="18" fill="none" stroke="#E8DFD0" stroke-width="6"/>
-                <circle cx="24" cy="24" r="18" fill="none" stroke="#43061F" stroke-width="6"
-                        stroke-dasharray="42 113" stroke-dashoffset="0" transform="rotate(-90 24 24)"/>
-                <circle cx="24" cy="24" r="18" fill="none" stroke="#B8893A" stroke-width="6"
-                        stroke-dasharray="28 113" stroke-dashoffset="-42" transform="rotate(-90 24 24)"/>
-                <circle cx="24" cy="24" r="18" fill="none" stroke="#591029" stroke-width="6"
-                        stroke-dasharray="20 113" stroke-dashoffset="-70" transform="rotate(-90 24 24)"/>
+                <circle cx="24" cy="24" r="18" fill="none" stroke="#43061F" stroke-width="6" stroke-dasharray="42 113" transform="rotate(-90 24 24)"/>
+                <circle cx="24" cy="24" r="18" fill="none" stroke="#B8893A" stroke-width="6" stroke-dasharray="28 113" stroke-dashoffset="-42" transform="rotate(-90 24 24)"/>
+                <circle cx="24" cy="24" r="18" fill="none" stroke="#591029" stroke-width="6" stroke-dasharray="20 113" stroke-dashoffset="-70" transform="rotate(-90 24 24)"/>
               </svg>
               <div class="spark-list">
                 <div class="spark-row"><span class="spark-dot" style="background:#43061F"></span>Flight Ops &nbsp;<b style="color:var(--text)">37%</b></div>
@@ -673,43 +457,16 @@
                 <div class="spark-row"><span class="spark-dot" style="background:#E8DFD0"></span>Other &nbsp;<b style="color:var(--text-mid)">20%</b></div>
               </div>
             </div>
-            <div class="viz-sub" style="margin-top:4px;">Share of opens · selected filters apply</div>
+            <div class="viz-sub" style="margin-top:4px;">Share of opens · current filter applied</div>
           </div>
-
         </div>
 
-        <!-- ─── Column 3: Dashboard list ─── -->
         <div class="card" style="background:var(--white);">
           <div class="card-hdr">
-            <span class="card-title">Dashboards matching "flight dispatch"</span>
-            <span class="card-hint">6 results</span>
+            <span class="card-title" id="listTitle">Dashboards</span>
+            <span class="card-hint" id="listCount"></span>
           </div>
-          <div class="dash-list">
-            <a class="dash-item" href="#">
-              <span class="dash-link">ADSB DOH Arrivals path comparison (by Points)</span>
-              <span class="dash-meta"><span class="dash-cat">Flight Ops</span> &nbsp;· Updated 2 days ago</span>
-            </a>
-            <a class="dash-item" href="#">
-              <span class="dash-link">European Priority Connections</span>
-              <span class="dash-meta"><span class="dash-cat">Network Ops</span> &nbsp;· Updated yesterday</span>
-            </a>
-            <a class="dash-item" href="#">
-              <span class="dash-link">FIR or Waypoint Closure</span>
-              <span class="dash-meta"><span class="dash-cat">Navigation</span> &nbsp;· Updated 1 week ago</span>
-            </a>
-            <a class="dash-item" href="#">
-              <span class="dash-link">Flight Dispatch Cost Savings</span>
-              <span class="dash-meta"><span class="dash-cat">Flight Ops</span> &nbsp;· Updated 3 days ago</span>
-            </a>
-            <a class="dash-item" href="#">
-              <span class="dash-link">Dispatch Release Turnaround</span>
-              <span class="dash-meta"><span class="dash-cat">Flight Ops</span> &nbsp;· Updated today</span>
-            </a>
-            <a class="dash-item" href="#">
-              <span class="dash-link">NOTAM Exposure by Route</span>
-              <span class="dash-meta"><span class="dash-cat">Flight Data</span> &nbsp;· Updated 4 days ago</span>
-            </a>
-          </div>
+          <div class="dash-list" id="dashList"></div>
         </div>
 
       </div>
@@ -725,12 +482,268 @@
   </main>
 
   <script>
-    document.querySelectorAll('.nav-pill').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
+    // ─── Data ──────────────────────────────────────────────────────
+    const CATS = [
+      "Crew Control","Crew Hotels","Fleet","Flight Data","Flight Ops","Fuel",
+      "IOC","Navigation","Network Ops","Technical","TOPS","Training"
+    ];
+
+    const DASHBOARDS = [
+      { name:"OTP & Delay Analysis",                           cat:"Flight Ops",    age:"today",        kw:["otp","delay","punctuality","flight"] },
+      { name:"ADSB DOH Arrivals path comparison (by Points)",  cat:"Flight Ops",    age:"2 days ago",   kw:["adsb","arrivals","doha","flight","dispatch"] },
+      { name:"Flight Dispatch Cost Savings",                   cat:"Flight Ops",    age:"3 days ago",   kw:["flight","dispatch","cost","savings"] },
+      { name:"Dispatch Release Turnaround",                    cat:"Flight Ops",    age:"today",        kw:["flight","dispatch","release","turnaround"] },
+      { name:"Aircraft Performance and Weight & Balance Info", cat:"Flight Ops",    age:"1 week ago",   kw:["glp","aircraft","weight","balance","performance"] },
+      { name:"Pilot Duty & Rest Compliance",                   cat:"Flight Ops",    age:"5 days ago",   kw:["pilot","duty","rest","compliance"] },
+
+      { name:"Crew Control Department Productivity",           cat:"Crew Control",  age:"yesterday",    kw:["crew","productivity","department"] },
+      { name:"Crew Control Rule Setting Dashboard",            cat:"Crew Control",  age:"1 week ago",   kw:["crew","rules","configuration"] },
+      { name:"Crew Roster Disruption Tracker",                 cat:"Crew Control",  age:"3 days ago",   kw:["crew","roster","disruption"] },
+      { name:"Crew Absence & Sickness Patterns",               cat:"Crew Control",  age:"4 days ago",   kw:["crew","absence","sickness"] },
+
+      { name:"Crew Hotel Allocation Overview",                 cat:"Crew Hotels",   age:"today",        kw:["hotel","crew","accommodation","doha"] },
+      { name:"Crew Hotel Cost per Night Benchmark",            cat:"Crew Hotels",   age:"1 week ago",   kw:["hotel","cost","benchmark"] },
+
+      { name:"Fleet Availability Tracker",                     cat:"Fleet",         age:"2 days ago",   kw:["fleet","aog","mro","availability"] },
+      { name:"Aircraft Utilisation Heatmap",                   cat:"Fleet",         age:"5 days ago",   kw:["fleet","utilisation","block hour","aircraft"] },
+      { name:"Fleet Age & Retirement Plan",                    cat:"Fleet",         age:"2 weeks ago",  kw:["fleet","retirement","aircraft"] },
+
+      { name:"Flight Data Quality Dashboard",                  cat:"Flight Data",   age:"6 hours ago",  kw:["flight","data","quality","completeness"] },
+      { name:"NOTAM Exposure by Route",                        cat:"Flight Data",   age:"4 days ago",   kw:["notam","route","exposure"] },
+      { name:"FDM Events Summary",                             cat:"Flight Data",   age:"1 day ago",    kw:["fdm","events","flight","data"] },
+
+      { name:"Fuel Performance Dashboard",                     cat:"Fuel",          age:"today",        kw:["fuel","uplift","burn","block hour","cost"] },
+      { name:"Fuel Uplift Variance by Station",                cat:"Fuel",          age:"yesterday",    kw:["fuel","uplift","variance","station"] },
+      { name:"Fuel Hedging Snapshot",                          cat:"Fuel",          age:"1 week ago",   kw:["fuel","hedge","cost","treasury"] },
+
+      { name:"IOC Live Operations Board",                      cat:"IOC",           age:"10 min ago",   kw:["ioc","disruption","diversion","operations"] },
+      { name:"IOC Shift Handover Notes",                       cat:"IOC",           age:"today",        kw:["ioc","shift","handover"] },
+      { name:"IOC Controller Workload",                        cat:"IOC",           age:"3 days ago",   kw:["ioc","controller","workload"] },
+
+      { name:"Navigation Database Health",                     cat:"Navigation",    age:"2 days ago",   kw:["nav","navigation","airac","database"] },
+      { name:"FIR or Waypoint Closure",                        cat:"Navigation",    age:"1 week ago",   kw:["fir","waypoint","closure","navigation"] },
+      { name:"ETOPS & Diversion Airport Matrix",               cat:"Navigation",    age:"1 week ago",   kw:["etops","diversion","airport"] },
+
+      { name:"European Priority Connections",                  cat:"Network Ops",   age:"yesterday",    kw:["europe","connections","priority","network"] },
+      { name:"Network Schedule Viewer",                        cat:"Network Ops",   age:"3 days ago",   kw:["network","schedule","slot","planning"] },
+      { name:"Slot Utilisation by Hub",                        cat:"Network Ops",   age:"1 week ago",   kw:["slot","hub","utilisation"] },
+
+      { name:"Technical Logbook Summary",                      cat:"Technical",     age:"1 week ago",   kw:["technical","logbook","ata","engineering"] },
+      { name:"Open Defect Register",                           cat:"Technical",     age:"today",        kw:["defects","mel","cdl","engineering"] },
+      { name:"Component Reliability by Fleet",                 cat:"Technical",     age:"4 days ago",   kw:["reliability","component","fleet"] },
+
+      { name:"TOPS Performance",                               cat:"TOPS",          age:"1 week ago",   kw:["tops","takeoff","performance","runway"] },
+      { name:"Runway Analysis Trend",                          cat:"TOPS",          age:"5 days ago",   kw:["runway","analysis","tops"] },
+
+      { name:"Training Compliance Tracker",                    cat:"Training",      age:"today",        kw:["training","compliance","currency","pilot","cabin"] },
+      { name:"Simulator Utilisation Monitor",                  cat:"Training",      age:"yesterday",    kw:["simulator","utilisation","training"] },
+      { name:"Type Rating Expiry Forecast",                    cat:"Training",      age:"1 week ago",   kw:["type rating","expiry","training"] },
+    ];
+
+    const PINS = [
+      { name:"OTP & Delay Analysis",         cat:"Flight Ops"   },
+      { name:"Fuel Performance Dashboard",   cat:"Fuel"         },
+      { name:"Crew Roster Disruption",       cat:"Crew Control" },
+    ];
+
+    const CLOUD_WORDS = [
+      { w:"flight dispatch", size:"xl", color:"c-primary-d" },
+      { w:"otp",             size:"lg", color:"c-amber-d"   },
+      { w:"crew roster",     size:"md", color:"c-mid"       },
+      { w:"delay",           size:"sm", color:"c-primary"   },
+      { w:"fuel uplift",     size:"md", color:"c-amber"     },
+      { w:"message",         size:"sm", color:"c-mid"       },
+      { w:"apu",             size:"xs", color:"c-light"     },
+      { w:"notam",           size:"lg", color:"c-primary-m" },
+      { w:"departure",       size:"md", color:"c-amber-l"   },
+      { w:"flight planning", size:"sm", color:"c-primary"   },
+      { w:"impacted flights",size:"xs", color:"c-mid"       },
+      { w:"pnl",             size:"sm", color:"c-amber-d"   },
+      { w:"crew control",    size:"xl", color:"c-primary", italic:true },
+      { w:"remote",          size:"sm", color:"c-light"     },
+      { w:"irregular ops",   size:"md", color:"c-mid"       },
+      { w:"jeppesen",        size:"xs", color:"c-amber"     },
+      { w:"crew training",   size:"sm", color:"c-primary-d" },
+      { w:"etops",           size:"xs", color:"c-light"     },
+      { w:"autoperformance", size:"md", color:"c-amber-d"   },
+      { w:"landing",         size:"sm", color:"c-primary"   },
+      { w:"fleet",           size:"xs", color:"c-mid"       },
+      { w:"block time",      size:"sm", color:"c-amber"     },
+      { w:"block hour",      size:"xs", color:"c-light"     },
+      { w:"disruption",      size:"md", color:"c-primary-m" },
+      { w:"ditching",        size:"xs", color:"c-amber-d"   },
+      { w:"inspection",      size:"sm", color:"c-mid"       },
+      { w:"currency",        size:"xs", color:"c-light"     },
+      { w:"cost",            size:"xs", color:"c-primary"   },
+      { w:"doha",            size:"sm", color:"c-amber-l"   },
+      { w:"hotel",           size:"xs", color:"c-mid"       },
+    ];
+
+    // ─── State ─────────────────────────────────────────────────────
+    let currentCat   = "All Areas";
+    let currentQuery = "";
+
+    // ─── Elements ──────────────────────────────────────────────────
+    const navPills    = document.getElementById("navPills");
+    const navCount    = document.getElementById("navCount");
+    const pinnedRow   = document.getElementById("pinnedRow");
+    const cloudEl     = document.getElementById("cloud");
+    const dashListEl  = document.getElementById("dashList");
+    const listTitle   = document.getElementById("listTitle");
+    const listCount   = document.getElementById("listCount");
+    const searchInput = document.getElementById("searchInput");
+    const searchClear = document.getElementById("searchClear");
+    const vizUsageNum = document.getElementById("vizUsageNum");
+    const vizUsageSub = document.getElementById("vizUsageSub");
+
+    // ─── Render pinned ─────────────────────────────────────────────
+    PINS.forEach(p => {
+      const el = document.createElement("div");
+      el.className = "pin-slot";
+      el.title = p.name;
+      el.innerHTML = `<div class="pin-slot-name">${p.name}</div><div class="pin-slot-cat">${p.cat}</div>`;
+      el.addEventListener("click", () => { applyFilter(p.cat, p.name); });
+      pinnedRow.appendChild(el);
     });
+
+    // ─── Render nav pills ──────────────────────────────────────────
+    const allPill = document.createElement("button");
+    allPill.className = "nav-pill active";
+    allPill.textContent = "All Areas";
+    allPill.addEventListener("click", () => applyFilter("All Areas"));
+    navPills.appendChild(allPill);
+
+    CATS.forEach(cat => {
+      const b = document.createElement("button");
+      b.className = "nav-pill";
+      b.textContent = cat;
+      b.dataset.cat = cat;
+      b.addEventListener("click", () => applyFilter(cat));
+      navPills.appendChild(b);
+    });
+
+    // ─── Render cloud ──────────────────────────────────────────────
+    CLOUD_WORDS.forEach(c => {
+      const s = document.createElement("span");
+      s.className = `w-${c.size} ${c.color}`;
+      if (c.italic) s.style.fontFamily = "'Cormorant Garamond',serif", s.style.fontStyle = "italic";
+      s.textContent = c.w;
+      s.addEventListener("click", () => setSearch(c.w));
+      cloudEl.appendChild(s);
+    });
+
+    // ─── Filtering ─────────────────────────────────────────────────
+    function matches(d) {
+      const catOk = (currentCat === "All Areas") || (d.cat === currentCat);
+      if (!catOk) return false;
+      if (!currentQuery) return true;
+      const q = currentQuery.toLowerCase();
+      if (d.name.toLowerCase().includes(q)) return true;
+      if (d.cat.toLowerCase().includes(q)) return true;
+      return d.kw.some(k => k.toLowerCase().includes(q));
+    }
+
+    function hl(text, q) {
+      if (!q) return text;
+      const esc = q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+      return text.replace(new RegExp(`(${esc})`,"gi"), "<mark>$1</mark>");
+    }
+
+    function render() {
+      // nav pill active state
+      document.querySelectorAll(".nav-pill").forEach(el => {
+        const label = el.textContent;
+        el.classList.toggle("active", label === currentCat);
+      });
+
+      // dashboard list
+      const hits = DASHBOARDS.filter(matches);
+      dashListEl.innerHTML = "";
+      if (hits.length === 0) {
+        dashListEl.innerHTML = `<div class="dash-empty">No dashboards match the current filter.<br>Try clearing the search or picking another area.</div>`;
+      } else {
+        hits.forEach(d => {
+          const a = document.createElement("a");
+          a.className = "dash-item";
+          a.href = "#";
+          a.innerHTML = `
+            <span class="dash-link">${hl(d.name, currentQuery)}</span>
+            <span class="dash-meta"><span class="dash-cat">${d.cat}</span> &nbsp;· Updated ${d.age}</span>`;
+          dashListEl.appendChild(a);
+        });
+      }
+
+      // list header
+      const scope = (currentCat === "All Areas") ? "all areas" : currentCat;
+      if (currentQuery) {
+        listTitle.innerHTML = `Matching <mark style="background:rgba(184,137,58,0.22);color:var(--oxblood-0);padding:0 4px;border-radius:2px;">"${currentQuery}"</mark>`;
+      } else {
+        listTitle.textContent = `Dashboards in ${scope}`;
+      }
+      listCount.textContent = `${hits.length} result${hits.length !== 1 ? "s" : ""}`;
+
+      // nav count
+      const total = DASHBOARDS.length;
+      const areaCount = CATS.length;
+      navCount.innerHTML = `<b>${total}</b> dashboards &nbsp;·&nbsp; <b>${areaCount}</b> areas`;
+      if (currentCat !== "All Areas") {
+        const inCat = DASHBOARDS.filter(d => d.cat === currentCat).length;
+        navCount.innerHTML = `<b>${inCat}</b> in ${currentCat} &nbsp;·&nbsp; <span style="opacity:0.6">of ${total}</span>`;
+      }
+
+      // cloud dimming — dim words that don't appear in any visible dashboard's keywords
+      const visibleKw = new Set();
+      hits.forEach(d => d.kw.forEach(k => visibleKw.add(k.toLowerCase())));
+      document.querySelectorAll(".cloud span").forEach(s => {
+        const w = s.textContent.toLowerCase();
+        const active = [...visibleKw].some(k => k.includes(w) || w.includes(k));
+        s.classList.toggle("dim", !active && currentCat !== "All Areas");
+      });
+
+      // stats usage sub
+      if (currentCat === "All Areas") {
+        vizUsageNum.innerHTML = `4,218<em>views</em>`;
+        vizUsageSub.innerHTML = `Most-opened area: <b style="color:var(--text-mid)">Flight Ops</b> (37% of views)`;
+      } else {
+        const fake = Math.round(800 + (currentCat.length * 53));
+        vizUsageNum.innerHTML = `${fake.toLocaleString()}<em>views</em>`;
+        vizUsageSub.innerHTML = `${currentCat} · <b style="color:var(--text-mid)">${hits.length}</b> dashboard${hits.length!==1?"s":""} in scope`;
+      }
+
+      // search clear button visibility
+      searchClear.classList.toggle("show", !!currentQuery);
+    }
+
+    // ─── Actions ───────────────────────────────────────────────────
+    function applyFilter(cat, q = undefined) {
+      currentCat = cat;
+      if (q !== undefined) {
+        currentQuery = q;
+        searchInput.value = q;
+      }
+      render();
+    }
+    function setSearch(q) {
+      currentQuery = q;
+      searchInput.value = q;
+      render();
+    }
+
+    searchInput.addEventListener("input", e => {
+      currentQuery = e.target.value.trim();
+      render();
+    });
+    searchClear.addEventListener("click", () => {
+      currentQuery = "";
+      searchInput.value = "";
+      render();
+    });
+    document.querySelectorAll(".ex-chip").forEach(btn => {
+      btn.addEventListener("click", () => setSearch(btn.dataset.q));
+    });
+
+    // initial render
+    render();
   </script>
 </body>
 </html>
