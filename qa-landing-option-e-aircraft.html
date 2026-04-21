@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Your Dashboard · Option E — Qatar 777 (World Cup livery)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:           #1F0310;
+      --oxblood-0:     #2A0311;
+      --oxblood-1:     #43061F;
+      --oxblood-2:     #591029;
+      --amber:         #B8893A;
+      --amber-dark:    #7A4E1A;
+      --amber-light:   #D9B268;
+      --honey:         #E6C179;
+      --cream:         #FBF6EC;
+      --cream-warm:    #F3EADA;
+      --cream-title:   #F7EBD4;
+      --white:         #FFFFFF;
+      --border:        #E8DFD0;
+      --border-mid:    #D6C9B6;
+      --text:          #1A0D12;
+      --text-mid:      #524148;
+      --text-light:    #9C8680;
+      --link-visited:  #330418;
+      --green:         #2E7D4F;
+      --red:           #8C1E2A;
+    }
+
+    html, body { height: 100%; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── Ribbon ── */
+    .ribbon {
+      background: var(--ink);
+      color: rgba(247,235,212,0.78);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 6px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(184,137,58,0.18);
+    }
+    .ribbon-left { display: flex; align-items: center; gap: 10px; }
+    .ribbon-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
+    .ribbon-right { color: rgba(247,235,212,0.5); font-size: 10px; letter-spacing: 0.2em; }
+
+    .report { max-width: 1280px; margin: 0 auto; background: var(--cream); }
+
+    /* ── Banner (Qatar 777 World Cup livery · heavy left scrim, plane hero on right) ── */
+    .banner {
+      background:
+        /* Strong fade from dark oxblood on left to near-transparent on right
+           so the aircraft's burgundy + QATAR wordmark stay visible */
+        linear-gradient(95deg, rgba(26,3,14,0.96) 0%, rgba(42,3,17,0.90) 32%, rgba(42,3,17,0.55) 55%, rgba(42,3,17,0.22) 80%, rgba(42,3,17,0.10) 100%),
+        url("qatar-777-worldcup.jpg") center 55% / cover no-repeat;
+      color: var(--cream-title);
+      padding: 40px 40px 36px;
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+    }
+    .banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        /* subtle amber glow under the pinned/search area */
+        radial-gradient(ellipse 45% 60% at 78% 50%, rgba(184,137,58,0.10) 0%, transparent 70%),
+        /* soft top + bottom darkening to keep skies from washing out text */
+        linear-gradient(180deg, rgba(26,3,14,0.28) 0%, rgba(26,3,14,0) 30%, rgba(26,3,14,0) 70%, rgba(26,3,14,0.28) 100%);
+      pointer-events: none;
+    }
+    .banner::after {
+      content: '';
+      position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,178,104,0.65), transparent);
+    }
+
+    /* Contrast boosts — stronger shadows + slightly brighter text on this variant */
+    .banner .title { text-shadow: 0 2px 14px rgba(0,0,0,0.55); }
+    .banner .subtitle { color: rgba(247,235,212,0.82); text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+    .banner .eyebrow { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+    .banner .eyebrow::before { background: var(--honey); opacity: 0.9; }
+
+    /* Pinned tiles: stronger glass */
+    .banner .pinned-label { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+    .banner .pin-slot {
+      background: rgba(26,3,14,0.55);
+      border: 1px solid rgba(217,178,104,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .banner .pin-slot:hover {
+      background: rgba(26,3,14,0.72);
+      border-color: var(--amber-light);
+    }
+    .banner .pin-slot-name { color: var(--cream-title); text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+    .banner .pin-slot-cat { color: var(--honey); }
+
+    /* Search box: darker glass, cream input area */
+    .banner .bs-label { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+    .banner .bs-box {
+      background: rgba(251,246,236,0.97);
+      border: 1.5px solid rgba(217,178,104,0.7);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    }
+    .banner-grid {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 36px;
+      align-items: center;
+    }
+    .banner-left { max-width: 520px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--amber-light); margin-bottom: 10px;
+    }
+    .eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--amber); opacity: 0.7; }
+    .title {
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-size: 36px; font-weight: 500; line-height: 1.06;
+      color: var(--cream-title); margin-bottom: 6px;
+    }
+    .title em { font-style: italic; font-weight: 400; color: var(--honey); }
+    .subtitle { font-size: 12.5px; color: rgba(247,235,212,0.60); }
+
+    .pinned { display: flex; flex-direction: column; gap: 6px; }
+    .pinned-label {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(217,178,104,0.75); margin-bottom: 4px;
+    }
+    .pinned-row { display: flex; gap: 8px; }
+    .pin-slot {
+      width: 96px; height: 36px;
+      background: rgba(247,235,212,0.06);
+      border: 1px solid rgba(217,178,104,0.28);
+      border-radius: 4px;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 2px 6px; text-align: center; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .pin-slot:hover { background: rgba(217,178,104,0.14); border-color: var(--amber-light); }
+    .pin-slot-name {
+      font-size: 10px; color: var(--cream-title); font-weight: 600;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px;
+      line-height: 1.15;
+    }
+    .pin-slot-cat {
+      font-size: 8px; color: rgba(217,178,104,0.65);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1px;
+    }
+
+    .banner-search { display: flex; flex-direction: column; gap: 6px; min-width: 240px; }
+    .bs-label {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(217,178,104,0.75);
+    }
+    .bs-box {
+      display: flex; align-items: center;
+      background: rgba(251,246,236,0.95);
+      border: 1px solid rgba(217,178,104,0.4);
+      border-radius: 4px; height: 34px; padding: 0 10px;
+    }
+    .bs-box:focus-within { border-color: var(--amber-light); box-shadow: 0 0 0 2px rgba(217,178,104,0.25); }
+    .bs-icon { color: var(--oxblood-1); opacity: 0.55; flex-shrink: 0; margin-right: 8px; }
+    .bs-input { flex: 1; border: none; background: transparent; font: inherit; font-size: 13px; outline: none; height: 100%; }
+    .bs-clear {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--border); border: none; cursor: pointer;
+      color: var(--text-mid); font-size: 10px;
+      display: none; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .bs-clear.show { display: flex; }
+
+    /* ── Nav strip ── */
+    .navstrip {
+      background: linear-gradient(180deg, rgba(184,137,58,0.22) 0%, rgba(184,137,58,0.08) 100%);
+      border-top: 1px solid rgba(184,137,58,0.35);
+      border-bottom: 1px solid rgba(184,137,58,0.2);
+      padding: 9px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nav-pill {
+      padding: 5px 12px; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.04em; border: 1px solid transparent; border-radius: 50px;
+      color: var(--oxblood-1); background: transparent; cursor: pointer;
+      transition: all 0.15s; font-family: inherit;
+    }
+    .nav-pill:hover { background: rgba(67,6,31,0.08); }
+    .nav-pill.active {
+      background: var(--oxblood-1); color: var(--cream-title);
+      border-color: var(--oxblood-1);
+      box-shadow: 0 1px 4px rgba(42,3,17,0.25);
+    }
+    .nav-count {
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-style: italic; font-size: 14px; color: var(--oxblood-1);
+    }
+    .nav-count b { font-weight: 600; }
+
+    /* ── Panel ── */
+    .panel {
+      background: var(--white);
+      margin: 16px 32px;
+      border-radius: 6px;
+      box-shadow: 0 8px 32px rgba(42,3,17,0.08), 0 1px 3px rgba(42,3,17,0.05);
+      padding: 20px 28px 24px;
+      border: 1px solid var(--border);
+    }
+    .examples-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 18px; flex-wrap: wrap;
+    }
+    .examples-label {
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-style: italic; font-size: 14px; color: var(--text-mid);
+    }
+    .ex-chip {
+      padding: 4px 12px; font-size: 11.5px; font-weight: 600;
+      border: 1px solid var(--border-mid); background: var(--cream-warm);
+      color: var(--oxblood-1); border-radius: 50px;
+      cursor: pointer; transition: all 0.15s; font-family: inherit;
+    }
+    .ex-chip:hover { background: var(--oxblood-1); color: var(--cream-title); border-color: var(--oxblood-1); }
+
+    /* ── KPI band ── */
+    .kpi-band {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .kpi {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi::after {
+      content: '';
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--amber), var(--amber-light));
+      opacity: 0.7;
+    }
+    .kpi-label {
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-mid); margin-bottom: 6px;
+    }
+    .kpi-val {
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-size: 30px; font-weight: 600; line-height: 1;
+      color: var(--oxblood-0);
+    }
+    .kpi-val em {
+      font-style: italic; font-weight: 400; color: var(--amber);
+      font-size: 16px; margin-left: 4px;
+    }
+    .kpi-sub {
+      font-size: 10.5px; color: var(--text-light); margin-top: 4px;
+      font-style: italic;
+    }
+    .kpi-sub b { color: var(--text-mid); font-style: normal; font-weight: 600; }
+
+    /* Special KPI: top dashboard */
+    .kpi.feature {
+      background: linear-gradient(160deg, rgba(67,6,31,0.04) 0%, rgba(184,137,58,0.08) 100%);
+    }
+    .kpi.feature .kpi-val {
+      font-size: 15px; font-family: 'Segoe UI', sans-serif; font-style: normal;
+      font-weight: 600; color: var(--oxblood-1); line-height: 1.2;
+    }
+
+    /* ── Sort control ── */
+    .section-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-size: 19px; font-weight: 600; color: var(--oxblood-0);
+    }
+    .section-title em { font-style: italic; color: var(--amber-dark); font-weight: 500; }
+    .sort-wrap { display: flex; align-items: center; gap: 8px; }
+    .sort-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-mid);
+    }
+    .sort-pills { display: flex; gap: 4px; }
+    .sort-pill {
+      padding: 4px 10px; font-size: 11px; font-weight: 600;
+      border: 1px solid var(--border-mid); background: var(--white);
+      color: var(--text-mid); border-radius: 4px;
+      cursor: pointer; transition: all 0.15s; font-family: inherit;
+    }
+    .sort-pill:hover { border-color: var(--oxblood-1); color: var(--oxblood-1); }
+    .sort-pill.active {
+      background: var(--oxblood-1); color: var(--cream-title); border-color: var(--oxblood-1);
+    }
+
+    /* ── Main grid ── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr 1.4fr;
+      gap: 18px;
+    }
+    .col-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 16px 16px;
+      display: flex; flex-direction: column;
+      min-height: 420px;
+    }
+    .col-card.white { background: var(--white); }
+    .col-hdr {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 10px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .col-title {
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-size: 15px; font-weight: 600;
+      color: var(--oxblood-0);
+    }
+    .col-hint {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-light);
+    }
+
+    /* ── Most Popular ── */
+    .pop-list { display: flex; flex-direction: column; gap: 12px; }
+    .pop-item {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: start;
+      cursor: pointer;
+    }
+    .pop-rank {
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-size: 26px; font-weight: 600;
+      color: var(--amber);
+      line-height: 0.9;
+    }
+    .pop-body { min-width: 0; }
+    .pop-name {
+      font-size: 12.5px; font-weight: 600; color: var(--oxblood-1);
+      text-decoration: underline; text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      line-height: 1.3; margin-bottom: 3px;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .pop-item:hover .pop-name { color: var(--oxblood-0); }
+    .pop-bar-wrap {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 3px;
+    }
+    .pop-bar {
+      height: 5px;
+      background: var(--border); border-radius: 3px;
+      flex: 1; position: relative; overflow: hidden;
+    }
+    .pop-bar-fill {
+      position: absolute; top: 0; left: 0; bottom: 0;
+      background: linear-gradient(90deg, var(--oxblood-1), var(--amber));
+      border-radius: 3px;
+    }
+    .pop-count {
+      font-size: 10.5px; color: var(--text-mid); font-variant-numeric: tabular-nums;
+      font-weight: 600; min-width: 38px; text-align: right;
+    }
+    .pop-meta {
+      font-size: 10px; color: var(--text-light); margin-top: 2px;
+    }
+    .pop-meta .pop-cat {
+      color: var(--amber-dark); font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase; font-size: 9px;
+    }
+
+    /* ── Cloud ── */
+    .cloud {
+      flex: 1; display: flex; flex-wrap: wrap; gap: 5px 9px;
+      align-content: flex-start; padding: 4px 2px; line-height: 1;
+    }
+    .cloud span {
+      display: inline-block; font-weight: 600; letter-spacing: 0.01em;
+      cursor: pointer; transition: opacity 0.15s, transform 0.15s;
+    }
+    .cloud span:hover { opacity: 1 !important; transform: scale(1.05); }
+    .cloud span.dim { opacity: 0.3; }
+    .w-xl { font-size: 25px; font-family: 'Cormorant Garamond',serif; font-style: italic; }
+    .w-lg { font-size: 20px; }
+    .w-md { font-size: 16px; }
+    .w-sm { font-size: 13px; }
+    .w-xs { font-size: 11px; }
+    .c-primary { color: var(--oxblood-1); }
+    .c-primary-d { color: var(--oxblood-0); }
+    .c-primary-m { color: var(--oxblood-2); }
+    .c-amber { color: var(--amber); }
+    .c-amber-d { color: var(--amber-dark); }
+    .c-amber-l { color: var(--amber-light); }
+    .c-mid { color: var(--text-mid); }
+    .c-light { color: var(--text-light); }
+
+    /* ── Dashboard table (list column) ── */
+    .dash-table {
+      flex: 1;
+      font-size: 12px;
+    }
+    .dt-head {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 0.75fr 0.7fr;
+      gap: 10px;
+      padding: 8px 6px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      border-bottom: 2px solid var(--oxblood-1);
+    }
+    .dt-body {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    .dt-row {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 0.75fr 0.7fr;
+      gap: 10px;
+      padding: 10px 6px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .dt-row:hover { background: var(--cream); }
+    .dt-row .dt-heat {
+      position: absolute; top: 0; bottom: 0; left: 0;
+      width: 3px;
+      background: var(--amber);
+      opacity: 0;
+      transition: opacity 0.1s;
+    }
+    .dt-row:hover .dt-heat { opacity: 1; }
+
+    .dt-name {
+      color: var(--oxblood-1);
+      text-decoration: underline;
+      text-underline-offset: 3px; text-decoration-thickness: 1px;
+      font-weight: 600;
+      line-height: 1.3;
+      align-self: center;
+    }
+    .dt-row:hover .dt-name { color: var(--oxblood-0); }
+    .dt-name mark {
+      background: rgba(184,137,58,0.25); color: var(--oxblood-0);
+      padding: 0 2px; border-radius: 2px; font-weight: 700;
+    }
+    .dt-dept {
+      font-size: 11px; color: var(--text-mid);
+      align-self: center; line-height: 1.25;
+    }
+    .dt-freq { align-self: center; }
+    .freq-pill {
+      font-size: 9.5px; font-weight: 700;
+      padding: 2px 8px; border-radius: 50px;
+      letter-spacing: 0.04em;
+      display: inline-block;
+    }
+    .freq-realtime { background: rgba(46,125,79,0.12); color: var(--green); }
+    .freq-hourly { background: rgba(67,6,31,0.10); color: var(--oxblood-1); }
+    .freq-daily { background: rgba(184,137,58,0.18); color: var(--amber-dark); }
+    .freq-weekly { background: rgba(140,30,42,0.10); color: var(--red); }
+    .freq-ondemand { background: var(--border); color: var(--text-mid); }
+    .dt-upd {
+      font-size: 10.5px; color: var(--text-light);
+      align-self: center; font-style: italic;
+    }
+    .dt-upd.stale { color: var(--red); font-weight: 600; font-style: normal; }
+    .dt-empty {
+      padding: 40px 10px; text-align: center;
+      color: var(--text-light); font-size: 12px; font-style: italic;
+    }
+
+    /* ── Tooltip popup ── */
+    .tooltip {
+      position: fixed;
+      z-index: 1000;
+      width: 280px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 12px 36px rgba(42,3,17,0.18), 0 2px 6px rgba(42,3,17,0.08);
+      padding: 14px 16px;
+      font-size: 12px;
+      color: var(--text);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.12s, transform 0.12s;
+    }
+    .tooltip.show { opacity: 1; transform: translateY(0); }
+    .tooltip::before {
+      content: '';
+      position: absolute; top: -5px; left: 20px;
+      width: 10px; height: 10px;
+      background: var(--white);
+      border-left: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      transform: rotate(45deg);
+    }
+    .tt-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px; font-weight: 600;
+      color: var(--oxblood-0);
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+    .tt-meta {
+      font-size: 10.5px; color: var(--text-light);
+      letter-spacing: 0.04em; margin-bottom: 10px;
+    }
+    .tt-meta .tt-cat {
+      color: var(--amber-dark); font-weight: 600;
+      text-transform: uppercase; font-size: 9.5px;
+    }
+    .tt-spark {
+      height: 38px;
+      display: flex; align-items: flex-end; gap: 2px;
+      margin: 4px 0 10px;
+    }
+    .tt-spark .tb {
+      flex: 1;
+      background: linear-gradient(180deg, var(--amber), var(--amber-light));
+      border-radius: 1px 1px 0 0;
+      opacity: 0.85;
+    }
+    .tt-rows {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 12px;
+      font-size: 11px;
+    }
+    .tt-k {
+      color: var(--text-light);
+      font-weight: 600; letter-spacing: 0.04em;
+      text-transform: uppercase; font-size: 9.5px;
+    }
+    .tt-v { color: var(--text); font-weight: 500; }
+    .tt-hint {
+      font-size: 10px; color: var(--text-light);
+      margin-top: 10px; padding-top: 8px;
+      border-top: 1px solid var(--border);
+      font-style: italic;
+    }
+
+    /* ── Footer ── */
+    .footer-bar {
+      margin: 0 32px; padding: 14px 8px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px; color: var(--text-light); border-top: 1px solid var(--border);
+    }
+    .footer-bar .page-indicator { font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    .footer-bar .pbi-note { font-style: italic; display: flex; align-items: center; gap: 6px; }
+    .pbi-mark { width: 10px; height: 10px; border-radius: 2px; background: #F2C811; }
+  </style>
+</head>
+<body>
+
+  <div class="ribbon">
+    <div class="ribbon-left">
+      <span class="ribbon-dot"></span>
+      <span>Qatar Airways &nbsp;·&nbsp; Dashboard Directory</span>
+    </div>
+    <div class="ribbon-right">Internal Use Only</div>
+  </div>
+
+  <main class="report">
+
+    <!-- Banner -->
+    <section class="banner">
+      <div class="banner-grid">
+        <div class="banner-left">
+          <span class="eyebrow">Business Intelligence Portal</span>
+          <h1 class="title">Find Your <em>Dashboard.</em></h1>
+          <p class="subtitle">Search by dashboard name, keyword or business description.</p>
+        </div>
+        <div class="pinned">
+          <div class="pinned-label">Pinned by you</div>
+          <div class="pinned-row" id="pinnedRow"></div>
+        </div>
+        <div class="banner-search">
+          <div class="bs-label">Search</div>
+          <div class="bs-box">
+            <svg class="bs-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input class="bs-input" id="searchInput" spellcheck="false" placeholder="Try 'otp', 'delay', 'fuel'…" autocomplete="off">
+            <button class="bs-clear" id="searchClear" type="button">✕</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nav strip -->
+    <section class="navstrip">
+      <div class="nav-pills" id="navPills"></div>
+      <div class="nav-count" id="navCount"></div>
+    </section>
+
+    <section class="panel">
+
+      <div class="examples-row">
+        <span class="examples-label">Examples:</span>
+        <button class="ex-chip" data-q="otp">OTP</button>
+        <button class="ex-chip" data-q="delay">Delay</button>
+        <button class="ex-chip" data-q="fuel">Fuel uplift</button>
+        <button class="ex-chip" data-q="glp">GLP code</button>
+        <button class="ex-chip" data-q="crew">Crew roster</button>
+      </div>
+
+      <!-- KPI band -->
+      <div class="kpi-band" id="kpiBand"></div>
+
+      <!-- Main grid: Most Popular · Cloud · List -->
+      <div class="main-grid">
+
+        <div class="col-card">
+          <div class="col-hdr">
+            <span class="col-title" id="popTitle">Most Popular</span>
+            <span class="col-hint">30-day views</span>
+          </div>
+          <div class="pop-list" id="popList"></div>
+        </div>
+
+        <div class="col-card">
+          <div class="col-hdr">
+            <span class="col-title">Keyword cloud</span>
+            <span class="col-hint">Click to filter</span>
+          </div>
+          <div class="cloud" id="cloud"></div>
+        </div>
+
+        <div class="col-card white">
+          <div class="section-hdr">
+            <span class="section-title" id="listTitle">All dashboards</span>
+            <div class="sort-wrap">
+              <span class="sort-label">Sort</span>
+              <div class="sort-pills" id="sortPills"></div>
+            </div>
+          </div>
+          <div class="dash-table">
+            <div class="dt-head">
+              <span>Dashboard</span>
+              <span>Department</span>
+              <span>Refresh</span>
+              <span>Updated</span>
+            </div>
+            <div class="dt-body" id="dashBody"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="footer-bar">
+      <span class="page-indicator">Page 1 of 3</span>
+      <span class="pbi-note">
+        <span class="pbi-mark"></span>
+        Powered by Power BI &nbsp;·&nbsp; Last refresh: 19 Apr 2026, 10:02 AM
+      </span>
+    </div>
+  </main>
+
+  <!-- Tooltip (hidden until hover) -->
+  <div class="tooltip" id="tooltip"></div>
+
+  <script>
+    // ────────────────────────────────────────────────
+    //  DATA MODEL — matches the v3 plan exactly
+    // ────────────────────────────────────────────────
+    const CATS = [
+      "Crew Control","Crew Hotels","Fleet","Flight Data","Flight Ops","Fuel",
+      "IOC","Navigation","Network Ops","Technical","TOPS","Training"
+    ];
+
+    const rand = (seed) => {
+      // deterministic pseudo-random so sparkline patterns are stable
+      let s = seed;
+      return () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+    };
+
+    const DASHBOARDS = [
+      // name, cat, dept, freq, views30d, lastRefreshHrs, createdDaysAgo, kw
+      ["OTP & Delay Analysis","Flight Ops","IOC Control","Hourly",1842,1.5,420,["otp","delay","punctuality","flight"]],
+      ["ADSB DOH Arrivals path comparison (by Points)","Flight Ops","Flight Dispatch","Daily",612,17,110,["adsb","arrivals","doha","flight","dispatch"]],
+      ["Flight Dispatch Cost Savings","Flight Ops","Flight Dispatch","Weekly",540,120,80,["flight","dispatch","cost","savings"]],
+      ["Dispatch Release Turnaround","Flight Ops","Flight Dispatch","Hourly",398,1.0,18,["flight","dispatch","release"]],
+      ["Aircraft Performance and Weight & Balance Info","Flight Ops","Flight Dispatch","Daily",284,20,300,["glp","aircraft","weight","balance"]],
+      ["Pilot Duty & Rest Compliance","Flight Ops","Crew Control","Daily",212,22,90,["pilot","duty","rest","compliance"]],
+      ["Crew Control Department Productivity","Crew Control","Crew Control","Daily",742,18,200,["crew","productivity","department"]],
+      ["Crew Control Rule Setting Dashboard","Crew Control","Crew Control","Weekly",210,96,400,["crew","rules","configuration"]],
+      ["Crew Roster Disruption Tracker","Crew Control","Crew Control","Hourly",968,0.5,45,["crew","roster","disruption"]],
+      ["Crew Absence & Sickness Patterns","Crew Control","Crew Control","Daily",184,23,150,["crew","absence","sickness"]],
+      ["Crew Hotel Allocation Overview","Crew Hotels","Ground Services","Daily",312,19,220,["hotel","crew","doha"]],
+      ["Crew Hotel Cost per Night Benchmark","Crew Hotels","Ground Services","Weekly",98,168,360,["hotel","cost","benchmark"]],
+      ["Fleet Availability Tracker","Fleet","Engineering","Hourly",820,1.2,280,["fleet","aog","mro","availability"]],
+      ["Aircraft Utilisation Heatmap","Fleet","Engineering","Daily",330,14,180,["fleet","utilisation","block hour"]],
+      ["Fleet Age & Retirement Plan","Fleet","Strategy","Weekly",72,240,500,["fleet","retirement"]],
+      ["Flight Data Quality Dashboard","Flight Data","Data Eng","Real-time",512,0.05,60,["flight","data","quality"]],
+      ["NOTAM Exposure by Route","Flight Data","Flight Dispatch","Hourly",245,1.8,120,["notam","route","exposure"]],
+      ["FDM Events Summary","Flight Data","Flight Safety","Daily",188,16,220,["fdm","events","flight","data"]],
+      ["Fuel Performance Dashboard","Fuel","Fuel Management","Hourly",1248,1.1,90,["fuel","uplift","burn","block hour","cost"]],
+      ["Fuel Uplift Variance by Station","Fuel","Fuel Management","Daily",442,21,140,["fuel","uplift","variance","station"]],
+      ["Fuel Hedging Snapshot","Fuel","Treasury","Weekly",96,200,600,["fuel","hedge","cost","treasury"]],
+      ["IOC Live Operations Board","IOC","IOC Control","Real-time",1562,0.02,40,["ioc","disruption","diversion","operations"]],
+      ["IOC Shift Handover Notes","IOC","IOC Control","Hourly",310,1.5,70,["ioc","shift","handover"]],
+      ["IOC Controller Workload","IOC","IOC Control","Daily",176,20,180,["ioc","controller","workload"]],
+      ["Navigation Database Health","Navigation","Navigation","Weekly",118,120,500,["nav","airac","database"]],
+      ["FIR or Waypoint Closure","Navigation","Navigation","Daily",204,22,170,["fir","waypoint","closure"]],
+      ["ETOPS & Diversion Airport Matrix","Navigation","Flight Dispatch","Weekly",88,160,420,["etops","diversion","airport"]],
+      ["European Priority Connections","Network Ops","Network Planning","Daily",358,18,120,["europe","connections","priority","network"]],
+      ["Network Schedule Viewer","Network Ops","Network Planning","Daily",420,19,340,["network","schedule","slot","planning"]],
+      ["Slot Utilisation by Hub","Network Ops","Network Planning","Weekly",142,140,380,["slot","hub","utilisation"]],
+      ["Technical Logbook Summary","Technical","Engineering","Daily",388,17,260,["technical","logbook","ata","engineering"]],
+      ["Open Defect Register","Technical","Engineering","Hourly",604,1.8,80,["defects","mel","cdl","engineering"]],
+      ["Component Reliability by Fleet","Technical","Engineering","Weekly",172,180,450,["reliability","component","fleet"]],
+      ["TOPS Performance","TOPS","Flight Dispatch","Daily",248,22,200,["tops","takeoff","performance","runway"]],
+      ["Runway Analysis Trend","TOPS","Flight Dispatch","Weekly",96,144,520,["runway","analysis","tops"]],
+      ["Training Compliance Tracker","Training","Training","Daily",412,17,180,["training","compliance","currency"]],
+      ["Simulator Utilisation Monitor","Training","Training","Daily",226,20,270,["simulator","utilisation"]],
+      ["Type Rating Expiry Forecast","Training","Training","Weekly",134,160,410,["type rating","expiry"]],
+    ].map((d, i) => ({
+      name: d[0], cat: d[1], dept: d[2], freq: d[3],
+      views: d[4], refreshHrs: d[5], createdDays: d[6], kw: d[7],
+      id: i,
+      owner: ["Aisha Rahman","Omar Faraj","Lina Said","John Doe","Karthik R.","Mei Chen","Hassan Al-K.","Sara P."][i % 8],
+    }));
+
+    const PINS = [
+      { name:"OTP & Delay Analysis",         cat:"Flight Ops"   },
+      { name:"Fuel Performance Dashboard",   cat:"Fuel"         },
+      { name:"Crew Roster Disruption Tracker", cat:"Crew Control" },
+    ];
+
+    const CLOUD_WORDS = [
+      { w:"flight dispatch", size:"xl", color:"c-primary-d" },
+      { w:"otp",             size:"lg", color:"c-amber-d"   },
+      { w:"crew roster",     size:"md", color:"c-mid"       },
+      { w:"delay",           size:"sm", color:"c-primary"   },
+      { w:"fuel uplift",     size:"md", color:"c-amber"     },
+      { w:"notam",           size:"lg", color:"c-primary-m" },
+      { w:"departure",       size:"md", color:"c-amber-l"   },
+      { w:"flight planning", size:"sm", color:"c-primary"   },
+      { w:"pnl",             size:"sm", color:"c-amber-d"   },
+      { w:"crew control",    size:"xl", color:"c-primary", italic:true },
+      { w:"irregular ops",   size:"md", color:"c-mid"       },
+      { w:"crew training",   size:"sm", color:"c-primary-d" },
+      { w:"autoperformance", size:"md", color:"c-amber-d"   },
+      { w:"landing",         size:"sm", color:"c-primary"   },
+      { w:"fleet",           size:"xs", color:"c-mid"       },
+      { w:"block time",      size:"sm", color:"c-amber"     },
+      { w:"disruption",      size:"md", color:"c-primary-m" },
+      { w:"inspection",      size:"sm", color:"c-mid"       },
+      { w:"doha",            size:"sm", color:"c-amber-l"   },
+      { w:"hotel",           size:"xs", color:"c-mid"       },
+    ];
+
+    // ────────────────────────────────────────────────
+    //  STATE + HELPERS
+    // ────────────────────────────────────────────────
+    let currentCat  = "All Areas";
+    let currentQ    = "";
+    let currentSort = "popular";  // popular | name | recent | freq
+
+    const SORT_OPTIONS = [
+      { id:"popular", label:"Most popular" },
+      { id:"name",    label:"Name A-Z" },
+      { id:"recent",  label:"Recently updated" },
+      { id:"freq",    label:"Refresh cadence" },
+    ];
+
+    const FREQ_RANK = { "Real-time":0, "Hourly":1, "Daily":2, "Weekly":3, "On-demand":4 };
+
+    const el = (id) => document.getElementById(id);
+    const agoLabel = (h) => h < 1 ? `${Math.round(h*60)} min ago`
+                         : h < 24 ? `${Math.round(h)} hr ago`
+                         : `${Math.round(h/24)} days ago`;
+
+    const freqClass = (f) => ({
+      "Real-time":"freq-realtime","Hourly":"freq-hourly","Daily":"freq-daily",
+      "Weekly":"freq-weekly","On-demand":"freq-ondemand"
+    }[f] || "freq-ondemand");
+
+    const isStale = (d) => {
+      const sla = { "Real-time":0.083, "Hourly":2, "Daily":26, "Weekly":192, "On-demand":9999 }[d.freq] || 9999;
+      return d.refreshHrs > sla;
+    };
+
+    const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    const hl = (t,q) => !q ? t : t.replace(new RegExp(`(${esc(q)})`,"gi"),"<mark>$1</mark>");
+
+    // ────────────────────────────────────────────────
+    //  DATA FILTERING & SORTING
+    // ────────────────────────────────────────────────
+    function filtered() {
+      return DASHBOARDS.filter(d => {
+        if (currentCat !== "All Areas" && d.cat !== currentCat) return false;
+        if (!currentQ) return true;
+        const q = currentQ.toLowerCase();
+        return d.name.toLowerCase().includes(q)
+            || d.cat.toLowerCase().includes(q)
+            || d.dept.toLowerCase().includes(q)
+            || d.kw.some(k => k.toLowerCase().includes(q));
+      });
+    }
+
+    function sorted(list) {
+      const l = [...list];
+      switch (currentSort) {
+        case "name":    return l.sort((a,b) => a.name.localeCompare(b.name));
+        case "recent":  return l.sort((a,b) => a.refreshHrs - b.refreshHrs);
+        case "freq":    return l.sort((a,b) => FREQ_RANK[a.freq] - FREQ_RANK[b.freq] || b.views - a.views);
+        default:        return l.sort((a,b) => b.views - a.views);
+      }
+    }
+
+    // ────────────────────────────────────────────────
+    //  RENDERERS
+    // ────────────────────────────────────────────────
+    function renderPinned() {
+      el("pinnedRow").innerHTML = "";
+      PINS.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "pin-slot";
+        div.title = p.name;
+        div.innerHTML = `<div class="pin-slot-name">${p.name}</div><div class="pin-slot-cat">${p.cat}</div>`;
+        div.addEventListener("click", () => { applyFilter(p.cat); });
+        el("pinnedRow").appendChild(div);
+      });
+    }
+
+    function renderNavPills() {
+      const wrap = el("navPills");
+      wrap.innerHTML = "";
+      ["All Areas", ...CATS].forEach(cat => {
+        const b = document.createElement("button");
+        b.className = "nav-pill" + (cat === currentCat ? " active" : "");
+        b.textContent = cat;
+        b.addEventListener("click", () => applyFilter(cat));
+        wrap.appendChild(b);
+      });
+    }
+
+    function renderCloud() {
+      const wrap = el("cloud");
+      wrap.innerHTML = "";
+      CLOUD_WORDS.forEach(c => {
+        const s = document.createElement("span");
+        s.className = `w-${c.size} ${c.color}`;
+        if (c.italic) { s.style.fontFamily = "'Cormorant Garamond',serif"; s.style.fontStyle = "italic"; }
+        s.textContent = c.w;
+        s.addEventListener("click", () => setSearch(c.w));
+        wrap.appendChild(s);
+      });
+    }
+
+    function renderSortPills() {
+      const wrap = el("sortPills");
+      wrap.innerHTML = "";
+      SORT_OPTIONS.forEach(o => {
+        const b = document.createElement("button");
+        b.className = "sort-pill" + (o.id === currentSort ? " active" : "");
+        b.textContent = o.label;
+        b.addEventListener("click", () => { currentSort = o.id; renderSortPills(); renderList(); });
+        wrap.appendChild(b);
+      });
+    }
+
+    function renderKpiBand() {
+      const scope = filtered();
+      const totalViews = scope.reduce((a,d) => a + d.views, 0);
+      const newThisMo = scope.filter(d => d.createdDays <= 30).length;
+      const fresh = scope.filter(d => !isStale(d)).length;
+      const freshPct = scope.length ? Math.round((fresh/scope.length)*100) : 0;
+      const topDash = [...scope].sort((a,b) => b.views - a.views)[0];
+      const scopeLbl = currentCat === "All Areas" ? "directory-wide" : currentCat;
+
+      const cards = [
+        { lbl:`Dashboards${currentCat === "All Areas" ? "" : " in " + currentCat}`,
+          val:scope.length,
+          sub:`<b>${scope.length}</b> ${scope.length === 1 ? "dashboard" : "dashboards"} in scope` },
+        { lbl:"Views · 30 days",
+          val:totalViews.toLocaleString(),
+          em:"views",
+          sub:`avg <b>${Math.round(totalViews / Math.max(scope.length,1))}</b> per dashboard` },
+        { lbl:"New this month",
+          val:newThisMo,
+          sub:`added since ${new Date(Date.now() - 30*86400000).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}` },
+        { lbl:"Fresh %",
+          val:freshPct,
+          em:"%",
+          sub:`<b>${fresh}</b> of <b>${scope.length}</b> within SLA` },
+        { lbl:"Most opened", feature:true,
+          val:topDash ? topDash.name : "—",
+          sub:topDash ? `<b>${topDash.views.toLocaleString()}</b> views · <span style="color:var(--amber-dark)">${topDash.cat}</span>` : "no data" },
+      ];
+
+      el("kpiBand").innerHTML = cards.map(c => `
+        <div class="kpi ${c.feature ? "feature" : ""}">
+          <div class="kpi-label">${c.lbl}</div>
+          <div class="kpi-val">${c.val}${c.em ? `<em>${c.em}</em>` : ""}</div>
+          <div class="kpi-sub">${c.sub}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderPopular() {
+      const scope = filtered();
+      const top = [...scope].sort((a,b) => b.views - a.views).slice(0,5);
+      const max = top[0]?.views || 1;
+
+      el("popTitle").innerHTML = currentCat === "All Areas"
+        ? `Most Popular <em>· across all areas</em>`
+        : `Most Popular <em>· in ${currentCat}</em>`;
+
+      if (top.length === 0) {
+        el("popList").innerHTML = `<div class="dt-empty">No dashboards in scope.</div>`;
+        return;
+      }
+
+      el("popList").innerHTML = top.map((d,i) => `
+        <div class="pop-item" data-id="${d.id}">
+          <div class="pop-rank">${i+1}</div>
+          <div class="pop-body">
+            <div class="pop-name">${d.name}</div>
+            <div class="pop-bar-wrap">
+              <div class="pop-bar"><div class="pop-bar-fill" style="width:${(d.views/max)*100}%"></div></div>
+              <div class="pop-count">${d.views.toLocaleString()}</div>
+            </div>
+            <div class="pop-meta"><span class="pop-cat">${d.cat}</span> · ${d.dept}</div>
+          </div>
+        </div>`).join("");
+
+      // attach tooltip + click
+      el("popList").querySelectorAll(".pop-item").forEach(node => {
+        const id = +node.dataset.id;
+        attachTooltip(node, id);
+      });
+    }
+
+    function renderList() {
+      const list = sorted(filtered());
+      const body = el("dashBody");
+
+      if (list.length === 0) {
+        body.innerHTML = `<div class="dt-empty">No dashboards match the current filter.</div>`;
+      } else {
+        body.innerHTML = list.map(d => `
+          <div class="dt-row" data-id="${d.id}">
+            <div class="dt-heat"></div>
+            <div class="dt-name">${hl(d.name, currentQ)}</div>
+            <div class="dt-dept">${d.dept}</div>
+            <div class="dt-freq"><span class="freq-pill ${freqClass(d.freq)}">${d.freq}</span></div>
+            <div class="dt-upd ${isStale(d) ? "stale" : ""}">${agoLabel(d.refreshHrs)}</div>
+          </div>`).join("");
+
+        body.querySelectorAll(".dt-row").forEach(node => {
+          const id = +node.dataset.id;
+          attachTooltip(node, id);
+        });
+      }
+
+      // header
+      const scopeLbl = currentCat === "All Areas" ? "all areas" : currentCat;
+      el("listTitle").innerHTML = currentQ
+        ? `Matching <em>"${currentQ}"</em>`
+        : `All dashboards <em>· ${scopeLbl}</em>`;
+
+      // nav count
+      const inCat = currentCat === "All Areas" ? DASHBOARDS.length : DASHBOARDS.filter(d => d.cat === currentCat).length;
+      el("navCount").innerHTML = currentCat === "All Areas"
+        ? `<b>${DASHBOARDS.length}</b> dashboards &nbsp;·&nbsp; <b>${CATS.length}</b> areas`
+        : `<b>${inCat}</b> in ${currentCat} &nbsp;·&nbsp; <span style="opacity:0.6">of ${DASHBOARDS.length}</span>`;
+
+      // dim cloud words not present in visible set
+      const visibleKw = new Set();
+      list.forEach(d => d.kw.forEach(k => visibleKw.add(k.toLowerCase())));
+      document.querySelectorAll(".cloud span").forEach(s => {
+        const w = s.textContent.toLowerCase();
+        const hit = [...visibleKw].some(k => k.includes(w) || w.includes(k));
+        s.classList.toggle("dim", !hit && currentCat !== "All Areas");
+      });
+
+      // search clear visibility
+      el("searchClear").classList.toggle("show", !!currentQ);
+    }
+
+    // ────────────────────────────────────────────────
+    //  TOOLTIP (shared popover)
+    // ────────────────────────────────────────────────
+    const tt = el("tooltip");
+
+    function buildSpark(seed, n = 12) {
+      const r = rand(seed);
+      const vals = Array.from({length:n}, () => 30 + Math.round(r() * 65));
+      return vals.map(v => `<div class="tb" style="height:${v}%"></div>`).join("");
+    }
+
+    function attachTooltip(node, id) {
+      const d = DASHBOARDS[id];
+      node.addEventListener("mouseenter", e => {
+        tt.innerHTML = `
+          <div class="tt-title">${d.name}</div>
+          <div class="tt-meta"><span class="tt-cat">${d.cat}</span> · ${d.dept}</div>
+          <div class="tt-spark">${buildSpark(id * 13)}</div>
+          <div class="tt-rows">
+            <span class="tt-k">Owner</span>  <span class="tt-v">${d.owner}</span>
+            <span class="tt-k">Refresh</span><span class="tt-v">${d.freq}${isStale(d) ? ' <span style="color:var(--red);font-weight:600">· stale</span>' : ''}</span>
+            <span class="tt-k">Updated</span><span class="tt-v">${agoLabel(d.refreshHrs)}</span>
+            <span class="tt-k">Views 30d</span><span class="tt-v"><b>${d.views.toLocaleString()}</b></span>
+          </div>
+          <div class="tt-hint">Right-click → See details for more</div>`;
+        positionTooltip(e);
+        tt.classList.add("show");
+      });
+      node.addEventListener("mousemove", positionTooltip);
+      node.addEventListener("mouseleave", () => tt.classList.remove("show"));
+    }
+
+    function positionTooltip(e) {
+      const pad = 14;
+      let x = e.clientX + pad;
+      let y = e.clientY + pad;
+      const w = tt.offsetWidth || 280;
+      const h = tt.offsetHeight || 180;
+      if (x + w + 12 > window.innerWidth) x = e.clientX - w - pad;
+      if (y + h + 12 > window.innerHeight) y = e.clientY - h - pad;
+      tt.style.left = x + "px";
+      tt.style.top  = y + "px";
+    }
+
+    // ────────────────────────────────────────────────
+    //  ACTIONS
+    // ────────────────────────────────────────────────
+    function applyFilter(cat) {
+      currentCat = cat;
+      renderNavPills(); renderAll();
+    }
+    function setSearch(q) {
+      currentQ = q;
+      el("searchInput").value = q;
+      renderAll();
+    }
+    function renderAll() {
+      renderKpiBand();
+      renderPopular();
+      renderList();
+    }
+
+    el("searchInput").addEventListener("input", e => { currentQ = e.target.value.trim(); renderAll(); });
+    el("searchClear").addEventListener("click", () => { currentQ = ""; el("searchInput").value = ""; renderAll(); });
+    document.querySelectorAll(".ex-chip").forEach(btn => btn.addEventListener("click", () => setSearch(btn.dataset.q)));
+
+    // ────────────────────────────────────────────────
+    //  INIT
+    // ────────────────────────────────────────────────
+    renderPinned();
+    renderNavPills();
+    renderCloud();
+    renderSortPills();
+    renderAll();
+  </script>
+</body>
+</html>
