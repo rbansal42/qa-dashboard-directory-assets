@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Details — OTP & Delay Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#1F0310; --oxblood-0:#2A0311; --oxblood-1:#43061F; --oxblood-2:#591029;
+    --amber:#B8893A; --amber-dark:#7A4E1A; --amber-light:#D9B268; --honey:#E6C179;
+    --cream:#FBF6EC; --cream-warm:#F3EADA; --cream-title:#F7EBD4; --white:#FFFFFF;
+    --border:#E8DFD0; --border-mid:#D6C9B6; --text:#1A0D12; --text-mid:#524148; --text-light:#9C8680;
+    --green:#2E7D4F; --red:#8C1E2A;
+  }
+  body{font-family:'Segoe UI',sans-serif;background:var(--cream);color:var(--text);font-size:14px;line-height:1.5}
+
+  .ribbon{background:var(--ink);color:rgba(247,235,212,0.78);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;padding:6px 24px;display:flex;justify-content:space-between;align-items:center;font-weight:500;border-bottom:1px solid rgba(184,137,58,0.18)}
+  .ribbon-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);display:inline-block;margin-right:10px;vertical-align:middle}
+
+  .report{max-width:1280px;margin:0 auto}
+
+  /* Top action bar */
+  .action-bar{background:var(--white);border-bottom:1px solid var(--border);padding:10px 40px;display:flex;justify-content:space-between;align-items:center}
+  .back-btn{background:none;border:none;color:var(--oxblood-1);font:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+  .back-btn:hover{color:var(--oxblood-0)}
+  .action-btns{display:flex;gap:8px}
+  .btn{padding:6px 16px;font-size:12px;font-weight:600;border-radius:4px;cursor:pointer;font:inherit;font-weight:600;letter-spacing:0.02em;border:1px solid transparent;transition:all 0.15s}
+  .btn-ghost{background:transparent;color:var(--text-mid);border-color:var(--border-mid)}
+  .btn-ghost:hover{border-color:var(--oxblood-1);color:var(--oxblood-1)}
+  .btn-primary{background:var(--oxblood-1);color:var(--cream-title)}
+  .btn-primary:hover{background:var(--oxblood-0)}
+
+  /* Title block */
+  .title-block{padding:28px 40px 22px;background:linear-gradient(135deg,var(--oxblood-0) 0%,var(--oxblood-1) 55%,var(--oxblood-2) 100%);color:var(--cream-title);position:relative;overflow:hidden}
+  .title-block::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(184,137,58,0.10)' stroke-width='0.6'%3E%3Cpolygon points='50,6 90,28 90,72 50,94 10,72 10,28'/%3E%3Ccircle cx='50' cy='50' r='14'/%3E%3C/g%3E%3C/svg%3E");background-size:100px 100px;pointer-events:none}
+  .title-row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;position:relative;z-index:1}
+  .eyebrow{font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-light);margin-bottom:8px}
+  .eyebrow::before{content:'';display:inline-block;width:22px;height:1px;background:var(--amber);vertical-align:middle;margin-right:10px;opacity:0.7}
+  h1{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;line-height:1.05;color:var(--cream-title)}
+  h1 em{font-style:italic;font-weight:400;color:var(--honey)}
+  .cat-pill{background:rgba(217,178,104,0.2);color:var(--amber-light);padding:4px 14px;border-radius:50px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;border:1px solid rgba(217,178,104,0.35);white-space:nowrap}
+
+  /* Metadata bar */
+  .meta-bar{background:var(--white);padding:18px 40px;display:grid;grid-template-columns:repeat(6,1fr);gap:18px;border-bottom:1px solid var(--border)}
+  .meta-item{display:flex;flex-direction:column;gap:3px}
+  .meta-k{font-size:9.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light)}
+  .meta-v{font-size:13px;font-weight:500;color:var(--text)}
+  .sla{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:50px;font-size:11px;font-weight:600}
+  .sla::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+  .sla.ok{background:rgba(46,125,79,0.12);color:var(--green)}
+  .sla.stale{background:rgba(140,30,42,0.10);color:var(--red)}
+
+  /* Main grid */
+  .main{padding:24px 40px;display:grid;grid-template-columns:1.1fr 1fr;gap:24px}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:20px 22px}
+  .card h2{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--oxblood-0);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline}
+  .card h2 em{font-style:italic;font-size:12px;color:var(--text-light);font-weight:400}
+
+  .desc p{margin-bottom:12px;color:var(--text-mid);font-size:13px;line-height:1.6}
+  .desc ul{padding-left:18px;margin:6px 0 12px;color:var(--text-mid);font-size:13px;line-height:1.75}
+  .desc ul li::marker{color:var(--amber)}
+
+  /* Usage chart */
+  .chart-wrap{position:relative;height:180px;margin:8px 0 12px}
+  .chart-svg{width:100%;height:100%}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+  .stat{display:flex;flex-direction:column;gap:2px}
+  .stat-val{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--oxblood-0);line-height:1}
+  .stat-val em{font-style:italic;font-size:13px;color:var(--amber);margin-left:2px;font-weight:400}
+  .stat-k{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light)}
+
+  /* Related dashboards */
+  .related{padding:0 40px 24px}
+  .related-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:20px 22px}
+  .related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+  .rel-item{padding:12px 14px;background:var(--cream);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:all 0.15s}
+  .rel-item:hover{border-color:var(--amber);background:var(--cream-warm)}
+  .rel-name{font-size:12.5px;font-weight:600;color:var(--oxblood-1);text-decoration:underline;text-underline-offset:2px;margin-bottom:4px;line-height:1.3}
+  .rel-meta{font-size:10px;color:var(--text-light)}
+  .rel-cat{color:var(--amber-dark);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;font-size:9.5px}
+
+  /* Refresh history */
+  .history{padding:0 40px 40px}
+  .history-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:20px 22px}
+  table.history-tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+  table.history-tbl thead th{font-size:9.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);text-align:left;padding:8px 10px;border-bottom:1px solid var(--border-mid);background:var(--cream-warm)}
+  table.history-tbl tbody td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text-mid)}
+  table.history-tbl tbody tr:last-child td{border-bottom:none}
+  .status-ok{color:var(--green);font-weight:600}
+  .status-fail{color:var(--red);font-weight:600}
+
+  .footer-bar{margin:0 40px;padding:14px 0 20px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text-light);border-top:1px solid var(--border)}
+  .page-ind{font-weight:600;letter-spacing:0.08em;text-transform:uppercase}
+  .pbi-note{font-style:italic;display:flex;align-items:center;gap:6px}
+  .pbi-mark{width:10px;height:10px;border-radius:2px;background:#F2C811}
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <div><span class="ribbon-dot"></span>Qatar Airways · Dashboard Directory</div>
+  <div style="color:rgba(247,235,212,0.5);font-size:10px;letter-spacing:0.2em">Internal Use Only</div>
+</div>
+
+<div class="report">
+
+  <div class="action-bar">
+    <button class="back-btn">← Back to directory</button>
+    <div class="action-btns">
+      <button class="btn btn-ghost">Subscribe to updates</button>
+      <button class="btn btn-ghost">Request access</button>
+      <button class="btn btn-primary">Open dashboard ↗</button>
+    </div>
+  </div>
+
+  <div class="title-block">
+    <div class="title-row">
+      <div>
+        <div class="eyebrow">Dashboard Detail</div>
+        <h1>OTP &amp; <em>Delay Analysis</em></h1>
+      </div>
+      <span class="cat-pill">Flight Ops</span>
+    </div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-item"><span class="meta-k">Owner</span><span class="meta-v">Aisha Rahman</span></div>
+    <div class="meta-item"><span class="meta-k">Department</span><span class="meta-v">IOC Control</span></div>
+    <div class="meta-item"><span class="meta-k">Data source</span><span class="meta-v">AIMS · SQL Server</span></div>
+    <div class="meta-item"><span class="meta-k">Refresh</span><span class="meta-v">Hourly (SLA 2 hr)</span></div>
+    <div class="meta-item"><span class="meta-k">Last refresh</span><span class="meta-v">1 hr 30 min ago</span></div>
+    <div class="meta-item"><span class="meta-k">Status</span><span class="sla ok">Within SLA</span></div>
+  </div>
+
+  <div class="main">
+
+    <div class="card desc">
+      <h2>About this dashboard <em>·  detail</em></h2>
+      <p>Real-time and historical on-time performance across all Qatar Airways operations. Tracks departure and arrival punctuality against OAG schedules, attributes delay minutes to root causes, and surfaces anomalies by route, station and tail number.</p>
+      <p style="font-size:11px;color:var(--text-light);font-style:italic;margin-bottom:4px">Common questions answered here:</p>
+      <ul>
+        <li>How many flights are running behind schedule today?</li>
+        <li>What is the weekly OTP trend for DOH departures?</li>
+        <li>Which stations have the highest rolling delay minutes?</li>
+        <li>How has D15 performance shifted since the last schedule change?</li>
+      </ul>
+      <p style="font-size:11px;color:var(--text-light);font-style:italic;margin-bottom:4px">Known limitations:</p>
+      <ul>
+        <li>Codeshare legs inherit the operating carrier's OTP — not marketing carrier.</li>
+        <li>Delay reason codes are final at +36 hr post-arrival; earlier reads are provisional.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Usage · last 90 days <em>· 90 d</em></h2>
+      <div class="chart-wrap">
+        <svg class="chart-svg" viewBox="0 0 460 180" preserveAspectRatio="none">
+          <!-- grid -->
+          <line x1="0" y1="45" x2="460" y2="45" stroke="#E8DFD0" stroke-width="1"/>
+          <line x1="0" y1="90" x2="460" y2="90" stroke="#E8DFD0" stroke-width="1"/>
+          <line x1="0" y1="135" x2="460" y2="135" stroke="#E8DFD0" stroke-width="1"/>
+          <!-- area -->
+          <path d="M 0 130 L 20 120 L 40 112 L 60 98 L 80 108 L 100 88 L 120 78 L 140 72 L 160 84 L 180 68 L 200 62 L 220 48 L 240 54 L 260 40 L 280 34 L 300 50 L 320 42 L 340 28 L 360 34 L 380 22 L 400 30 L 420 18 L 440 24 L 460 12 L 460 180 L 0 180 Z"
+                fill="url(#g)" opacity="0.7"/>
+          <!-- line -->
+          <path d="M 0 130 L 20 120 L 40 112 L 60 98 L 80 108 L 100 88 L 120 78 L 140 72 L 160 84 L 180 68 L 200 62 L 220 48 L 240 54 L 260 40 L 280 34 L 300 50 L 320 42 L 340 28 L 360 34 L 380 22 L 400 30 L 420 18 L 440 24 L 460 12"
+                fill="none" stroke="#43061F" stroke-width="2" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#B8893A" stop-opacity="0.45"/>
+              <stop offset="100%" stop-color="#B8893A" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- peak marker -->
+          <circle cx="460" cy="12" r="4" fill="#B8893A" stroke="#FBF6EC" stroke-width="2"/>
+        </svg>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-light);letter-spacing:0.08em;text-transform:uppercase;margin-top:-6px">
+        <span>19 Jan</span><span>15 Feb</span><span>15 Mar</span><span>19 Apr</span>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><span class="stat-val">1,842</span><span class="stat-k">Views · 30 d</span></div>
+        <div class="stat"><span class="stat-val">312</span><span class="stat-k">Unique users</span></div>
+        <div class="stat"><span class="stat-val">Mon<em>9 AM</em></span><span class="stat-k">Peak slot</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="related">
+    <div class="related-card">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--oxblood-0);margin-bottom:6px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline">
+        Related dashboards <em style="font-style:italic;font-size:12px;color:var(--text-light);font-weight:400">· same area or shared keywords</em>
+      </h2>
+      <div class="related-grid">
+        <div class="rel-item">
+          <div class="rel-name">IOC Live Operations Board</div>
+          <div class="rel-meta"><span class="rel-cat">IOC</span> · 1,562 views 30d</div>
+        </div>
+        <div class="rel-item">
+          <div class="rel-name">Dispatch Release Turnaround</div>
+          <div class="rel-meta"><span class="rel-cat">Flight Ops</span> · 398 views 30d</div>
+        </div>
+        <div class="rel-item">
+          <div class="rel-name">Crew Roster Disruption Tracker</div>
+          <div class="rel-meta"><span class="rel-cat">Crew Control</span> · 968 views 30d</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="history">
+    <div class="history-card">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--oxblood-0);margin-bottom:6px;padding-bottom:8px;border-bottom:1px solid var(--border)">Refresh history · last 10 runs</h2>
+      <table class="history-tbl">
+        <thead>
+          <tr><th>Started</th><th>Duration</th><th>Rows loaded</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>19 Apr 2026 · 10:00</td><td>3 min 12 s</td><td>184,212</td><td class="status-ok">Success</td></tr>
+          <tr><td>19 Apr 2026 · 09:00</td><td>3 min 04 s</td><td>183,990</td><td class="status-ok">Success</td></tr>
+          <tr><td>19 Apr 2026 · 08:00</td><td>3 min 18 s</td><td>183,775</td><td class="status-ok">Success</td></tr>
+          <tr><td>19 Apr 2026 · 07:00</td><td>3 min 21 s</td><td>183,502</td><td class="status-ok">Success</td></tr>
+          <tr><td>19 Apr 2026 · 06:00</td><td>2 min 58 s</td><td>183,298</td><td class="status-ok">Success</td></tr>
+          <tr><td>19 Apr 2026 · 05:00</td><td>—</td><td>—</td><td class="status-fail">Failed · source timeout</td></tr>
+          <tr><td>19 Apr 2026 · 04:00</td><td>3 min 04 s</td><td>183,016</td><td class="status-ok">Success</td></tr>
+          <tr><td>19 Apr 2026 · 03:00</td><td>3 min 10 s</td><td>182,820</td><td class="status-ok">Success</td></tr>
+          <tr><td>19 Apr 2026 · 02:00</td><td>3 min 09 s</td><td>182,601</td><td class="status-ok">Success</td></tr>
+          <tr><td>19 Apr 2026 · 01:00</td><td>3 min 15 s</td><td>182,388</td><td class="status-ok">Success</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span class="page-ind">Page 2 of 3 · Drillthrough</span>
+    <span class="pbi-note"><span class="pbi-mark"></span>Powered by Power BI · Last refresh: 19 Apr 2026, 10:02 AM</span>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Find Your Dashboard — Qatar Airways</title>
+  <title>Find Your Dashboard — Qatar Airways (v3)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
       --oxblood-1:     #43061F;
       --oxblood-2:     #591029;
       --amber:         #B8893A;
+      --amber-dark:    #7A4E1A;
       --amber-light:   #D9B268;
       --honey:         #E6C179;
       --cream:         #FBF6EC;
@@ -28,6 +29,8 @@
       --text-mid:      #524148;
       --text-light:    #9C8680;
       --link-visited:  #330418;
+      --green:         #2E7D4F;
+      --red:           #8C1E2A;
     }
 
     html, body { height: 100%; }
@@ -39,7 +42,7 @@
       line-height: 1.5;
     }
 
-    /* Ribbon */
+    /* ── Ribbon ── */
     .ribbon {
       background: var(--ink);
       color: rgba(247,235,212,0.78);
@@ -59,11 +62,11 @@
 
     .report { max-width: 1280px; margin: 0 auto; background: var(--cream); }
 
-    /* Banner */
+    /* ── Banner ── */
     .banner {
       background: linear-gradient(135deg, var(--oxblood-0) 0%, var(--oxblood-1) 40%, var(--oxblood-2) 100%);
       color: var(--cream-title);
-      padding: 36px 40px 32px;
+      padding: 32px 40px 28px;
       position: relative;
       overflow: hidden;
     }
@@ -78,27 +81,24 @@
       position: relative; z-index: 1;
       display: grid;
       grid-template-columns: 1fr auto auto;
-      gap: 40px;
+      gap: 36px;
       align-items: center;
     }
     .banner-left { max-width: 520px; }
     .eyebrow {
       display: inline-flex; align-items: center; gap: 10px;
       font-size: 10px; font-weight: 600; letter-spacing: 0.3em;
-      text-transform: uppercase; color: var(--amber-light); margin-bottom: 12px;
+      text-transform: uppercase; color: var(--amber-light); margin-bottom: 10px;
     }
     .eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--amber); opacity: 0.7; }
     .title {
       font-family: 'Cormorant Garamond','Georgia',serif;
-      font-size: 40px; font-weight: 500; line-height: 1.06;
-      color: var(--cream-title); margin-bottom: 8px;
+      font-size: 36px; font-weight: 500; line-height: 1.06;
+      color: var(--cream-title); margin-bottom: 6px;
     }
     .title em { font-style: italic; font-weight: 400; color: var(--honey); }
-    .subtitle {
-      font-size: 13px; color: rgba(247,235,212,0.60); letter-spacing: 0.02em;
-    }
+    .subtitle { font-size: 12.5px; color: rgba(247,235,212,0.60); }
 
-    /* Pinned tiles (clickable) */
     .pinned { display: flex; flex-direction: column; gap: 6px; }
     .pinned-label {
       font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
@@ -125,8 +125,7 @@
       letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1px;
     }
 
-    /* Banner search */
-    .banner-search { display: flex; flex-direction: column; gap: 6px; min-width: 260px; }
+    .banner-search { display: flex; flex-direction: column; gap: 6px; min-width: 240px; }
     .bs-label {
       font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
       text-transform: uppercase; color: rgba(217,178,104,0.75);
@@ -135,19 +134,11 @@
       display: flex; align-items: center;
       background: rgba(251,246,236,0.95);
       border: 1px solid rgba(217,178,104,0.4);
-      border-radius: 4px; height: 36px; padding: 0 10px;
-      transition: border-color 0.15s, box-shadow 0.15s;
+      border-radius: 4px; height: 34px; padding: 0 10px;
     }
-    .bs-box:focus-within {
-      border-color: var(--amber-light);
-      box-shadow: 0 0 0 2px rgba(217,178,104,0.25);
-    }
+    .bs-box:focus-within { border-color: var(--amber-light); box-shadow: 0 0 0 2px rgba(217,178,104,0.25); }
     .bs-icon { color: var(--oxblood-1); opacity: 0.55; flex-shrink: 0; margin-right: 8px; }
-    .bs-input {
-      flex: 1; border: none; background: transparent;
-      font-family: inherit; font-size: 13px; color: var(--text);
-      outline: none; height: 100%;
-    }
+    .bs-input { flex: 1; border: none; background: transparent; font: inherit; font-size: 13px; outline: none; height: 100%; }
     .bs-clear {
       width: 18px; height: 18px; border-radius: 50%;
       background: var(--border); border: none; cursor: pointer;
@@ -157,12 +148,12 @@
     }
     .bs-clear.show { display: flex; }
 
-    /* Navigation strip — these are the interactive category filters */
+    /* ── Nav strip ── */
     .navstrip {
       background: linear-gradient(180deg, rgba(184,137,58,0.22) 0%, rgba(184,137,58,0.08) 100%);
       border-top: 1px solid rgba(184,137,58,0.35);
       border-bottom: 1px solid rgba(184,137,58,0.2);
-      padding: 10px 40px;
+      padding: 9px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -186,73 +177,194 @@
       font-family: 'Cormorant Garamond','Georgia',serif;
       font-style: italic; font-size: 14px; color: var(--oxblood-1);
     }
-    .nav-count b { font-weight: 600; letter-spacing: 0.02em; }
+    .nav-count b { font-weight: 600; }
 
-    /* Panel */
+    /* ── Panel ── */
     .panel {
       background: var(--white);
-      margin: 20px 32px;
+      margin: 16px 32px;
       border-radius: 6px;
       box-shadow: 0 8px 32px rgba(42,3,17,0.08), 0 1px 3px rgba(42,3,17,0.05);
-      padding: 24px 32px 28px;
+      padding: 20px 28px 24px;
       border: 1px solid var(--border);
     }
     .examples-row {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 8px; flex-wrap: wrap;
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 18px; flex-wrap: wrap;
     }
     .examples-label {
       font-family: 'Cormorant Garamond','Georgia',serif;
-      font-style: italic; font-size: 15px; color: var(--text-mid);
+      font-style: italic; font-size: 14px; color: var(--text-mid);
     }
     .ex-chip {
-      padding: 5px 14px; font-size: 12px; font-weight: 600;
+      padding: 4px 12px; font-size: 11.5px; font-weight: 600;
       border: 1px solid var(--border-mid); background: var(--cream-warm);
       color: var(--oxblood-1); border-radius: 50px;
       cursor: pointer; transition: all 0.15s; font-family: inherit;
     }
-    .ex-chip:hover {
-      background: var(--oxblood-1); color: var(--cream-title); border-color: var(--oxblood-1);
+    .ex-chip:hover { background: var(--oxblood-1); color: var(--cream-title); border-color: var(--oxblood-1); }
+
+    /* ── KPI band ── */
+    .kpi-band {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
     }
-    .examples-hint {
-      font-size: 11.5px; color: var(--text-light); font-style: italic;
-      margin-bottom: 22px; padding-left: 2px;
+    .kpi {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi::after {
+      content: '';
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--amber), var(--amber-light));
+      opacity: 0.7;
+    }
+    .kpi-label {
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-mid); margin-bottom: 6px;
+    }
+    .kpi-val {
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-size: 30px; font-weight: 600; line-height: 1;
+      color: var(--oxblood-0);
+    }
+    .kpi-val em {
+      font-style: italic; font-weight: 400; color: var(--amber);
+      font-size: 16px; margin-left: 4px;
+    }
+    .kpi-sub {
+      font-size: 10.5px; color: var(--text-light); margin-top: 4px;
+      font-style: italic;
+    }
+    .kpi-sub b { color: var(--text-mid); font-style: normal; font-weight: 600; }
+
+    /* Special KPI: top dashboard */
+    .kpi.feature {
+      background: linear-gradient(160deg, rgba(67,6,31,0.04) 0%, rgba(184,137,58,0.08) 100%);
+    }
+    .kpi.feature .kpi-val {
+      font-size: 15px; font-family: 'Segoe UI', sans-serif; font-style: normal;
+      font-weight: 600; color: var(--oxblood-1); line-height: 1.2;
     }
 
-    /* Main grid */
+    /* ── Sort control ── */
+    .section-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-size: 19px; font-weight: 600; color: var(--oxblood-0);
+    }
+    .section-title em { font-style: italic; color: var(--amber-dark); font-weight: 500; }
+    .sort-wrap { display: flex; align-items: center; gap: 8px; }
+    .sort-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-mid);
+    }
+    .sort-pills { display: flex; gap: 4px; }
+    .sort-pill {
+      padding: 4px 10px; font-size: 11px; font-weight: 600;
+      border: 1px solid var(--border-mid); background: var(--white);
+      color: var(--text-mid); border-radius: 4px;
+      cursor: pointer; transition: all 0.15s; font-family: inherit;
+    }
+    .sort-pill:hover { border-color: var(--oxblood-1); color: var(--oxblood-1); }
+    .sort-pill.active {
+      background: var(--oxblood-1); color: var(--cream-title); border-color: var(--oxblood-1);
+    }
+
+    /* ── Main grid ── */
     .main-grid {
       display: grid;
-      grid-template-columns: 1.25fr 1.15fr 1.1fr;
-      gap: 20px;
+      grid-template-columns: 1.05fr 0.95fr 1.4fr;
+      gap: 18px;
     }
-    .card {
+    .col-card {
       background: var(--cream);
       border: 1px solid var(--border);
       border-radius: 6px;
       padding: 14px 16px 16px;
       display: flex; flex-direction: column;
-      min-height: 320px;
+      min-height: 420px;
     }
-    .card-hdr {
+    .col-card.white { background: var(--white); }
+    .col-hdr {
       display: flex; justify-content: space-between; align-items: baseline;
       margin-bottom: 10px; padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
     }
-    .card-title {
+    .col-title {
       font-family: 'Cormorant Garamond','Georgia',serif;
-      font-size: 16px; font-weight: 600;
-      color: var(--oxblood-0); letter-spacing: 0.01em;
+      font-size: 15px; font-weight: 600;
+      color: var(--oxblood-0);
     }
-    .card-title mark { background: transparent; color: var(--amber-dark, #7A4E1A); font-weight: 600; }
-    .card-hint {
+    .col-hint {
       font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--text-light);
     }
 
-    /* Cloud */
+    /* ── Most Popular ── */
+    .pop-list { display: flex; flex-direction: column; gap: 12px; }
+    .pop-item {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: start;
+      cursor: pointer;
+    }
+    .pop-rank {
+      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-size: 26px; font-weight: 600;
+      color: var(--amber);
+      line-height: 0.9;
+    }
+    .pop-body { min-width: 0; }
+    .pop-name {
+      font-size: 12.5px; font-weight: 600; color: var(--oxblood-1);
+      text-decoration: underline; text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      line-height: 1.3; margin-bottom: 3px;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .pop-item:hover .pop-name { color: var(--oxblood-0); }
+    .pop-bar-wrap {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 3px;
+    }
+    .pop-bar {
+      height: 5px;
+      background: var(--border); border-radius: 3px;
+      flex: 1; position: relative; overflow: hidden;
+    }
+    .pop-bar-fill {
+      position: absolute; top: 0; left: 0; bottom: 0;
+      background: linear-gradient(90deg, var(--oxblood-1), var(--amber));
+      border-radius: 3px;
+    }
+    .pop-count {
+      font-size: 10.5px; color: var(--text-mid); font-variant-numeric: tabular-nums;
+      font-weight: 600; min-width: 38px; text-align: right;
+    }
+    .pop-meta {
+      font-size: 10px; color: var(--text-light); margin-top: 2px;
+    }
+    .pop-meta .pop-cat {
+      color: var(--amber-dark); font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase; font-size: 9px;
+    }
+
+    /* ── Cloud ── */
     .cloud {
-      flex: 1; display: flex; flex-wrap: wrap; gap: 6px 10px;
-      align-content: flex-start; padding: 6px 2px; line-height: 1;
+      flex: 1; display: flex; flex-wrap: wrap; gap: 5px 9px;
+      align-content: flex-start; padding: 4px 2px; line-height: 1;
     }
     .cloud span {
       display: inline-block; font-weight: 600; letter-spacing: 0.01em;
@@ -260,90 +372,174 @@
     }
     .cloud span:hover { opacity: 1 !important; transform: scale(1.05); }
     .cloud span.dim { opacity: 0.3; }
-    .w-xl { font-size: 28px; font-family: 'Cormorant Garamond',serif; font-style: italic; }
-    .w-lg { font-size: 22px; }
-    .w-md { font-size: 17px; }
-    .w-sm { font-size: 14px; }
-    .w-xs { font-size: 12px; }
-    .c-primary   { color: var(--oxblood-1); }
+    .w-xl { font-size: 25px; font-family: 'Cormorant Garamond',serif; font-style: italic; }
+    .w-lg { font-size: 20px; }
+    .w-md { font-size: 16px; }
+    .w-sm { font-size: 13px; }
+    .w-xs { font-size: 11px; }
+    .c-primary { color: var(--oxblood-1); }
     .c-primary-d { color: var(--oxblood-0); }
     .c-primary-m { color: var(--oxblood-2); }
-    .c-amber     { color: var(--amber); }
-    .c-amber-d   { color: #7A4E1A; }
-    .c-amber-l   { color: var(--amber-light); }
-    .c-mid       { color: var(--text-mid); }
-    .c-light     { color: var(--text-light); }
+    .c-amber { color: var(--amber); }
+    .c-amber-d { color: var(--amber-dark); }
+    .c-amber-l { color: var(--amber-light); }
+    .c-mid { color: var(--text-mid); }
+    .c-light { color: var(--text-light); }
 
-    /* Stats */
-    .viz-col { display: flex; flex-direction: column; gap: 20px; min-height: 320px; }
-    .viz-card {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 6px; padding: 14px 16px;
-      flex: 1; display: flex; flex-direction: column; gap: 10px;
+    /* ── Dashboard table (list column) ── */
+    .dash-table {
+      flex: 1;
+      font-size: 12px;
     }
-    .viz-hdr {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--text-mid);
+    .dt-head {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 0.75fr 0.7fr;
+      gap: 10px;
+      padding: 8px 6px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      border-bottom: 2px solid var(--oxblood-1);
     }
-    .viz-big {
-      font-family: 'Cormorant Garamond','Georgia',serif;
-      font-weight: 600; font-size: 34px; line-height: 1;
-      color: var(--oxblood-0);
+    .dt-body {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 2px;
     }
-    .viz-big em {
-      font-style: italic; font-weight: 400; color: var(--amber);
-      font-size: 22px; margin-left: 4px;
+    .dt-row {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 0.75fr 0.7fr;
+      gap: 10px;
+      padding: 10px 6px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.1s;
     }
-    .viz-sub { font-size: 11px; color: var(--text-light); line-height: 1.45; }
-    .minibar { display: flex; align-items: flex-end; gap: 4px; height: 48px; }
-    .minibar .b {
-      flex: 1; background: linear-gradient(180deg, var(--oxblood-1), var(--oxblood-2));
-      border-radius: 2px 2px 0 0; opacity: 0.85;
+    .dt-row:hover { background: var(--cream); }
+    .dt-row .dt-heat {
+      position: absolute; top: 0; bottom: 0; left: 0;
+      width: 3px;
+      background: var(--amber);
+      opacity: 0;
+      transition: opacity 0.1s;
     }
-    .minibar .b.hi { background: linear-gradient(180deg, var(--amber), var(--amber-light)); opacity: 1; }
-    .mb-x {
-      display: flex; justify-content: space-between; font-size: 9px;
-      color: var(--text-light); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px;
-    }
-    .spark { height: 48px; display: flex; align-items: center; gap: 10px; }
-    .spark-list { display: flex; flex-direction: column; gap: 3px; font-size: 11px; }
-    .spark-row { display: flex; align-items: center; gap: 6px; color: var(--text-mid); }
-    .spark-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+    .dt-row:hover .dt-heat { opacity: 1; }
 
-    /* Dashboard list */
-    .dash-list { flex: 1; display: flex; flex-direction: column; gap: 0; overflow-y: auto; }
-    .dash-item {
-      padding: 10px 4px; border-bottom: 1px solid var(--border);
-      display: flex; flex-direction: column; gap: 3px;
-      transition: background 0.1s, padding 0.1s;
-      cursor: pointer; text-decoration: none;
-    }
-    .dash-item:last-child { border-bottom: none; }
-    .dash-item:hover {
-      background: var(--cream-warm); padding-left: 8px; padding-right: 8px;
-      margin: 0 -4px; border-radius: 4px;
-    }
-    .dash-link {
-      color: var(--oxblood-1); text-decoration: underline;
+    .dt-name {
+      color: var(--oxblood-1);
+      text-decoration: underline;
       text-underline-offset: 3px; text-decoration-thickness: 1px;
-      font-weight: 600; font-size: 13px; line-height: 1.35;
+      font-weight: 600;
+      line-height: 1.3;
+      align-self: center;
     }
-    .dash-link mark {
-      background: rgba(184,137,58,0.22); color: var(--oxblood-0);
+    .dt-row:hover .dt-name { color: var(--oxblood-0); }
+    .dt-name mark {
+      background: rgba(184,137,58,0.25); color: var(--oxblood-0);
       padding: 0 2px; border-radius: 2px; font-weight: 700;
     }
-    .dash-item:hover .dash-link { color: var(--oxblood-0); text-decoration-thickness: 2px; }
-    .dash-meta { font-size: 10.5px; color: var(--text-light); font-style: italic; }
-    .dash-meta .dash-cat {
-      font-style: normal; font-weight: 600; color: var(--amber);
-      letter-spacing: 0.06em; text-transform: uppercase; font-size: 9.5px;
+    .dt-dept {
+      font-size: 11px; color: var(--text-mid);
+      align-self: center; line-height: 1.25;
     }
-    .dash-empty {
-      padding: 32px 10px; text-align: center;
+    .dt-freq { align-self: center; }
+    .freq-pill {
+      font-size: 9.5px; font-weight: 700;
+      padding: 2px 8px; border-radius: 50px;
+      letter-spacing: 0.04em;
+      display: inline-block;
+    }
+    .freq-realtime { background: rgba(46,125,79,0.12); color: var(--green); }
+    .freq-hourly { background: rgba(67,6,31,0.10); color: var(--oxblood-1); }
+    .freq-daily { background: rgba(184,137,58,0.18); color: var(--amber-dark); }
+    .freq-weekly { background: rgba(140,30,42,0.10); color: var(--red); }
+    .freq-ondemand { background: var(--border); color: var(--text-mid); }
+    .dt-upd {
+      font-size: 10.5px; color: var(--text-light);
+      align-self: center; font-style: italic;
+    }
+    .dt-upd.stale { color: var(--red); font-weight: 600; font-style: normal; }
+    .dt-empty {
+      padding: 40px 10px; text-align: center;
       color: var(--text-light); font-size: 12px; font-style: italic;
     }
 
-    /* Footer */
+    /* ── Tooltip popup ── */
+    .tooltip {
+      position: fixed;
+      z-index: 1000;
+      width: 280px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 12px 36px rgba(42,3,17,0.18), 0 2px 6px rgba(42,3,17,0.08);
+      padding: 14px 16px;
+      font-size: 12px;
+      color: var(--text);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.12s, transform 0.12s;
+    }
+    .tooltip.show { opacity: 1; transform: translateY(0); }
+    .tooltip::before {
+      content: '';
+      position: absolute; top: -5px; left: 20px;
+      width: 10px; height: 10px;
+      background: var(--white);
+      border-left: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      transform: rotate(45deg);
+    }
+    .tt-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px; font-weight: 600;
+      color: var(--oxblood-0);
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+    .tt-meta {
+      font-size: 10.5px; color: var(--text-light);
+      letter-spacing: 0.04em; margin-bottom: 10px;
+    }
+    .tt-meta .tt-cat {
+      color: var(--amber-dark); font-weight: 600;
+      text-transform: uppercase; font-size: 9.5px;
+    }
+    .tt-spark {
+      height: 38px;
+      display: flex; align-items: flex-end; gap: 2px;
+      margin: 4px 0 10px;
+    }
+    .tt-spark .tb {
+      flex: 1;
+      background: linear-gradient(180deg, var(--amber), var(--amber-light));
+      border-radius: 1px 1px 0 0;
+      opacity: 0.85;
+    }
+    .tt-rows {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 12px;
+      font-size: 11px;
+    }
+    .tt-k {
+      color: var(--text-light);
+      font-weight: 600; letter-spacing: 0.04em;
+      text-transform: uppercase; font-size: 9.5px;
+    }
+    .tt-v { color: var(--text); font-weight: 500; }
+    .tt-hint {
+      font-size: 10px; color: var(--text-light);
+      margin-top: 10px; padding-top: 8px;
+      border-top: 1px solid var(--border);
+      font-style: italic;
+    }
+
+    /* ── Footer ── */
     .footer-bar {
       margin: 0 32px; padding: 14px 8px 20px;
       display: flex; justify-content: space-between; align-items: center;
@@ -366,6 +562,7 @@
 
   <main class="report">
 
+    <!-- Banner -->
     <section class="banner">
       <div class="banner-grid">
         <div class="banner-left">
@@ -375,9 +572,7 @@
         </div>
         <div class="pinned">
           <div class="pinned-label">Pinned by you</div>
-          <div class="pinned-row" id="pinnedRow">
-            <!-- populated by JS -->
-          </div>
+          <div class="pinned-row" id="pinnedRow"></div>
         </div>
         <div class="banner-search">
           <div class="bs-label">Search</div>
@@ -386,14 +581,15 @@
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
             </svg>
             <input class="bs-input" id="searchInput" spellcheck="false" placeholder="Try 'otp', 'delay', 'fuel'…" autocomplete="off">
-            <button class="bs-clear" id="searchClear" type="button" aria-label="Clear">✕</button>
+            <button class="bs-clear" id="searchClear" type="button">✕</button>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Nav strip -->
     <section class="navstrip">
-      <div class="nav-pills" id="navPills"><!-- populated by JS --></div>
+      <div class="nav-pills" id="navPills"></div>
       <div class="nav-count" id="navCount"></div>
     </section>
 
@@ -407,66 +603,46 @@
         <button class="ex-chip" data-q="glp">GLP code</button>
         <button class="ex-chip" data-q="crew">Crew roster</button>
       </div>
-      <div class="examples-hint">— or choose one from the keyword cloud below</div>
 
+      <!-- KPI band -->
+      <div class="kpi-band" id="kpiBand"></div>
+
+      <!-- Main grid: Most Popular · Cloud · List -->
       <div class="main-grid">
 
-        <div class="card">
-          <div class="card-hdr">
-            <span class="card-title">Keyword cloud</span>
-            <span class="card-hint">Click to filter</span>
+        <div class="col-card">
+          <div class="col-hdr">
+            <span class="col-title" id="popTitle">Most Popular</span>
+            <span class="col-hint">30-day views</span>
           </div>
-          <div class="cloud" id="cloud"><!-- populated by JS --></div>
+          <div class="pop-list" id="popList"></div>
         </div>
 
-        <div class="viz-col">
-          <div class="viz-card">
-            <div class="viz-hdr" id="vizUsageHdr">Directory usage — last 30 days</div>
-            <div class="viz-big" id="vizUsageNum">4,218<em>views</em></div>
-            <div class="viz-sub" id="vizUsageSub">Most-opened area: <b style="color:var(--text-mid)">Flight Ops</b> (37% of views)</div>
-            <div class="minibar">
-              <div class="b" style="height:35%"></div>
-              <div class="b" style="height:52%"></div>
-              <div class="b" style="height:48%"></div>
-              <div class="b" style="height:68%"></div>
-              <div class="b" style="height:61%"></div>
-              <div class="b" style="height:74%"></div>
-              <div class="b hi" style="height:92%"></div>
-              <div class="b" style="height:71%"></div>
-              <div class="b" style="height:83%"></div>
-              <div class="b" style="height:79%"></div>
-              <div class="b" style="height:86%"></div>
-              <div class="b hi" style="height:94%"></div>
-            </div>
-            <div class="mb-x"><span>Wk 13</span><span>Wk 17</span></div>
+        <div class="col-card">
+          <div class="col-hdr">
+            <span class="col-title">Keyword cloud</span>
+            <span class="col-hint">Click to filter</span>
           </div>
-
-          <div class="viz-card">
-            <div class="viz-hdr">Top areas this week</div>
-            <div class="spark">
-              <svg width="48" height="48" viewBox="0 0 48 48">
-                <circle cx="24" cy="24" r="18" fill="none" stroke="#E8DFD0" stroke-width="6"/>
-                <circle cx="24" cy="24" r="18" fill="none" stroke="#43061F" stroke-width="6" stroke-dasharray="42 113" transform="rotate(-90 24 24)"/>
-                <circle cx="24" cy="24" r="18" fill="none" stroke="#B8893A" stroke-width="6" stroke-dasharray="28 113" stroke-dashoffset="-42" transform="rotate(-90 24 24)"/>
-                <circle cx="24" cy="24" r="18" fill="none" stroke="#591029" stroke-width="6" stroke-dasharray="20 113" stroke-dashoffset="-70" transform="rotate(-90 24 24)"/>
-              </svg>
-              <div class="spark-list">
-                <div class="spark-row"><span class="spark-dot" style="background:#43061F"></span>Flight Ops &nbsp;<b style="color:var(--text)">37%</b></div>
-                <div class="spark-row"><span class="spark-dot" style="background:#B8893A"></span>Crew Control &nbsp;<b style="color:var(--text)">25%</b></div>
-                <div class="spark-row"><span class="spark-dot" style="background:#591029"></span>Fuel &nbsp;<b style="color:var(--text)">18%</b></div>
-                <div class="spark-row"><span class="spark-dot" style="background:#E8DFD0"></span>Other &nbsp;<b style="color:var(--text-mid)">20%</b></div>
-              </div>
-            </div>
-            <div class="viz-sub" style="margin-top:4px;">Share of opens · current filter applied</div>
-          </div>
+          <div class="cloud" id="cloud"></div>
         </div>
 
-        <div class="card" style="background:var(--white);">
-          <div class="card-hdr">
-            <span class="card-title" id="listTitle">Dashboards</span>
-            <span class="card-hint" id="listCount"></span>
+        <div class="col-card white">
+          <div class="section-hdr">
+            <span class="section-title" id="listTitle">All dashboards</span>
+            <div class="sort-wrap">
+              <span class="sort-label">Sort</span>
+              <div class="sort-pills" id="sortPills"></div>
+            </div>
           </div>
-          <div class="dash-list" id="dashList"></div>
+          <div class="dash-table">
+            <div class="dt-head">
+              <span>Dashboard</span>
+              <span>Department</span>
+              <span>Refresh</span>
+              <span>Updated</span>
+            </div>
+            <div class="dt-body" id="dashBody"></div>
+          </div>
         </div>
 
       </div>
@@ -481,69 +657,75 @@
     </div>
   </main>
 
+  <!-- Tooltip (hidden until hover) -->
+  <div class="tooltip" id="tooltip"></div>
+
   <script>
-    // ─── Data ──────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────
+    //  DATA MODEL — matches the v3 plan exactly
+    // ────────────────────────────────────────────────
     const CATS = [
       "Crew Control","Crew Hotels","Fleet","Flight Data","Flight Ops","Fuel",
       "IOC","Navigation","Network Ops","Technical","TOPS","Training"
     ];
 
+    const rand = (seed) => {
+      // deterministic pseudo-random so sparkline patterns are stable
+      let s = seed;
+      return () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+    };
+
     const DASHBOARDS = [
-      { name:"OTP & Delay Analysis",                           cat:"Flight Ops",    age:"today",        kw:["otp","delay","punctuality","flight"] },
-      { name:"ADSB DOH Arrivals path comparison (by Points)",  cat:"Flight Ops",    age:"2 days ago",   kw:["adsb","arrivals","doha","flight","dispatch"] },
-      { name:"Flight Dispatch Cost Savings",                   cat:"Flight Ops",    age:"3 days ago",   kw:["flight","dispatch","cost","savings"] },
-      { name:"Dispatch Release Turnaround",                    cat:"Flight Ops",    age:"today",        kw:["flight","dispatch","release","turnaround"] },
-      { name:"Aircraft Performance and Weight & Balance Info", cat:"Flight Ops",    age:"1 week ago",   kw:["glp","aircraft","weight","balance","performance"] },
-      { name:"Pilot Duty & Rest Compliance",                   cat:"Flight Ops",    age:"5 days ago",   kw:["pilot","duty","rest","compliance"] },
-
-      { name:"Crew Control Department Productivity",           cat:"Crew Control",  age:"yesterday",    kw:["crew","productivity","department"] },
-      { name:"Crew Control Rule Setting Dashboard",            cat:"Crew Control",  age:"1 week ago",   kw:["crew","rules","configuration"] },
-      { name:"Crew Roster Disruption Tracker",                 cat:"Crew Control",  age:"3 days ago",   kw:["crew","roster","disruption"] },
-      { name:"Crew Absence & Sickness Patterns",               cat:"Crew Control",  age:"4 days ago",   kw:["crew","absence","sickness"] },
-
-      { name:"Crew Hotel Allocation Overview",                 cat:"Crew Hotels",   age:"today",        kw:["hotel","crew","accommodation","doha"] },
-      { name:"Crew Hotel Cost per Night Benchmark",            cat:"Crew Hotels",   age:"1 week ago",   kw:["hotel","cost","benchmark"] },
-
-      { name:"Fleet Availability Tracker",                     cat:"Fleet",         age:"2 days ago",   kw:["fleet","aog","mro","availability"] },
-      { name:"Aircraft Utilisation Heatmap",                   cat:"Fleet",         age:"5 days ago",   kw:["fleet","utilisation","block hour","aircraft"] },
-      { name:"Fleet Age & Retirement Plan",                    cat:"Fleet",         age:"2 weeks ago",  kw:["fleet","retirement","aircraft"] },
-
-      { name:"Flight Data Quality Dashboard",                  cat:"Flight Data",   age:"6 hours ago",  kw:["flight","data","quality","completeness"] },
-      { name:"NOTAM Exposure by Route",                        cat:"Flight Data",   age:"4 days ago",   kw:["notam","route","exposure"] },
-      { name:"FDM Events Summary",                             cat:"Flight Data",   age:"1 day ago",    kw:["fdm","events","flight","data"] },
-
-      { name:"Fuel Performance Dashboard",                     cat:"Fuel",          age:"today",        kw:["fuel","uplift","burn","block hour","cost"] },
-      { name:"Fuel Uplift Variance by Station",                cat:"Fuel",          age:"yesterday",    kw:["fuel","uplift","variance","station"] },
-      { name:"Fuel Hedging Snapshot",                          cat:"Fuel",          age:"1 week ago",   kw:["fuel","hedge","cost","treasury"] },
-
-      { name:"IOC Live Operations Board",                      cat:"IOC",           age:"10 min ago",   kw:["ioc","disruption","diversion","operations"] },
-      { name:"IOC Shift Handover Notes",                       cat:"IOC",           age:"today",        kw:["ioc","shift","handover"] },
-      { name:"IOC Controller Workload",                        cat:"IOC",           age:"3 days ago",   kw:["ioc","controller","workload"] },
-
-      { name:"Navigation Database Health",                     cat:"Navigation",    age:"2 days ago",   kw:["nav","navigation","airac","database"] },
-      { name:"FIR or Waypoint Closure",                        cat:"Navigation",    age:"1 week ago",   kw:["fir","waypoint","closure","navigation"] },
-      { name:"ETOPS & Diversion Airport Matrix",               cat:"Navigation",    age:"1 week ago",   kw:["etops","diversion","airport"] },
-
-      { name:"European Priority Connections",                  cat:"Network Ops",   age:"yesterday",    kw:["europe","connections","priority","network"] },
-      { name:"Network Schedule Viewer",                        cat:"Network Ops",   age:"3 days ago",   kw:["network","schedule","slot","planning"] },
-      { name:"Slot Utilisation by Hub",                        cat:"Network Ops",   age:"1 week ago",   kw:["slot","hub","utilisation"] },
-
-      { name:"Technical Logbook Summary",                      cat:"Technical",     age:"1 week ago",   kw:["technical","logbook","ata","engineering"] },
-      { name:"Open Defect Register",                           cat:"Technical",     age:"today",        kw:["defects","mel","cdl","engineering"] },
-      { name:"Component Reliability by Fleet",                 cat:"Technical",     age:"4 days ago",   kw:["reliability","component","fleet"] },
-
-      { name:"TOPS Performance",                               cat:"TOPS",          age:"1 week ago",   kw:["tops","takeoff","performance","runway"] },
-      { name:"Runway Analysis Trend",                          cat:"TOPS",          age:"5 days ago",   kw:["runway","analysis","tops"] },
-
-      { name:"Training Compliance Tracker",                    cat:"Training",      age:"today",        kw:["training","compliance","currency","pilot","cabin"] },
-      { name:"Simulator Utilisation Monitor",                  cat:"Training",      age:"yesterday",    kw:["simulator","utilisation","training"] },
-      { name:"Type Rating Expiry Forecast",                    cat:"Training",      age:"1 week ago",   kw:["type rating","expiry","training"] },
-    ];
+      // name, cat, dept, freq, views30d, lastRefreshHrs, createdDaysAgo, kw
+      ["OTP & Delay Analysis","Flight Ops","IOC Control","Hourly",1842,1.5,420,["otp","delay","punctuality","flight"]],
+      ["ADSB DOH Arrivals path comparison (by Points)","Flight Ops","Flight Dispatch","Daily",612,17,110,["adsb","arrivals","doha","flight","dispatch"]],
+      ["Flight Dispatch Cost Savings","Flight Ops","Flight Dispatch","Weekly",540,120,80,["flight","dispatch","cost","savings"]],
+      ["Dispatch Release Turnaround","Flight Ops","Flight Dispatch","Hourly",398,1.0,18,["flight","dispatch","release"]],
+      ["Aircraft Performance and Weight & Balance Info","Flight Ops","Flight Dispatch","Daily",284,20,300,["glp","aircraft","weight","balance"]],
+      ["Pilot Duty & Rest Compliance","Flight Ops","Crew Control","Daily",212,22,90,["pilot","duty","rest","compliance"]],
+      ["Crew Control Department Productivity","Crew Control","Crew Control","Daily",742,18,200,["crew","productivity","department"]],
+      ["Crew Control Rule Setting Dashboard","Crew Control","Crew Control","Weekly",210,96,400,["crew","rules","configuration"]],
+      ["Crew Roster Disruption Tracker","Crew Control","Crew Control","Hourly",968,0.5,45,["crew","roster","disruption"]],
+      ["Crew Absence & Sickness Patterns","Crew Control","Crew Control","Daily",184,23,150,["crew","absence","sickness"]],
+      ["Crew Hotel Allocation Overview","Crew Hotels","Ground Services","Daily",312,19,220,["hotel","crew","doha"]],
+      ["Crew Hotel Cost per Night Benchmark","Crew Hotels","Ground Services","Weekly",98,168,360,["hotel","cost","benchmark"]],
+      ["Fleet Availability Tracker","Fleet","Engineering","Hourly",820,1.2,280,["fleet","aog","mro","availability"]],
+      ["Aircraft Utilisation Heatmap","Fleet","Engineering","Daily",330,14,180,["fleet","utilisation","block hour"]],
+      ["Fleet Age & Retirement Plan","Fleet","Strategy","Weekly",72,240,500,["fleet","retirement"]],
+      ["Flight Data Quality Dashboard","Flight Data","Data Eng","Real-time",512,0.05,60,["flight","data","quality"]],
+      ["NOTAM Exposure by Route","Flight Data","Flight Dispatch","Hourly",245,1.8,120,["notam","route","exposure"]],
+      ["FDM Events Summary","Flight Data","Flight Safety","Daily",188,16,220,["fdm","events","flight","data"]],
+      ["Fuel Performance Dashboard","Fuel","Fuel Management","Hourly",1248,1.1,90,["fuel","uplift","burn","block hour","cost"]],
+      ["Fuel Uplift Variance by Station","Fuel","Fuel Management","Daily",442,21,140,["fuel","uplift","variance","station"]],
+      ["Fuel Hedging Snapshot","Fuel","Treasury","Weekly",96,200,600,["fuel","hedge","cost","treasury"]],
+      ["IOC Live Operations Board","IOC","IOC Control","Real-time",1562,0.02,40,["ioc","disruption","diversion","operations"]],
+      ["IOC Shift Handover Notes","IOC","IOC Control","Hourly",310,1.5,70,["ioc","shift","handover"]],
+      ["IOC Controller Workload","IOC","IOC Control","Daily",176,20,180,["ioc","controller","workload"]],
+      ["Navigation Database Health","Navigation","Navigation","Weekly",118,120,500,["nav","airac","database"]],
+      ["FIR or Waypoint Closure","Navigation","Navigation","Daily",204,22,170,["fir","waypoint","closure"]],
+      ["ETOPS & Diversion Airport Matrix","Navigation","Flight Dispatch","Weekly",88,160,420,["etops","diversion","airport"]],
+      ["European Priority Connections","Network Ops","Network Planning","Daily",358,18,120,["europe","connections","priority","network"]],
+      ["Network Schedule Viewer","Network Ops","Network Planning","Daily",420,19,340,["network","schedule","slot","planning"]],
+      ["Slot Utilisation by Hub","Network Ops","Network Planning","Weekly",142,140,380,["slot","hub","utilisation"]],
+      ["Technical Logbook Summary","Technical","Engineering","Daily",388,17,260,["technical","logbook","ata","engineering"]],
+      ["Open Defect Register","Technical","Engineering","Hourly",604,1.8,80,["defects","mel","cdl","engineering"]],
+      ["Component Reliability by Fleet","Technical","Engineering","Weekly",172,180,450,["reliability","component","fleet"]],
+      ["TOPS Performance","TOPS","Flight Dispatch","Daily",248,22,200,["tops","takeoff","performance","runway"]],
+      ["Runway Analysis Trend","TOPS","Flight Dispatch","Weekly",96,144,520,["runway","analysis","tops"]],
+      ["Training Compliance Tracker","Training","Training","Daily",412,17,180,["training","compliance","currency"]],
+      ["Simulator Utilisation Monitor","Training","Training","Daily",226,20,270,["simulator","utilisation"]],
+      ["Type Rating Expiry Forecast","Training","Training","Weekly",134,160,410,["type rating","expiry"]],
+    ].map((d, i) => ({
+      name: d[0], cat: d[1], dept: d[2], freq: d[3],
+      views: d[4], refreshHrs: d[5], createdDays: d[6], kw: d[7],
+      id: i,
+      owner: ["Aisha Rahman","Omar Faraj","Lina Said","John Doe","Karthik R.","Mei Chen","Hassan Al-K.","Sara P."][i % 8],
+    }));
 
     const PINS = [
       { name:"OTP & Delay Analysis",         cat:"Flight Ops"   },
       { name:"Fuel Performance Dashboard",   cat:"Fuel"         },
-      { name:"Crew Roster Disruption",       cat:"Crew Control" },
+      { name:"Crew Roster Disruption Tracker", cat:"Crew Control" },
     ];
 
     const CLOUD_WORDS = [
@@ -552,198 +734,327 @@
       { w:"crew roster",     size:"md", color:"c-mid"       },
       { w:"delay",           size:"sm", color:"c-primary"   },
       { w:"fuel uplift",     size:"md", color:"c-amber"     },
-      { w:"message",         size:"sm", color:"c-mid"       },
-      { w:"apu",             size:"xs", color:"c-light"     },
       { w:"notam",           size:"lg", color:"c-primary-m" },
       { w:"departure",       size:"md", color:"c-amber-l"   },
       { w:"flight planning", size:"sm", color:"c-primary"   },
-      { w:"impacted flights",size:"xs", color:"c-mid"       },
       { w:"pnl",             size:"sm", color:"c-amber-d"   },
       { w:"crew control",    size:"xl", color:"c-primary", italic:true },
-      { w:"remote",          size:"sm", color:"c-light"     },
       { w:"irregular ops",   size:"md", color:"c-mid"       },
-      { w:"jeppesen",        size:"xs", color:"c-amber"     },
       { w:"crew training",   size:"sm", color:"c-primary-d" },
-      { w:"etops",           size:"xs", color:"c-light"     },
       { w:"autoperformance", size:"md", color:"c-amber-d"   },
       { w:"landing",         size:"sm", color:"c-primary"   },
       { w:"fleet",           size:"xs", color:"c-mid"       },
       { w:"block time",      size:"sm", color:"c-amber"     },
-      { w:"block hour",      size:"xs", color:"c-light"     },
       { w:"disruption",      size:"md", color:"c-primary-m" },
-      { w:"ditching",        size:"xs", color:"c-amber-d"   },
       { w:"inspection",      size:"sm", color:"c-mid"       },
-      { w:"currency",        size:"xs", color:"c-light"     },
-      { w:"cost",            size:"xs", color:"c-primary"   },
       { w:"doha",            size:"sm", color:"c-amber-l"   },
       { w:"hotel",           size:"xs", color:"c-mid"       },
     ];
 
-    // ─── State ─────────────────────────────────────────────────────
-    let currentCat   = "All Areas";
-    let currentQuery = "";
+    // ────────────────────────────────────────────────
+    //  STATE + HELPERS
+    // ────────────────────────────────────────────────
+    let currentCat  = "All Areas";
+    let currentQ    = "";
+    let currentSort = "popular";  // popular | name | recent | freq
 
-    // ─── Elements ──────────────────────────────────────────────────
-    const navPills    = document.getElementById("navPills");
-    const navCount    = document.getElementById("navCount");
-    const pinnedRow   = document.getElementById("pinnedRow");
-    const cloudEl     = document.getElementById("cloud");
-    const dashListEl  = document.getElementById("dashList");
-    const listTitle   = document.getElementById("listTitle");
-    const listCount   = document.getElementById("listCount");
-    const searchInput = document.getElementById("searchInput");
-    const searchClear = document.getElementById("searchClear");
-    const vizUsageNum = document.getElementById("vizUsageNum");
-    const vizUsageSub = document.getElementById("vizUsageSub");
+    const SORT_OPTIONS = [
+      { id:"popular", label:"Most popular" },
+      { id:"name",    label:"Name A-Z" },
+      { id:"recent",  label:"Recently updated" },
+      { id:"freq",    label:"Refresh cadence" },
+    ];
 
-    // ─── Render pinned ─────────────────────────────────────────────
-    PINS.forEach(p => {
-      const el = document.createElement("div");
-      el.className = "pin-slot";
-      el.title = p.name;
-      el.innerHTML = `<div class="pin-slot-name">${p.name}</div><div class="pin-slot-cat">${p.cat}</div>`;
-      el.addEventListener("click", () => { applyFilter(p.cat, p.name); });
-      pinnedRow.appendChild(el);
-    });
+    const FREQ_RANK = { "Real-time":0, "Hourly":1, "Daily":2, "Weekly":3, "On-demand":4 };
 
-    // ─── Render nav pills ──────────────────────────────────────────
-    const allPill = document.createElement("button");
-    allPill.className = "nav-pill active";
-    allPill.textContent = "All Areas";
-    allPill.addEventListener("click", () => applyFilter("All Areas"));
-    navPills.appendChild(allPill);
+    const el = (id) => document.getElementById(id);
+    const agoLabel = (h) => h < 1 ? `${Math.round(h*60)} min ago`
+                         : h < 24 ? `${Math.round(h)} hr ago`
+                         : `${Math.round(h/24)} days ago`;
 
-    CATS.forEach(cat => {
-      const b = document.createElement("button");
-      b.className = "nav-pill";
-      b.textContent = cat;
-      b.dataset.cat = cat;
-      b.addEventListener("click", () => applyFilter(cat));
-      navPills.appendChild(b);
-    });
+    const freqClass = (f) => ({
+      "Real-time":"freq-realtime","Hourly":"freq-hourly","Daily":"freq-daily",
+      "Weekly":"freq-weekly","On-demand":"freq-ondemand"
+    }[f] || "freq-ondemand");
 
-    // ─── Render cloud ──────────────────────────────────────────────
-    CLOUD_WORDS.forEach(c => {
-      const s = document.createElement("span");
-      s.className = `w-${c.size} ${c.color}`;
-      if (c.italic) s.style.fontFamily = "'Cormorant Garamond',serif", s.style.fontStyle = "italic";
-      s.textContent = c.w;
-      s.addEventListener("click", () => setSearch(c.w));
-      cloudEl.appendChild(s);
-    });
+    const isStale = (d) => {
+      const sla = { "Real-time":0.083, "Hourly":2, "Daily":26, "Weekly":192, "On-demand":9999 }[d.freq] || 9999;
+      return d.refreshHrs > sla;
+    };
 
-    // ─── Filtering ─────────────────────────────────────────────────
-    function matches(d) {
-      const catOk = (currentCat === "All Areas") || (d.cat === currentCat);
-      if (!catOk) return false;
-      if (!currentQuery) return true;
-      const q = currentQuery.toLowerCase();
-      if (d.name.toLowerCase().includes(q)) return true;
-      if (d.cat.toLowerCase().includes(q)) return true;
-      return d.kw.some(k => k.toLowerCase().includes(q));
-    }
+    const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    const hl = (t,q) => !q ? t : t.replace(new RegExp(`(${esc(q)})`,"gi"),"<mark>$1</mark>");
 
-    function hl(text, q) {
-      if (!q) return text;
-      const esc = q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-      return text.replace(new RegExp(`(${esc})`,"gi"), "<mark>$1</mark>");
-    }
-
-    function render() {
-      // nav pill active state
-      document.querySelectorAll(".nav-pill").forEach(el => {
-        const label = el.textContent;
-        el.classList.toggle("active", label === currentCat);
+    // ────────────────────────────────────────────────
+    //  DATA FILTERING & SORTING
+    // ────────────────────────────────────────────────
+    function filtered() {
+      return DASHBOARDS.filter(d => {
+        if (currentCat !== "All Areas" && d.cat !== currentCat) return false;
+        if (!currentQ) return true;
+        const q = currentQ.toLowerCase();
+        return d.name.toLowerCase().includes(q)
+            || d.cat.toLowerCase().includes(q)
+            || d.dept.toLowerCase().includes(q)
+            || d.kw.some(k => k.toLowerCase().includes(q));
       });
+    }
 
-      // dashboard list
-      const hits = DASHBOARDS.filter(matches);
-      dashListEl.innerHTML = "";
-      if (hits.length === 0) {
-        dashListEl.innerHTML = `<div class="dash-empty">No dashboards match the current filter.<br>Try clearing the search or picking another area.</div>`;
+    function sorted(list) {
+      const l = [...list];
+      switch (currentSort) {
+        case "name":    return l.sort((a,b) => a.name.localeCompare(b.name));
+        case "recent":  return l.sort((a,b) => a.refreshHrs - b.refreshHrs);
+        case "freq":    return l.sort((a,b) => FREQ_RANK[a.freq] - FREQ_RANK[b.freq] || b.views - a.views);
+        default:        return l.sort((a,b) => b.views - a.views);
+      }
+    }
+
+    // ────────────────────────────────────────────────
+    //  RENDERERS
+    // ────────────────────────────────────────────────
+    function renderPinned() {
+      el("pinnedRow").innerHTML = "";
+      PINS.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "pin-slot";
+        div.title = p.name;
+        div.innerHTML = `<div class="pin-slot-name">${p.name}</div><div class="pin-slot-cat">${p.cat}</div>`;
+        div.addEventListener("click", () => { applyFilter(p.cat); });
+        el("pinnedRow").appendChild(div);
+      });
+    }
+
+    function renderNavPills() {
+      const wrap = el("navPills");
+      wrap.innerHTML = "";
+      ["All Areas", ...CATS].forEach(cat => {
+        const b = document.createElement("button");
+        b.className = "nav-pill" + (cat === currentCat ? " active" : "");
+        b.textContent = cat;
+        b.addEventListener("click", () => applyFilter(cat));
+        wrap.appendChild(b);
+      });
+    }
+
+    function renderCloud() {
+      const wrap = el("cloud");
+      wrap.innerHTML = "";
+      CLOUD_WORDS.forEach(c => {
+        const s = document.createElement("span");
+        s.className = `w-${c.size} ${c.color}`;
+        if (c.italic) { s.style.fontFamily = "'Cormorant Garamond',serif"; s.style.fontStyle = "italic"; }
+        s.textContent = c.w;
+        s.addEventListener("click", () => setSearch(c.w));
+        wrap.appendChild(s);
+      });
+    }
+
+    function renderSortPills() {
+      const wrap = el("sortPills");
+      wrap.innerHTML = "";
+      SORT_OPTIONS.forEach(o => {
+        const b = document.createElement("button");
+        b.className = "sort-pill" + (o.id === currentSort ? " active" : "");
+        b.textContent = o.label;
+        b.addEventListener("click", () => { currentSort = o.id; renderSortPills(); renderList(); });
+        wrap.appendChild(b);
+      });
+    }
+
+    function renderKpiBand() {
+      const scope = filtered();
+      const totalViews = scope.reduce((a,d) => a + d.views, 0);
+      const newThisMo = scope.filter(d => d.createdDays <= 30).length;
+      const fresh = scope.filter(d => !isStale(d)).length;
+      const freshPct = scope.length ? Math.round((fresh/scope.length)*100) : 0;
+      const topDash = [...scope].sort((a,b) => b.views - a.views)[0];
+      const scopeLbl = currentCat === "All Areas" ? "directory-wide" : currentCat;
+
+      const cards = [
+        { lbl:`Dashboards${currentCat === "All Areas" ? "" : " in " + currentCat}`,
+          val:scope.length,
+          sub:`<b>${scope.length}</b> ${scope.length === 1 ? "dashboard" : "dashboards"} in scope` },
+        { lbl:"Views · 30 days",
+          val:totalViews.toLocaleString(),
+          em:"views",
+          sub:`avg <b>${Math.round(totalViews / Math.max(scope.length,1))}</b> per dashboard` },
+        { lbl:"New this month",
+          val:newThisMo,
+          sub:`added since ${new Date(Date.now() - 30*86400000).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}` },
+        { lbl:"Fresh %",
+          val:freshPct,
+          em:"%",
+          sub:`<b>${fresh}</b> of <b>${scope.length}</b> within SLA` },
+        { lbl:"Most opened", feature:true,
+          val:topDash ? topDash.name : "—",
+          sub:topDash ? `<b>${topDash.views.toLocaleString()}</b> views · <span style="color:var(--amber-dark)">${topDash.cat}</span>` : "no data" },
+      ];
+
+      el("kpiBand").innerHTML = cards.map(c => `
+        <div class="kpi ${c.feature ? "feature" : ""}">
+          <div class="kpi-label">${c.lbl}</div>
+          <div class="kpi-val">${c.val}${c.em ? `<em>${c.em}</em>` : ""}</div>
+          <div class="kpi-sub">${c.sub}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderPopular() {
+      const scope = filtered();
+      const top = [...scope].sort((a,b) => b.views - a.views).slice(0,5);
+      const max = top[0]?.views || 1;
+
+      el("popTitle").innerHTML = currentCat === "All Areas"
+        ? `Most Popular <em>· across all areas</em>`
+        : `Most Popular <em>· in ${currentCat}</em>`;
+
+      if (top.length === 0) {
+        el("popList").innerHTML = `<div class="dt-empty">No dashboards in scope.</div>`;
+        return;
+      }
+
+      el("popList").innerHTML = top.map((d,i) => `
+        <div class="pop-item" data-id="${d.id}">
+          <div class="pop-rank">${i+1}</div>
+          <div class="pop-body">
+            <div class="pop-name">${d.name}</div>
+            <div class="pop-bar-wrap">
+              <div class="pop-bar"><div class="pop-bar-fill" style="width:${(d.views/max)*100}%"></div></div>
+              <div class="pop-count">${d.views.toLocaleString()}</div>
+            </div>
+            <div class="pop-meta"><span class="pop-cat">${d.cat}</span> · ${d.dept}</div>
+          </div>
+        </div>`).join("");
+
+      // attach tooltip + click
+      el("popList").querySelectorAll(".pop-item").forEach(node => {
+        const id = +node.dataset.id;
+        attachTooltip(node, id);
+      });
+    }
+
+    function renderList() {
+      const list = sorted(filtered());
+      const body = el("dashBody");
+
+      if (list.length === 0) {
+        body.innerHTML = `<div class="dt-empty">No dashboards match the current filter.</div>`;
       } else {
-        hits.forEach(d => {
-          const a = document.createElement("a");
-          a.className = "dash-item";
-          a.href = "#";
-          a.innerHTML = `
-            <span class="dash-link">${hl(d.name, currentQuery)}</span>
-            <span class="dash-meta"><span class="dash-cat">${d.cat}</span> &nbsp;· Updated ${d.age}</span>`;
-          dashListEl.appendChild(a);
+        body.innerHTML = list.map(d => `
+          <div class="dt-row" data-id="${d.id}">
+            <div class="dt-heat"></div>
+            <div class="dt-name">${hl(d.name, currentQ)}</div>
+            <div class="dt-dept">${d.dept}</div>
+            <div class="dt-freq"><span class="freq-pill ${freqClass(d.freq)}">${d.freq}</span></div>
+            <div class="dt-upd ${isStale(d) ? "stale" : ""}">${agoLabel(d.refreshHrs)}</div>
+          </div>`).join("");
+
+        body.querySelectorAll(".dt-row").forEach(node => {
+          const id = +node.dataset.id;
+          attachTooltip(node, id);
         });
       }
 
-      // list header
-      const scope = (currentCat === "All Areas") ? "all areas" : currentCat;
-      if (currentQuery) {
-        listTitle.innerHTML = `Matching <mark style="background:rgba(184,137,58,0.22);color:var(--oxblood-0);padding:0 4px;border-radius:2px;">"${currentQuery}"</mark>`;
-      } else {
-        listTitle.textContent = `Dashboards in ${scope}`;
-      }
-      listCount.textContent = `${hits.length} result${hits.length !== 1 ? "s" : ""}`;
+      // header
+      const scopeLbl = currentCat === "All Areas" ? "all areas" : currentCat;
+      el("listTitle").innerHTML = currentQ
+        ? `Matching <em>"${currentQ}"</em>`
+        : `All dashboards <em>· ${scopeLbl}</em>`;
 
       // nav count
-      const total = DASHBOARDS.length;
-      const areaCount = CATS.length;
-      navCount.innerHTML = `<b>${total}</b> dashboards &nbsp;·&nbsp; <b>${areaCount}</b> areas`;
-      if (currentCat !== "All Areas") {
-        const inCat = DASHBOARDS.filter(d => d.cat === currentCat).length;
-        navCount.innerHTML = `<b>${inCat}</b> in ${currentCat} &nbsp;·&nbsp; <span style="opacity:0.6">of ${total}</span>`;
-      }
+      const inCat = currentCat === "All Areas" ? DASHBOARDS.length : DASHBOARDS.filter(d => d.cat === currentCat).length;
+      el("navCount").innerHTML = currentCat === "All Areas"
+        ? `<b>${DASHBOARDS.length}</b> dashboards &nbsp;·&nbsp; <b>${CATS.length}</b> areas`
+        : `<b>${inCat}</b> in ${currentCat} &nbsp;·&nbsp; <span style="opacity:0.6">of ${DASHBOARDS.length}</span>`;
 
-      // cloud dimming — dim words that don't appear in any visible dashboard's keywords
+      // dim cloud words not present in visible set
       const visibleKw = new Set();
-      hits.forEach(d => d.kw.forEach(k => visibleKw.add(k.toLowerCase())));
+      list.forEach(d => d.kw.forEach(k => visibleKw.add(k.toLowerCase())));
       document.querySelectorAll(".cloud span").forEach(s => {
         const w = s.textContent.toLowerCase();
-        const active = [...visibleKw].some(k => k.includes(w) || w.includes(k));
-        s.classList.toggle("dim", !active && currentCat !== "All Areas");
+        const hit = [...visibleKw].some(k => k.includes(w) || w.includes(k));
+        s.classList.toggle("dim", !hit && currentCat !== "All Areas");
       });
 
-      // stats usage sub
-      if (currentCat === "All Areas") {
-        vizUsageNum.innerHTML = `4,218<em>views</em>`;
-        vizUsageSub.innerHTML = `Most-opened area: <b style="color:var(--text-mid)">Flight Ops</b> (37% of views)`;
-      } else {
-        const fake = Math.round(800 + (currentCat.length * 53));
-        vizUsageNum.innerHTML = `${fake.toLocaleString()}<em>views</em>`;
-        vizUsageSub.innerHTML = `${currentCat} · <b style="color:var(--text-mid)">${hits.length}</b> dashboard${hits.length!==1?"s":""} in scope`;
-      }
-
-      // search clear button visibility
-      searchClear.classList.toggle("show", !!currentQuery);
+      // search clear visibility
+      el("searchClear").classList.toggle("show", !!currentQ);
     }
 
-    // ─── Actions ───────────────────────────────────────────────────
-    function applyFilter(cat, q = undefined) {
+    // ────────────────────────────────────────────────
+    //  TOOLTIP (shared popover)
+    // ────────────────────────────────────────────────
+    const tt = el("tooltip");
+
+    function buildSpark(seed, n = 12) {
+      const r = rand(seed);
+      const vals = Array.from({length:n}, () => 30 + Math.round(r() * 65));
+      return vals.map(v => `<div class="tb" style="height:${v}%"></div>`).join("");
+    }
+
+    function attachTooltip(node, id) {
+      const d = DASHBOARDS[id];
+      node.addEventListener("mouseenter", e => {
+        tt.innerHTML = `
+          <div class="tt-title">${d.name}</div>
+          <div class="tt-meta"><span class="tt-cat">${d.cat}</span> · ${d.dept}</div>
+          <div class="tt-spark">${buildSpark(id * 13)}</div>
+          <div class="tt-rows">
+            <span class="tt-k">Owner</span>  <span class="tt-v">${d.owner}</span>
+            <span class="tt-k">Refresh</span><span class="tt-v">${d.freq}${isStale(d) ? ' <span style="color:var(--red);font-weight:600">· stale</span>' : ''}</span>
+            <span class="tt-k">Updated</span><span class="tt-v">${agoLabel(d.refreshHrs)}</span>
+            <span class="tt-k">Views 30d</span><span class="tt-v"><b>${d.views.toLocaleString()}</b></span>
+          </div>
+          <div class="tt-hint">Right-click → See details for more</div>`;
+        positionTooltip(e);
+        tt.classList.add("show");
+      });
+      node.addEventListener("mousemove", positionTooltip);
+      node.addEventListener("mouseleave", () => tt.classList.remove("show"));
+    }
+
+    function positionTooltip(e) {
+      const pad = 14;
+      let x = e.clientX + pad;
+      let y = e.clientY + pad;
+      const w = tt.offsetWidth || 280;
+      const h = tt.offsetHeight || 180;
+      if (x + w + 12 > window.innerWidth) x = e.clientX - w - pad;
+      if (y + h + 12 > window.innerHeight) y = e.clientY - h - pad;
+      tt.style.left = x + "px";
+      tt.style.top  = y + "px";
+    }
+
+    // ────────────────────────────────────────────────
+    //  ACTIONS
+    // ────────────────────────────────────────────────
+    function applyFilter(cat) {
       currentCat = cat;
-      if (q !== undefined) {
-        currentQuery = q;
-        searchInput.value = q;
-      }
-      render();
+      renderNavPills(); renderAll();
     }
     function setSearch(q) {
-      currentQuery = q;
-      searchInput.value = q;
-      render();
+      currentQ = q;
+      el("searchInput").value = q;
+      renderAll();
+    }
+    function renderAll() {
+      renderKpiBand();
+      renderPopular();
+      renderList();
     }
 
-    searchInput.addEventListener("input", e => {
-      currentQuery = e.target.value.trim();
-      render();
-    });
-    searchClear.addEventListener("click", () => {
-      currentQuery = "";
-      searchInput.value = "";
-      render();
-    });
-    document.querySelectorAll(".ex-chip").forEach(btn => {
-      btn.addEventListener("click", () => setSearch(btn.dataset.q));
-    });
+    el("searchInput").addEventListener("input", e => { currentQ = e.target.value.trim(); renderAll(); });
+    el("searchClear").addEventListener("click", () => { currentQ = ""; el("searchInput").value = ""; renderAll(); });
+    document.querySelectorAll(".ex-chip").forEach(btn => btn.addEventListener("click", () => setSearch(btn.dataset.q)));
 
-    // initial render
-    render();
+    // ────────────────────────────────────────────────
+    //  INIT
+    // ────────────────────────────────────────────────
+    renderPinned();
+    renderNavPills();
+    renderCloud();
+    renderSortPills();
+    renderAll();
   </script>
 </body>
 </html>
