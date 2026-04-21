@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Implementation Guide — Find Your Dashboard · Power BI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#1F0310; --oxblood-0:#2A0311; --oxblood-1:#43061F; --oxblood-2:#591029;
+    --amber:#B8893A; --amber-dark:#7A4E1A; --amber-light:#D9B268; --honey:#E6C179;
+    --cream:#FBF6EC; --cream-warm:#F3EADA; --cream-title:#F7EBD4; --white:#FFFFFF;
+    --border:#E8DFD0; --border-mid:#D6C9B6; --text:#1A0D12; --text-mid:#524148; --text-light:#9C8680;
+    --green:#2E7D4F; --red:#8C1E2A;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--text);font-size:14px;line-height:1.6}
+
+  /* Ribbon */
+  .ribbon{background:var(--ink);color:rgba(247,235,212,0.78);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;padding:7px 28px;display:flex;justify-content:space-between;align-items:center;font-weight:500;border-bottom:1px solid rgba(184,137,58,0.2)}
+  .ribbon-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);display:inline-block;margin-right:10px;vertical-align:middle}
+  .ribbon a{color:var(--honey);text-decoration:none}
+  .ribbon a:hover{text-decoration:underline}
+
+  /* Hero */
+  .hero{background:linear-gradient(125deg, rgba(26,3,14,0.94) 0%, rgba(42,3,17,0.82) 45%, rgba(67,6,31,0.58) 80%, rgba(89,16,41,0.4) 100%),url("qatar-777-worldcup.jpg") center 55%/cover no-repeat;color:var(--cream-title);padding:50px 40px 46px;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(217,178,104,0.65),transparent)}
+  .hero-inner{max-width:780px;position:relative;z-index:1}
+  .kicker{display:inline-flex;align-items:center;gap:12px;font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--honey);margin-bottom:14px;text-shadow:0 1px 4px rgba(0,0,0,0.45)}
+  .kicker::before{content:'';width:24px;height:1px;background:var(--amber);opacity:0.8}
+  h1{font-family:'Cormorant Garamond','Georgia',serif;font-size:44px;font-weight:500;line-height:1.04;margin-bottom:10px;text-shadow:0 2px 14px rgba(0,0,0,0.5);letter-spacing:-0.01em}
+  h1 em{font-style:italic;font-weight:400;color:var(--honey)}
+  .lede{font-size:15px;color:rgba(247,235,212,0.78);font-weight:300;max-width:620px;line-height:1.55;text-shadow:0 1px 4px rgba(0,0,0,0.4)}
+  .hero-meta{display:flex;gap:22px;margin-top:22px;flex-wrap:wrap;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,235,212,0.55)}
+  .hero-meta b{color:var(--honey);font-weight:600}
+
+  /* Layout */
+  .shell{display:grid;grid-template-columns:260px 1fr;gap:0;max-width:1320px;margin:0 auto}
+
+  aside{background:var(--cream);border-right:1px solid var(--border);padding:32px 20px 60px;position:sticky;top:0;height:100vh;overflow-y:auto;font-size:12.5px}
+  aside h4{font-size:9.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-light);margin:18px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  aside h4:first-child{margin-top:0}
+  aside a{display:block;color:var(--text-mid);text-decoration:none;padding:5px 10px;border-left:2px solid transparent;margin-left:-12px;transition:all 0.12s;line-height:1.4}
+  aside a:hover{color:var(--oxblood-1);border-left-color:var(--amber-light);background:var(--cream-warm)}
+  aside a.active{color:var(--oxblood-0);border-left-color:var(--oxblood-1);font-weight:600;background:var(--cream-warm)}
+  .step-num{display:inline-block;width:22px;font-family:'Consolas',monospace;font-size:11px;color:var(--amber-dark);font-weight:600}
+
+  main{padding:40px 44px 80px;min-width:0}
+  main section{margin-bottom:52px;scroll-margin-top:20px}
+  main h2{font-family:'Cormorant Garamond','Georgia',serif;font-size:30px;font-weight:600;color:var(--oxblood-0);margin-bottom:4px;padding-bottom:10px;border-bottom:2px solid var(--oxblood-1);display:flex;align-items:baseline;justify-content:space-between;letter-spacing:-0.005em}
+  main h2 em{font-style:italic;font-weight:400;color:var(--amber-dark);font-size:22px}
+  .section-num{font-family:'Consolas',monospace;font-size:12px;color:var(--text-light);font-weight:700;letter-spacing:0.1em}
+  main h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--oxblood-1);margin:24px 0 10px}
+  main h3 em{font-style:italic;color:var(--amber-dark);font-weight:400;font-size:15px}
+  main h4{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);margin:16px 0 8px}
+  main p{margin-bottom:10px;color:var(--text)}
+  main p.lead{color:var(--text-mid);font-size:14px;margin-bottom:16px}
+
+  /* Dimension tables */
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 16px;background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+  thead th{background:var(--cream-warm);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);text-align:left;padding:10px 12px;border-bottom:1px solid var(--border-mid)}
+  tbody td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:var(--cream)}
+  td.k{font-weight:600;color:var(--oxblood-1);font-size:12px}
+  td.mono, code, pre{font-family:'Consolas','Monaco',monospace}
+  td.mono{color:var(--amber-dark);font-size:12px;font-weight:600}
+
+  /* Color swatches */
+  .swatch{display:inline-flex;align-items:center;gap:8px;font-family:'Consolas',monospace;font-size:12px;padding:3px 10px 3px 3px;background:var(--white);border:1px solid var(--border);border-radius:50px;margin:2px 4px 2px 0;color:var(--text)}
+  .sw-dot{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,0.1);flex-shrink:0}
+  .swatch b{font-weight:700;color:var(--oxblood-0)}
+  .swatch span{color:var(--text-light)}
+
+  /* Code blocks */
+  code{background:var(--cream-warm);color:var(--maroon-dark,#7A4E1A);padding:1.5px 6px;border-radius:3px;font-size:12px}
+  pre{background:var(--cream-warm);color:var(--oxblood-0);padding:14px 16px;border-radius:6px;border:1px solid var(--border);font-size:12px;line-height:1.55;overflow-x:auto;margin:12px 0;white-space:pre}
+  pre code{background:none;padding:0;font-size:inherit;color:inherit}
+
+  /* Callouts */
+  .callout{border-left:3px solid;padding:12px 16px 12px 14px;margin:14px 0;border-radius:0 6px 6px 0;font-size:13px;line-height:1.55}
+  .callout-tip{background:rgba(184,137,58,0.08);border-color:var(--amber)}
+  .callout-warn{background:rgba(140,30,42,0.06);border-color:var(--red)}
+  .callout-note{background:rgba(67,6,31,0.05);border-color:var(--oxblood-1)}
+  .callout-do{background:rgba(46,125,79,0.08);border-color:var(--green)}
+  .callout strong{display:block;font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:3px}
+  .callout-tip strong{color:var(--amber-dark)}
+  .callout-warn strong{color:var(--red)}
+  .callout-note strong{color:var(--oxblood-1)}
+  .callout-do strong{color:var(--green)}
+
+  /* Step lists */
+  ol.steps{counter-reset:step;list-style:none;padding:0;margin:8px 0 16px}
+  ol.steps > li{counter-increment:step;position:relative;padding-left:38px;margin-bottom:12px;color:var(--text)}
+  ol.steps > li::before{content:counter(step);position:absolute;left:0;top:-2px;width:26px;height:26px;border-radius:50%;background:var(--oxblood-1);color:var(--cream-title);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Consolas',monospace}
+
+  ul.plain{list-style:none;padding:0;margin:8px 0 14px}
+  ul.plain li{padding-left:20px;position:relative;margin-bottom:6px;color:var(--text)}
+  ul.plain li::before{content:'▸';position:absolute;left:0;color:var(--amber);font-weight:600}
+
+  /* Text snippets */
+  .snippet{background:var(--white);border:1px solid var(--border-mid);border-radius:6px;padding:12px 16px;font-size:13px;margin:8px 0 14px;display:flex;align-items:center;gap:12px}
+  .snippet-label{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-dark);flex-shrink:0}
+  .snippet-text{flex:1;font-family:'Segoe UI',sans-serif;color:var(--text)}
+  .snippet.italic .snippet-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px}
+
+  /* Layer list */
+  .layers{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:14px 18px;margin:12px 0;font-size:13px}
+  .layers-title{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  .layers ol{list-style:none;counter-reset:layer;padding:0}
+  .layers li{counter-increment:layer;position:relative;padding:4px 0 4px 32px;color:var(--text-mid)}
+  .layers li::before{content:counter(layer);position:absolute;left:0;top:5px;font-family:'Consolas',monospace;font-size:10.5px;font-weight:700;color:var(--amber-dark);background:var(--cream-warm);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+
+  /* Visualisation grid */
+  .preview-img{width:100%;border-radius:6px;margin:12px 0 16px;border:1px solid var(--border);display:block}
+
+  /* Footer */
+  .footer{background:var(--ink);color:rgba(247,235,212,0.55);padding:28px 40px;font-size:11px;letter-spacing:0.08em;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .footer a{color:var(--honey);text-decoration:none;font-weight:600}
+  .footer a:hover{text-decoration:underline}
+
+  @media (max-width:960px){
+    .shell{grid-template-columns:1fr}
+    aside{position:relative;height:auto;border-right:none;border-bottom:1px solid var(--border)}
+    main{padding:28px 24px 60px}
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <div><span class="ribbon-dot"></span>Qatar Airways · Dashboard Directory · Implementation Guide</div>
+  <div><a href="index.html">← Back to preview hub</a></div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="kicker">Power BI Build Tutorial</div>
+    <h1>Build it, <em>step by step.</em></h1>
+    <p class="lede">Everything you need to reproduce the "Find Your Dashboard" landing page in Power BI Desktop 2025 — exact dimensions, hex + RGB for every element, text content, and the DAX measures that tie it together.</p>
+    <div class="hero-meta">
+      <span>⏱ <b>~3 hours</b> total</span>
+      <span>📐 <b>1280 × 1100</b> canvas</span>
+      <span>🎨 <b>15 colours</b></span>
+      <span>🧩 <b>9 sections</b></span>
+      <span>📊 <b>6 DAX measures</b></span>
+    </div>
+  </div>
+</section>
+
+<div class="shell">
+
+  <aside>
+    <h4>Setup</h4>
+    <a href="#prereq"><span class="step-num">00</span> Prerequisites</a>
+    <a href="#canvas"><span class="step-num">01</span> Canvas &amp; theme</a>
+    <a href="#data"><span class="step-num">02</span> Data model &amp; DAX</a>
+
+    <h4>Build</h4>
+    <a href="#ribbon"><span class="step-num">03</span> Top ribbon</a>
+    <a href="#banner"><span class="step-num">04</span> Banner</a>
+    <a href="#nav"><span class="step-num">05</span> Nav strip</a>
+    <a href="#panel"><span class="step-num">06</span> White panel</a>
+    <a href="#examples"><span class="step-num">07</span> Examples row</a>
+    <a href="#kpi"><span class="step-num">08</span> KPI band</a>
+    <a href="#grid"><span class="step-num">09</span> Main grid</a>
+    <a href="#gallery"><span class="step-num">10</span> Gallery strip</a>
+    <a href="#footer"><span class="step-num">11</span> Footer</a>
+
+    <h4>Finish</h4>
+    <a href="#interactions"><span class="step-num">12</span> Edit interactions</a>
+    <a href="#test"><span class="step-num">13</span> Test &amp; publish</a>
+
+    <h4>Reference</h4>
+    <a href="#palette">Full palette</a>
+    <a href="#quickref">Dimensions quick-ref</a>
+    <a href="#spacing">Padding &amp; margins</a>
+    <a href="#trouble">Troubleshooting</a>
+  </aside>
+
+  <main>
+
+    <!-- ══════════════════════════════════════ 00 · PREREQUISITES ══════════════════════════════════════ -->
+    <section id="prereq">
+      <h2>Before you start <span class="section-num">00</span></h2>
+      <p class="lead">Download every asset before opening Power BI. Keep filenames intact — the guide references each one by its exact filename.</p>
+
+      <h4>Asset checklist</h4>
+      <table>
+        <thead><tr><th>File</th><th>What it is</th><th>Used in</th></tr></thead>
+        <tbody>
+          <tr><td class="mono"><a href="qatar-theme.json" download>qatar-theme.json</a></td><td>Report theme (colours, fonts, visual defaults)</td><td>Step 01</td></tr>
+          <tr><td class="mono"><a href="qatar-777-worldcup.jpg" download>qatar-777-worldcup.jpg</a></td><td>Banner hero photo — 1600 × 1067</td><td>Step 04</td></tr>
+          <tr><td class="mono"><a href="doha-skyline.jpg" download>doha-skyline.jpg</a></td><td>Alternative banner · dusk skyline</td><td>Step 04 / 10</td></tr>
+          <tr><td class="mono"><a href="doha-aerial.jpg" download>doha-aerial.jpg</a></td><td>Alternative banner · daytime aerial</td><td>Step 04 / 10</td></tr>
+          <tr><td class="mono"><a href="qatar-cabin.jpg" download>qatar-cabin.jpg</a></td><td>Alternative banner · cabin interior</td><td>Step 04 / 10</td></tr>
+          <tr><td class="mono"><a href="qatar-qsuite.jpg" download>qatar-qsuite.jpg</a></td><td>Qsuite photo · for drillthrough / gallery</td><td>Step 10</td></tr>
+          <tr><td class="mono"><a href="sample-data.csv" download>sample-data.csv</a></td><td>13-row sample of DashboardDirectory</td><td>Step 02</td></tr>
+          <tr><td class="mono"><a href="dax-measures.txt" download>dax-measures.txt</a></td><td>Ready-to-paste DAX measures</td><td>Step 02</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>Tip</strong>
+        Right-click each link above → <em>Save link as…</em> to a dedicated folder (e.g. <code>C:\PBI\qa-dashboard\</code>). The tutorial references them by filename only.
+      </div>
+
+      <h4>Requirements</h4>
+      <ul class="plain">
+        <li>Power BI Desktop — <b>June 2024 build or newer</b> (needs Tile slicers &amp; Set-slicer button actions)</li>
+        <li><em>Word Cloud by Microsoft</em> custom visual — AppSource, free</li>
+        <li>A workspace to publish to</li>
+      </ul>
+    </section>
+
+    <!-- ══════════════════════════════════════ 01 · CANVAS & THEME ══════════════════════════════════════ -->
+    <section id="canvas">
+      <h2>Canvas &amp; theme <span class="section-num">01</span></h2>
+      <p class="lead">Set the canvas size first so every subsequent coordinate stays accurate. Then import the theme, which removes about 40 % of manual styling.</p>
+
+      <h3>1.1 Canvas size</h3>
+      <p>With no visual selected, open <b>Format page → Canvas settings</b> and set:</p>
+      <table>
+        <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Type</td><td>Custom</td></tr>
+          <tr><td class="k">Width</td><td class="mono">1280</td></tr>
+          <tr><td class="k">Height</td><td class="mono">1100</td></tr>
+          <tr><td class="k">Vertical alignment</td><td>Top</td></tr>
+        </tbody>
+      </table>
+
+      <h3>1.2 Canvas background</h3>
+      <p>Under <b>Format page → Canvas background</b>:</p>
+      <table>
+        <tbody>
+          <tr><td class="k">Colour</td><td>
+            <span class="swatch"><span class="sw-dot" style="background:#FBF6EC"></span><b>#FBF6EC</b> <span>· 251 · 246 · 236</span></span>
+          </td></tr>
+          <tr><td class="k">Transparency</td><td class="mono">0 %</td></tr>
+        </tbody>
+      </table>
+
+      <h3>1.3 Import the theme</h3>
+      <ol class="steps">
+        <li><b>View → Themes → Browse for themes</b></li>
+        <li>Select <code>qatar-theme.json</code> → <b>Open</b></li>
+      </ol>
+      <div class="callout callout-do">
+        <strong>What this unlocks</strong>
+        Button fills default to <code>#43061F</code>, button text to <code>#F7EBD4</code>, matrix grid lines to <code>#E8DFD0</code>, slicer border to <code>#D6C9B6</code>. You can place visuals freely and they inherit the brand.
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════ 02 · DATA & DAX ══════════════════════════════════════ -->
+    <section id="data">
+      <h2>Data model &amp; DAX <span class="section-num">02</span></h2>
+      <p class="lead">One master table drives every visual on the page. The tile slicer, search slicer, matrix, cloud and KPI cards all read from <code>DashboardDirectory</code>.</p>
+
+      <h3>2.1 DashboardDirectory table</h3>
+      <p><b>Home → Get Data → Text/CSV</b> → pick <code>sample-data.csv</code> → <b>Load</b>. In the Data pane, rename the loaded table to <code>DashboardDirectory</code>.</p>
+
+      <table>
+        <thead><tr><th>Column</th><th>Type</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="k">DashboardName</td><td>Text</td><td>OTP &amp; Delay Analysis</td></tr>
+          <tr><td class="k">Description</td><td>Text</td><td>Real-time on-time performance…</td></tr>
+          <tr><td class="k">Category</td><td>Text</td><td>Flight Ops</td></tr>
+          <tr><td class="k">URL</td><td>Text (Web URL)</td><td>https://app.powerbi.com/…</td></tr>
+          <tr><td class="k">Keywords</td><td>Text (comma-sep)</td><td>otp, delay, punctuality</td></tr>
+          <tr><td class="k">Owner</td><td>Text</td><td>Aisha Rahman</td></tr>
+          <tr><td class="k">Department</td><td>Text</td><td>IOC Control</td></tr>
+          <tr><td class="k">RefreshFrequency</td><td>Text</td><td>Hourly</td></tr>
+          <tr><td class="k">LastRefresh</td><td>Datetime</td><td>2026-04-22 09:40</td></tr>
+          <tr><td class="k">CreatedOn</td><td>Date</td><td>2025-02-03</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-warn">
+        <strong>Critical</strong>
+        Click the <code>URL</code> column → <b>Column tools → Data category → Web URL</b>. Without this step, the dashboard name in the matrix will not render as a clickable link.
+      </div>
+
+      <h3>2.2 Measures <em>· paste each into DashboardDirectory</em></h3>
+      <p>Right-click <code>DashboardDirectory</code> in the Data pane → <b>New measure</b> → paste each block below.</p>
+
+<pre><code>TotalDashboards = COUNTROWS(DashboardDirectory)
+
+NewThisMonth =
+CALCULATE(
+    COUNTROWS(DashboardDirectory),
+    DashboardDirectory[CreatedOn] &gt;= TODAY() - 30
+)
+
+FreshPct =
+DIVIDE(
+    COUNTROWS(
+        FILTER(
+            DashboardDirectory,
+            SWITCH(
+                DashboardDirectory[RefreshFrequency],
+                "Real-time", (NOW() - DashboardDirectory[LastRefresh]) * 24 * 60 &lt;= 5,
+                "Hourly",    (NOW() - DashboardDirectory[LastRefresh]) * 24 &lt;= 2,
+                "Daily",     (NOW() - DashboardDirectory[LastRefresh]) &lt;= 1.1,
+                "Weekly",    (NOW() - DashboardDirectory[LastRefresh]) &lt;= 8,
+                TRUE
+            )
+        )
+    ),
+    COUNTROWS(DashboardDirectory)
+)
+
+PastSLACount =
+COUNTROWS(DashboardDirectory) - [FreshPct] * COUNTROWS(DashboardDirectory)
+
+ResultsCount =
+VAR _cat = SELECTEDVALUE(DashboardDirectory[Category], "All areas")
+VAR _n   = COUNTROWS(DashboardDirectory)
+RETURN _n &amp; " dashboards in " &amp; _cat
+
+LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
+</code></pre>
+    </section>
+
+    <!-- ══════════════════════════════════════ 03 · RIBBON ══════════════════════════════════════ -->
+    <section id="ribbon">
+      <h2>Top ribbon <span class="section-num">03</span></h2>
+      <p class="lead">A 28-pixel bar at the very top. Sets the tone of the page before the hero banner.</p>
+
+      <h3>3.1 Background rectangle</h3>
+      <p>Insert → <b>Shapes → Rectangle</b>. In Format → Shape → General → <b>Properties</b>:</p>
+      <table>
+        <tbody>
+          <tr><td class="k">X</td><td class="mono">0</td></tr>
+          <tr><td class="k">Y</td><td class="mono">0</td></tr>
+          <tr><td class="k">Width</td><td class="mono">1280</td></tr>
+          <tr><td class="k">Height</td><td class="mono">28</td></tr>
+        </tbody>
+      </table>
+      <p>Format → Shape:</p>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#1F0310"></span><b>#1F0310</b> <span>· 31 · 3 · 16</span></span> · 0 % transparency</td></tr>
+          <tr><td class="k">Border</td><td>Off</td></tr>
+          <tr><td class="k">Shadow</td><td>Off</td></tr>
+        </tbody>
+      </table>
+
+      <h3>3.2 Left text</h3>
+      <p>Insert → <b>Text box</b>. Place at X=24, Y=6, W=400, H=16.</p>
+      <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">● QATAR AIRWAYS · DASHBOARD DIRECTORY</span></div>
+      <table>
+        <tbody>
+          <tr><td class="k">Font</td><td>Segoe UI 9 pt · not bold</td></tr>
+          <tr><td class="k">Colour (main text)</td><td><span class="swatch"><span class="sw-dot" style="background:#BCA9AE"></span><b>#BCA9AE</b> <span>· 188 · 169 · 174</span></span></td></tr>
+          <tr><td class="k">Colour (● bullet only)</td><td><span class="swatch"><span class="sw-dot" style="background:#B8893A"></span><b>#B8893A</b> <span>· 184 · 137 · 58</span></span></td></tr>
+          <tr><td class="k">Letter spacing</td><td>Use UPPERCASE text (PBI doesn't expose tracking)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>3.3 Right text</h3>
+      <p>Insert → <b>Text box</b>. Place at X=1140, Y=7, W=120, H=14. Right-align.</p>
+      <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">INTERNAL USE ONLY</span></div>
+      <table>
+        <tbody>
+          <tr><td class="k">Font</td><td>Segoe UI 8 pt</td></tr>
+          <tr><td class="k">Colour</td><td><span class="swatch"><span class="sw-dot" style="background:#BCA9AE"></span><b>#BCA9AE</b> <span>· 188 · 169 · 174</span></span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ══════════════════════════════════════ 04 · BANNER ══════════════════════════════════════ -->
+    <section id="banner">
+      <h2>Banner <span class="section-num">04</span></h2>
+      <p class="lead">The hero section. Photo + scrim + 3-column layout for title, pinned tiles, and search. Canonical variant below is <b>Option E · Qatar 777 FIFA livery</b>; other photos swap the image file and adjust the scrim position.</p>
+
+      <h3>4.1 Banner image</h3>
+      <p>Insert → <b>Image</b> → select <code>qatar-777-worldcup.jpg</code>. Place:</p>
+      <table>
+        <tbody>
+          <tr><td class="k">X</td><td class="mono">0</td></tr>
+          <tr><td class="k">Y</td><td class="mono">28</td></tr>
+          <tr><td class="k">Width</td><td class="mono">1280</td></tr>
+          <tr><td class="k">Height</td><td class="mono">220</td></tr>
+          <tr><td class="k">Scaling</td><td><b>Fill</b> (keeps aspect, crops if needed)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>4.2 Scrim (solid overlay)</h3>
+      <p>Insert <b>Rectangle</b> directly over the image at the same coordinates (X=0, Y=28, W=1280, H=220).</p>
+
+      <h4>Simple version — one shape</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill colour</td><td><span class="swatch"><span class="sw-dot" style="background:#2A0311"></span><b>#2A0311</b> <span>· 42 · 3 · 17</span></span></td></tr>
+          <tr><td class="k">Transparency</td><td class="mono">25 %</td></tr>
+          <tr><td class="k">Border</td><td>Off</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Two-layer version — closer to the HTML gradient</h4>
+      <table>
+        <thead><tr><th>Layer</th><th>Size &amp; position</th><th>Fill</th><th>Transparency</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="k">Base wash</td>
+            <td class="mono">X=0 Y=28 W=1280 H=220</td>
+            <td><span class="swatch"><span class="sw-dot" style="background:#2A0311"></span><b>#2A0311</b></span></td>
+            <td class="mono">30 %</td>
+          </tr>
+          <tr>
+            <td class="k">Left emphasis</td>
+            <td class="mono">X=0 Y=28 W=768 H=220</td>
+            <td><span class="swatch"><span class="sw-dot" style="background:#1A030E"></span><b>#1A030E</b> <span>· 26 · 3 · 14</span></span></td>
+            <td class="mono">15 %</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>4.3 Gold hairline at bottom</h3>
+      <p>Insert <b>Rectangle</b> at X=0, Y=246, W=1280, H=2:</p>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill colour</td><td><span class="swatch"><span class="sw-dot" style="background:#D9B268"></span><b>#D9B268</b> <span>· 217 · 178 · 104</span></span></td></tr>
+          <tr><td class="k">Transparency</td><td class="mono">35 %</td></tr>
+        </tbody>
+      </table>
+
+      <h3>4.4 Title block <em>· left zone</em></h3>
+      <p>Place three stacked text boxes anchored to X=40.</p>
+
+      <h4>Eyebrow · X=40 Y=54 W=260 H=14</h4>
+      <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">— BUSINESS INTELLIGENCE PORTAL</span></div>
+      <ul class="plain">
+        <li>Font: Segoe UI Semibold 9 pt</li>
+        <li>Colour: <span class="swatch"><span class="sw-dot" style="background:#E6C179"></span><b>#E6C179</b> <span>· 230 · 193 · 121</span></span> (honey)</li>
+      </ul>
+
+      <h4>Title · X=40 Y=74 W=540 H=64</h4>
+      <div class="snippet italic"><span class="snippet-label">Text</span><span class="snippet-text">Find Your <em>Dashboard.</em></span></div>
+      <ul class="plain">
+        <li>Font: Georgia 40 pt (or Cormorant Garamond if installed on your machine)</li>
+        <li>"Find Your" colour: <span class="swatch"><span class="sw-dot" style="background:#F7EBD4"></span><b>#F7EBD4</b> <span>· 247 · 235 · 212</span></span></li>
+        <li>"Dashboard." word only: <b>Italic</b>, colour <span class="swatch"><span class="sw-dot" style="background:#E6C179"></span><b>#E6C179</b> <span>· 230 · 193 · 121</span></span></li>
+      </ul>
+
+      <h4>Subtitle · X=40 Y=144 W=560 H=18</h4>
+      <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">Search by dashboard name, keyword or business description.</span></div>
+      <ul class="plain">
+        <li>Font: Segoe UI 12 pt</li>
+        <li>Colour: <span class="swatch"><span class="sw-dot" style="background:#F7EBD4"></span><b>#F7EBD4</b></span> at <b>65 % opacity</b> (use alpha channel or set to <code>#A89A8B</code>)</li>
+      </ul>
+
+      <h3>4.5 Pinned tiles <em>· centre zone</em></h3>
+      <p>A label + row of 3 small rectangles. Each tile is a <b>Button → Blank</b> with a Web URL action pointing at a specific dashboard.</p>
+
+      <h4>"Pinned by you" label · X=640 Y=90 W=120 H=14</h4>
+      <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">PINNED BY YOU</span></div>
+      <ul class="plain"><li>Font: Segoe UI 9 pt Semibold · colour <code>#E6C179</code></li></ul>
+
+      <h4>Each tile · 96 × 36 px · 8 px gap between tiles</h4>
+      <table>
+        <thead><tr><th>Tile #</th><th>X</th><th>Y</th><th>Label (Line 1)</th><th>Line 2</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">1</td><td class="mono">640</td><td class="mono">110</td><td>OTP Tracker</td><td>Flight Ops</td></tr>
+          <tr><td class="mono">2</td><td class="mono">744</td><td class="mono">110</td><td>Fuel Uplift</td><td>Fuel</td></tr>
+          <tr><td class="mono">3</td><td class="mono">848</td><td class="mono">110</td><td>Crew Roster</td><td>Crew Ctrl</td></tr>
+        </tbody>
+      </table>
+      <p>Format → Button → Shape:</p>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#F7EBD4;opacity:0.08"></span><b>rgba(247,235,212,0.08)</b></span></td></tr>
+          <tr><td class="k">Border</td><td><span class="swatch"><span class="sw-dot" style="background:#D9B268;opacity:0.4"></span><b>#D9B268</b></span> · 1 px · 55 % transparency · rounded 4 px</td></tr>
+          <tr><td class="k">Text line 1</td><td>Segoe UI Semibold 10 pt · <code>#F7EBD4</code></td></tr>
+          <tr><td class="k">Text line 2</td><td>Segoe UI 8 pt · <code>#E6C179</code> · uppercase · letter-space 0.1 em</td></tr>
+          <tr><td class="k">Action</td><td>Type: <b>Web URL</b> · paste the dashboard's link</td></tr>
+        </tbody>
+      </table>
+
+      <h3>4.6 Search box <em>· right zone</em></h3>
+      <p>A Slicer visual in <b>Search</b> style, bound to <code>DashboardDirectory[Keywords]</code>.</p>
+
+      <h4>Label · X=988 Y=90 W=100 H=14</h4>
+      <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">SEARCH</span></div>
+      <ul class="plain"><li>Font: Segoe UI 9 pt Semibold · colour <code>#E6C179</code></li></ul>
+
+      <h4>Slicer · X=988 Y=110 W=252 H=40</h4>
+      <ol class="steps">
+        <li>Insert → <b>Slicer</b></li>
+        <li>Drag <code>DashboardDirectory[Keywords]</code> into the Field well</li>
+        <li>Format → Visual → <b>Slicer settings → Style</b> → <b>Search</b></li>
+        <li>Format → Visual → Selection controls → hide the checkbox list (set its area height to minimum)</li>
+      </ol>
+      <table>
+        <tbody>
+          <tr><td class="k">Background</td><td><span class="swatch"><span class="sw-dot" style="background:#FBF6EC"></span><b>#FBF6EC</b> <span>· 251 · 246 · 236</span></span> · 3 % transparency</td></tr>
+          <tr><td class="k">Border</td><td><code>#D9B268</code> · 1.5 px · rounded 4 px</td></tr>
+          <tr><td class="k">Shadow</td><td>Outer · <code>#000000</code> · 75 % transparency · blur 14 · distance 4</td></tr>
+          <tr><td class="k">Input font</td><td>Segoe UI 13 pt · colour <code>#1A0D12</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ══════════════════════════════════════ 05 · NAV STRIP ══════════════════════════════════════ -->
+    <section id="nav">
+      <h2>Nav strip <span class="section-num">05</span></h2>
+      <p class="lead">Category pills. Use a single <b>Tile slicer</b> — PBI 2025's best feature for this job. Replaces the 12-bookmark pattern from older tutorials.</p>
+
+      <h3>5.1 Background band</h3>
+      <p>Insert <b>Rectangle</b> at X=0, Y=248, W=1280, H=44.</p>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#B8893A"></span><b>#B8893A</b></span> at <b>22 % opacity</b> (≈ <code>rgba(184,137,58,0.22)</code>)</td></tr>
+          <tr><td class="k">Border top</td><td>1 px · <code>#B8893A</code> · 35 % opacity</td></tr>
+          <tr><td class="k">Border bottom</td><td>1 px · <code>#B8893A</code> · 20 % opacity</td></tr>
+        </tbody>
+      </table>
+
+      <h3>5.2 Category Tile slicer</h3>
+      <p>Position at X=28, Y=254, W=900, H=32.</p>
+      <ol class="steps">
+        <li>Insert → <b>Slicer</b></li>
+        <li>Drag <code>DashboardDirectory[Category]</code> into the Field well</li>
+        <li>Format → Visual → Slicer settings → Style → <b>Tile</b></li>
+        <li>Selection controls → Single select <b>On</b> · Show "Select all" option <b>On</b> (this becomes "All Areas")</li>
+        <li>Rename the "Select all" label to <code>All Areas</code></li>
+      </ol>
+      <table>
+        <tbody>
+          <tr><td class="k">Font</td><td>Segoe UI Semibold 11 pt</td></tr>
+          <tr><td class="k">Default text</td><td><code>#43061F</code></td></tr>
+          <tr><td class="k">Default background</td><td>Transparent</td></tr>
+          <tr><td class="k">Selected text</td><td><code>#F7EBD4</code></td></tr>
+          <tr><td class="k">Selected background</td><td><code>#43061F</code></td></tr>
+          <tr><td class="k">Hover background</td><td><code>#43061F</code> at 8 % opacity</td></tr>
+          <tr><td class="k">Padding</td><td>5 top/bottom · 12 left/right</td></tr>
+          <tr><td class="k">Border radius</td><td>50 px (fully rounded)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>5.3 Count text on the right</h3>
+      <p>Card visual or text box at X=948, Y=258, W=300, H=22.</p>
+      <ol class="steps">
+        <li>Insert → <b>Card</b></li>
+        <li>Field: <code>[ResultsCount]</code></li>
+        <li>Format → Callout value → Font Cormorant Garamond italic 14 pt (or Georgia italic 14 pt)</li>
+        <li>Colour: <code>#43061F</code></li>
+        <li>Label: Off · Background: Transparent</li>
+      </ol>
+    </section>
+
+    <!-- ══════════════════════════════════════ 06 · PANEL ══════════════════════════════════════ -->
+    <section id="panel">
+      <h2>White content panel <span class="section-num">06</span></h2>
+      <p class="lead">The card that holds every interactive element. Acts as a visual container with shadow, giving the page a layered feel.</p>
+
+      <h3>6.1 Panel rectangle</h3>
+      <p>Insert <b>Rectangle</b>:</p>
+      <table>
+        <tbody>
+          <tr><td class="k">X · Y · W · H</td><td class="mono">32 · 308 · 1216 · 820</td></tr>
+          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#FFFFFF"></span><b>#FFFFFF</b> <span>· 255 · 255 · 255</span></span></td></tr>
+          <tr><td class="k">Border</td><td><code>#E8DFD0</code> · 1 px · rounded 6 px</td></tr>
+          <tr><td class="k">Shadow</td><td>Outer · Colour <code>#2A0311</code> · Transparency <b>88 %</b> · Blur <b>24</b> · Distance <b>6</b></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-note">
+        <strong>Layering</strong>
+        The panel sits above the canvas background but <em>below</em> every interactive visual. Everything in steps 07–11 is placed on top of this rectangle.
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════ 07 · EXAMPLES ══════════════════════════════════════ -->
+    <section id="examples">
+      <h2>Examples row <span class="section-num">07</span></h2>
+      <p class="lead">Five pre-built search chips. Each one is a button with a <b>Set slicer</b> action that pushes a term into the search slicer. Zero bookmarks.</p>
+
+      <h3>7.1 Label · X=60 Y=332 W=90 H=22</h3>
+      <div class="snippet italic"><span class="snippet-label">Text</span><span class="snippet-text">Examples:</span></div>
+      <ul class="plain"><li>Font: Georgia italic 14 pt · colour <code>#524148</code></li></ul>
+
+      <h3>7.2 Five chip buttons · each ~100 × 26 px · 10 px gap</h3>
+      <table>
+        <thead><tr><th>Chip</th><th>X</th><th>Y</th><th>Label</th><th>Push to search</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">1</td><td class="mono">156</td><td class="mono">332</td><td>OTP</td><td><code>otp</code></td></tr>
+          <tr><td class="mono">2</td><td class="mono">218</td><td class="mono">332</td><td>Delay</td><td><code>delay</code></td></tr>
+          <tr><td class="mono">3</td><td class="mono">288</td><td class="mono">332</td><td>Fuel uplift</td><td><code>fuel</code></td></tr>
+          <tr><td class="mono">4</td><td class="mono">376</td><td class="mono">332</td><td>GLP code</td><td><code>glp</code></td></tr>
+          <tr><td class="mono">5</td><td class="mono">456</td><td class="mono">332</td><td>Crew roster</td><td><code>crew</code></td></tr>
+        </tbody>
+      </table>
+
+      <h4>Chip formatting</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill</td><td><code>#F3EADA</code> · 243 · 234 · 218</td></tr>
+          <tr><td class="k">Border</td><td><code>#D6C9B6</code> · 1 px · rounded 50 px (pill)</td></tr>
+          <tr><td class="k">Text</td><td>Segoe UI Semibold 11 pt · <code>#43061F</code></td></tr>
+          <tr><td class="k">Hover fill</td><td><code>#43061F</code> · text becomes <code>#F7EBD4</code></td></tr>
+          <tr><td class="k">Action type</td><td><b>Set slicer</b></td></tr>
+          <tr><td class="k">Destination</td><td>The search slicer built in step 4.6</td></tr>
+          <tr><td class="k">Value</td><td>The literal term in the last column of the table above</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ══════════════════════════════════════ 08 · KPI BAND ══════════════════════════════════════ -->
+    <section id="kpi">
+      <h2>KPI band <span class="section-num">08</span></h2>
+      <p class="lead">Five small metric cards in a horizontal strip. Every card auto-filters when the user clicks a category in the nav strip.</p>
+
+      <h3>8.1 Card grid <em>· 5 cards, 10 px gap</em></h3>
+      <table>
+        <thead><tr><th>#</th><th>Position (X, Y)</th><th>Size (W × H)</th><th>Measure</th><th>Label above</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">1</td><td class="mono">60, 382</td><td class="mono">228 × 88</td><td><code>[TotalDashboards]</code></td><td>Dashboards</td></tr>
+          <tr><td class="mono">2</td><td class="mono">298, 382</td><td class="mono">228 × 88</td><td><code>[NewThisMonth]</code></td><td>New this month</td></tr>
+          <tr><td class="mono">3</td><td class="mono">536, 382</td><td class="mono">228 × 88</td><td><code>[FreshPct]</code></td><td>Fresh %</td></tr>
+          <tr><td class="mono">4</td><td class="mono">774, 382</td><td class="mono">228 × 88</td><td><code>[PastSLACount]</code></td><td>Past SLA</td></tr>
+          <tr><td class="mono">5</td><td class="mono">1012, 382</td><td class="mono">228 × 88</td><td>Newest addition (see below)</td><td>Most recent</td></tr>
+        </tbody>
+      </table>
+
+      <h3>8.2 Card formatting <em>· apply to all 5</em></h3>
+      <ol class="steps">
+        <li>Insert → <b>Card</b> (new card visual — multi-row variant)</li>
+        <li>Drag measure into Fields</li>
+      </ol>
+      <table>
+        <tbody>
+          <tr><td class="k">Background</td><td><code>#FBF6EC</code> · 0 % transparency</td></tr>
+          <tr><td class="k">Border</td><td><code>#E8DFD0</code> · 1 px · rounded 6 px</td></tr>
+          <tr><td class="k">Callout value font</td><td>Cormorant Garamond (or Georgia) Semibold 30 pt · <code>#2A0311</code></td></tr>
+          <tr><td class="k">Reference label font</td><td>Segoe UI 9.5 pt Bold · <code>#524148</code> · UPPERCASE · letter-space 0.12 em</td></tr>
+          <tr><td class="k">Bottom accent (optional)</td><td>Draw a 2-px rectangle at card bottom, fill linear gradient <code>#B8893A → #D9B268</code>, transparency 30 %</td></tr>
+        </tbody>
+      </table>
+
+      <h3>8.3 Newest addition card · text content</h3>
+      <p>For card #5, use a text-style card. Create a supporting measure:</p>
+<pre><code>MostRecentDashboard =
+VAR _max = MAXX(DashboardDirectory, DashboardDirectory[CreatedOn])
+RETURN
+CALCULATE(
+    MAX(DashboardDirectory[DashboardName]),
+    DashboardDirectory[CreatedOn] = _max
+)
+</code></pre>
+      <p>Font: Segoe UI Semibold 15 pt · colour <code>#43061F</code> · 2 lines max, wrap enabled.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════ 09 · MAIN GRID ══════════════════════════════════════ -->
+    <section id="grid">
+      <h2>Main grid <span class="section-num">09</span></h2>
+      <p class="lead">Three columns side by side: Most Popular (or Recently Added until popularity data exists) · Keyword cloud · Sortable dashboard list with metadata. Each column is 450 px tall.</p>
+
+      <h3>9.1 Column positions <em>· 18 px gap</em></h3>
+      <table>
+        <thead><tr><th>Column</th><th>X</th><th>Y</th><th>W</th><th>H</th></tr></thead>
+        <tbody>
+          <tr><td class="k">1 · Most Popular / Recently Added</td><td class="mono">60</td><td class="mono">490</td><td class="mono">375</td><td class="mono">450</td></tr>
+          <tr><td class="k">2 · Keyword cloud</td><td class="mono">453</td><td class="mono">490</td><td class="mono">340</td><td class="mono">450</td></tr>
+          <tr><td class="k">3 · Dashboard list</td><td class="mono">811</td><td class="mono">490</td><td class="mono">409</td><td class="mono">450</td></tr>
+        </tbody>
+      </table>
+
+      <h3>9.2 Column 1 · Most Popular (or Recently Added)</h3>
+      <p>Until view-log data exists, use <b>Recently Added</b> — same visual, different sort.</p>
+      <ol class="steps">
+        <li>Insert → <b>Clustered bar chart</b> (used as a ranked list — orientation horizontal)</li>
+        <li>Axis: <code>DashboardName</code></li>
+        <li>Values: <code>[Views30d]</code> if you have it, else <code>DashboardDirectory[CreatedOn]</code> — recent first</li>
+        <li>Format → Visual → Sorting → <b>Sort by [field] · Descending</b></li>
+        <li>Filter to <b>Top N = 5</b></li>
+      </ol>
+      <table>
+        <tbody>
+          <tr><td class="k">Bar fill</td><td>Linear gradient <code>#43061F → #B8893A</code> (use data-colour conditional on rank)</td></tr>
+          <tr><td class="k">Data labels</td><td>On · Segoe UI Semibold 10.5 pt · <code>#524148</code></td></tr>
+          <tr><td class="k">Axis title</td><td>Off · X-axis hidden · Y-axis values font 12.5 pt · <code>#43061F</code></td></tr>
+          <tr><td class="k">Background</td><td><code>#FBF6EC</code></td></tr>
+          <tr><td class="k">Border</td><td><code>#E8DFD0</code> · 1 px · rounded 6 px</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Column title · X=76 Y=506 W=340 H=22</h4>
+      <div class="snippet italic"><span class="snippet-label">Text</span><span class="snippet-text">Most Popular <em>· across all areas</em></span></div>
+      <ul class="plain"><li>Font: Cormorant Garamond 16 pt Semibold · <code>#2A0311</code></li></ul>
+
+      <h3>9.3 Column 2 · Keyword cloud</h3>
+      <ol class="steps">
+        <li>Visualizations → <b>Get more visuals</b> → AppSource → search "Word Cloud" by Microsoft → Add</li>
+        <li>Insert on your page</li>
+        <li>Category: <code>DashboardDirectory[Keywords]</code></li>
+        <li>Values: <code>COUNTROWS(DashboardDirectory)</code></li>
+      </ol>
+      <table>
+        <tbody>
+          <tr><td class="k">Data colours</td><td>Cycle through theme palette (already set by <code>qatar-theme.json</code>)</td></tr>
+          <tr><td class="k">Default font</td><td>Segoe UI Semibold</td></tr>
+          <tr><td class="k">Max font size</td><td>28</td></tr>
+          <tr><td class="k">Min font size</td><td>11</td></tr>
+          <tr><td class="k">Rotation</td><td>Off</td></tr>
+        </tbody>
+      </table>
+
+      <h3>9.4 Column 3 · Dashboard list</h3>
+      <p>Insert → <b>Matrix</b>. Position X=811, Y=530, W=409, H=410.</p>
+      <table>
+        <thead><tr><th>Well</th><th>Field</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Rows</td><td><code>DashboardDirectory[Description]</code> (hidden — used only for drillthrough context)</td></tr>
+          <tr><td class="k">Values 1</td><td><code>DashboardName</code> (header: "Dashboard")</td></tr>
+          <tr><td class="k">Values 2</td><td><code>Department</code></td></tr>
+          <tr><td class="k">Values 3</td><td><code>RefreshFrequency</code></td></tr>
+          <tr><td class="k">Values 4</td><td><code>LastRefresh</code> (format: "<code>d mmm · HH:MM</code>")</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Matrix formatting</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Style preset</td><td>None</td></tr>
+          <tr><td class="k">Column headers</td><td>Segoe UI Bold 9.5 pt · <code>#524148</code> · background <code>#F3EADA</code> · padding 10</td></tr>
+          <tr><td class="k">Values</td><td>Segoe UI 12 pt · <code>#1A0D12</code> · padding 10</td></tr>
+          <tr><td class="k">Grid horizontal</td><td>On · <code>#E8DFD0</code> · 1 px</td></tr>
+          <tr><td class="k">Grid vertical</td><td>Off</td></tr>
+          <tr><td class="k">Totals</td><td>Off</td></tr>
+          <tr><td class="k">Column widths</td><td>Dashboard 180 · Dept 95 · Freq 70 · Updated 64 (drag manually)</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Clickable Dashboard column</h4>
+      <ol class="steps">
+        <li>Right-click <code>DashboardName</code> in Values → <b>Conditional formatting → Web URL</b></li>
+        <li>Base on field: <code>URL</code></li>
+        <li><b>OK</b> — the cell now underlines and becomes clickable</li>
+        <li>Format → Values → Font colour → conditional rule → apply <code>#43061F</code> to the DashboardName column only</li>
+      </ol>
+
+      <h4>Refresh-frequency pill colours</h4>
+      <p>Format → Values → Background colour → conditional on the <code>RefreshFrequency</code> column:</p>
+      <table>
+        <thead><tr><th>Value</th><th>Background</th><th>Font colour</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Real-time</td><td><span class="swatch"><span class="sw-dot" style="background:#2E7D4F;opacity:0.12"></span><b>#2E7D4F</b> @ 12 %</span></td><td><code>#2E7D4F</code></td></tr>
+          <tr><td class="k">Hourly</td><td><span class="swatch"><span class="sw-dot" style="background:#43061F;opacity:0.10"></span><b>#43061F</b> @ 10 %</span></td><td><code>#43061F</code></td></tr>
+          <tr><td class="k">Daily</td><td><span class="swatch"><span class="sw-dot" style="background:#B8893A;opacity:0.18"></span><b>#B8893A</b> @ 18 %</span></td><td><code>#7A4E1A</code></td></tr>
+          <tr><td class="k">Weekly</td><td><span class="swatch"><span class="sw-dot" style="background:#8C1E2A;opacity:0.10"></span><b>#8C1E2A</b> @ 10 %</span></td><td><code>#8C1E2A</code></td></tr>
+          <tr><td class="k">On-demand</td><td><code>#E8DFD0</code></td><td><code>#524148</code></td></tr>
+        </tbody>
+      </table>
+
+      <h4>Sort field parameter · above the matrix · X=811 Y=500 W=409 H=26</h4>
+      <ol class="steps">
+        <li>Modeling → <b>New parameter → Fields</b></li>
+        <li>Name: <code>SortBy</code></li>
+        <li>Add fields: <code>[Views30d]</code> (label "Most popular"), <code>DashboardName</code> ("Name A–Z"), <code>LastRefresh</code> ("Recently updated"), <code>RefreshFrequency</code> ("Refresh cadence")</li>
+        <li>Check <b>Add slicer to this page</b></li>
+        <li>Format the new slicer as a <b>Tile slicer</b>, small pills</li>
+        <li>Drag the <code>SortBy</code> field into the matrix's Values well (at position 1). Right-click → Hide. It's now the driving sort key.</li>
+      </ol>
+    </section>
+
+    <!-- ══════════════════════════════════════ 10 · GALLERY ══════════════════════════════════════ -->
+    <section id="gallery">
+      <h2>Gallery strip <em>· optional</em> <span class="section-num">10</span></h2>
+      <p class="lead">Five Qatar-branded photo tiles at the bottom of the panel. Used in Options C and F. Skip this whole section if your chosen variant doesn't include it.</p>
+
+      <h3>10.1 Separator line · X=60 Y=964 W=1160 H=1</h3>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill</td><td><code>#E8DFD0</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>10.2 Five image tiles <em>· each 227 × 120 px · 10 px gap</em></h3>
+      <table>
+        <thead><tr><th>#</th><th>X</th><th>Y</th><th>Image</th><th>Kicker</th><th>Title</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">1</td><td class="mono">60</td><td class="mono">984</td><td><code>doha-aerial.jpg</code></td><td>NETWORK OPS</td><td>Doha hub · <em>daytime</em></td></tr>
+          <tr><td class="mono">2</td><td class="mono">297</td><td class="mono">984</td><td><code>doha-skyline.jpg</code></td><td>IOC</td><td>Dusk <em>operations</em></td></tr>
+          <tr><td class="mono">3</td><td class="mono">534</td><td class="mono">984</td><td><code>qatar-777-worldcup.jpg</code></td><td>FLEET</td><td>777 · <em>World Cup livery</em></td></tr>
+          <tr><td class="mono">4</td><td class="mono">771</td><td class="mono">984</td><td><code>qatar-cabin.jpg</code></td><td>FLIGHT OPS</td><td>Cabin <em>&amp; crew</em></td></tr>
+          <tr><td class="mono">5</td><td class="mono">1008</td><td class="mono">984</td><td><code>qatar-qsuite.jpg</code></td><td>CUSTOMER</td><td>Qsuite · <em>premium</em></td></tr>
+        </tbody>
+      </table>
+
+      <h4>Each tile — 3 stacked layers</h4>
+      <div class="layers">
+        <div class="layers-title">Bottom to top</div>
+        <ol>
+          <li><b>Image visual</b> · same coords as tile · scaling: Fill · rounded 6 px</li>
+          <li><b>Gradient scrim</b> · rectangle, same coords, fill <code>#2A0311</code> transparency 22 %, with a top-to-bottom linear gradient simulated by a second shape (top half 0 % fill)</li>
+          <li><b>Kicker text box</b> at bottom-left (padding 12 × 14 px from tile corner) · Segoe UI 9 pt Semibold · <code>#D9B268</code> · letter-space 0.22 em</li>
+          <li><b>Title text box</b> below kicker · Cormorant Garamond 15 pt · <code>#F7EBD4</code> · italic portion in <code>#E6C179</code></li>
+        </ol>
+      </div>
+
+      <div class="callout callout-tip">
+        <strong>Simpler tile</strong>
+        If the 3-layer tile feels heavy, bake the overlay into the image in Canva/Figma and insert one Image visual per tile. Still clickable via a Web URL action.
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════ 11 · FOOTER ══════════════════════════════════════ -->
+    <section id="footer">
+      <h2>Footer <span class="section-num">11</span></h2>
+      <p class="lead">A thin strip below the panel with page indicator and refresh timestamp.</p>
+
+      <h3>11.1 Separator line · X=60 Y=1112 W=1160 H=1</h3>
+      <p>Fill <code>#E8DFD0</code>.</p>
+
+      <h3>11.2 Left text · X=60 Y=1124 W=300 H=16</h3>
+      <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">PAGE 1 OF 3</span></div>
+      <ul class="plain"><li>Font: Segoe UI 9 pt Semibold · <code>#9C8680</code> · UPPERCASE · letter-space 0.08 em</li></ul>
+
+      <h3>11.3 Right text · X=860 Y=1124 W=360 H=16</h3>
+      <p>Card visual with <code>[LastRefreshFmt]</code> measure. Add a yellow square ahead of it:</p>
+      <ul class="plain">
+        <li>Small rectangle at X=838 Y=1129 W=10 H=10 · fill <code>#F2C811</code> · rounded 2 px</li>
+        <li>Card text: Segoe UI 10 pt Italic · <code>#9C8680</code></li>
+      </ul>
+
+      <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">Powered by Power BI · Last refresh: 22 Apr 2026, 09:40</span></div>
+    </section>
+
+    <!-- ══════════════════════════════════════ 12 · INTERACTIONS ══════════════════════════════════════ -->
+    <section id="interactions">
+      <h2>Edit interactions <span class="section-num">12</span></h2>
+      <p class="lead">The one manual wiring step. Set once, done forever. <b>Format → Edit interactions</b> in the top ribbon.</p>
+
+      <table>
+        <thead><tr><th>Source (click)</th><th>Target</th><th>Interaction</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Tile slicer (Category)</td><td>Matrix, Cloud, KPI cards, Most Popular</td><td>Filter</td></tr>
+          <tr><td class="k">Tile slicer (Category)</td><td>Banner search slicer</td><td><b>None</b></td></tr>
+          <tr><td class="k">Banner search slicer</td><td>Matrix, Cloud, KPI cards, Most Popular</td><td>Filter</td></tr>
+          <tr><td class="k">Banner search slicer</td><td>Tile slicer</td><td><b>None</b></td></tr>
+          <tr><td class="k">Sort-by slicer</td><td>Matrix only</td><td>Filter (for sort field)</td></tr>
+          <tr><td class="k">Sort-by slicer</td><td>Everything else</td><td><b>None</b></td></tr>
+          <tr><td class="k">Word Cloud</td><td>Matrix, KPI cards</td><td>Filter</td></tr>
+          <tr><td class="k">Word Cloud</td><td>Tile slicer, Banner search</td><td><b>None</b></td></tr>
+          <tr><td class="k">Pinned-tile buttons</td><td>(all)</td><td><b>None</b> — these open URLs</td></tr>
+          <tr><td class="k">Example chip buttons</td><td>(all)</td><td><b>None</b> — Set slicer covers it</td></tr>
+          <tr><td class="k">Gallery tiles</td><td>(all)</td><td><b>None</b> — open URLs</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ══════════════════════════════════════ 13 · TEST & PUBLISH ══════════════════════════════════════ -->
+    <section id="test">
+      <h2>Test &amp; publish <span class="section-num">13</span></h2>
+
+      <h3>13.1 Smoke test</h3>
+      <ol class="steps">
+        <li>Click every category pill in the nav strip. The Matrix, Word Cloud, KPI cards and Most Popular should all filter visibly.</li>
+        <li>Type <code>otp</code> into the banner search. Matrix narrows to OTP-related rows; count card updates.</li>
+        <li>Click the <b>OTP</b> example chip. Search box populates with "otp". Matrix narrows.</li>
+        <li>Click a Dashboard name in the matrix. Browser opens the URL.</li>
+        <li>Click a pinned tile. Browser opens its URL.</li>
+        <li>Click the "All Areas" pill. Everything resets.</li>
+        <li>Change the Sort-by to "Name A–Z". Matrix re-sorts.</li>
+      </ol>
+
+      <div class="callout callout-warn">
+        <strong>If a visual doesn't filter</strong>
+        You probably have an <em>Edit interactions</em> setting wrong. Open it, select the misbehaving source visual, and check the target's icon — three small icons appear on every other visual: Filter / Highlight / None.
+      </div>
+
+      <h3>13.2 Publish</h3>
+      <ol class="steps">
+        <li><b>Home → Publish</b> → choose destination workspace</li>
+        <li>In the Power BI service, pin the page to a dashboard if you want a shortcut tile</li>
+        <li>Share the report link</li>
+      </ol>
+
+      <h3>13.3 Save as template</h3>
+      <p><b>File → Export → Power BI template</b> (.pbit). Future directory pages can open this template, swap in new data, and inherit every visual.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════ APPENDIX · PALETTE ══════════════════════════════════════ -->
+    <section id="palette">
+      <h2>Appendix A · Full palette</h2>
+      <table>
+        <thead><tr><th>Role</th><th>Hex</th><th>RGB</th><th>Used in</th></tr></thead>
+        <tbody>
+          <tr><td class="k"><span class="sw-dot" style="background:#1F0310;display:inline-block;margin-right:8px;vertical-align:middle"></span>Ink (ribbon)</td><td class="mono">#1F0310</td><td class="mono">31 · 3 · 16</td><td>Top ribbon</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#1A030E;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood darkest</td><td class="mono">#1A030E</td><td class="mono">26 · 3 · 14</td><td>Left-emphasis scrim</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#2A0311;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood primary</td><td class="mono">#2A0311</td><td class="mono">42 · 3 · 17</td><td>Banner scrim, KPI value text</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#43061F;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood accent</td><td class="mono">#43061F</td><td class="mono">67 · 6 · 31</td><td>Button fill, active pill, links</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#591029;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood muted</td><td class="mono">#591029</td><td class="mono">89 · 16 · 41</td><td>Banner gradient end</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#7A4E1A;display:inline-block;margin-right:8px;vertical-align:middle"></span>Amber dark</td><td class="mono">#7A4E1A</td><td class="mono">122 · 78 · 26</td><td>Daily-pill text, kicker text</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#B8893A;display:inline-block;margin-right:8px;vertical-align:middle"></span>Amber</td><td class="mono">#B8893A</td><td class="mono">184 · 137 · 58</td><td>Gold accents, bar highlight</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#D9B268;display:inline-block;margin-right:8px;vertical-align:middle"></span>Amber light</td><td class="mono">#D9B268</td><td class="mono">217 · 178 · 104</td><td>Gold hairline, pin border</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#E6C179;display:inline-block;margin-right:8px;vertical-align:middle"></span>Honey</td><td class="mono">#E6C179</td><td class="mono">230 · 193 · 121</td><td>"Dashboard." italic, eyebrow</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#F7EBD4;display:inline-block;margin-right:8px;vertical-align:middle;border-color:#D6C9B6"></span>Cream title</td><td class="mono">#F7EBD4</td><td class="mono">247 · 235 · 212</td><td>Banner title text, pill selected</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#F3EADA;display:inline-block;margin-right:8px;vertical-align:middle;border-color:#D6C9B6"></span>Cream warm</td><td class="mono">#F3EADA</td><td class="mono">243 · 234 · 218</td><td>Matrix headers, chip default</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#FBF6EC;display:inline-block;margin-right:8px;vertical-align:middle;border-color:#D6C9B6"></span>Cream</td><td class="mono">#FBF6EC</td><td class="mono">251 · 246 · 236</td><td>Canvas background, card fills</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#E8DFD0;display:inline-block;margin-right:8px;vertical-align:middle"></span>Border</td><td class="mono">#E8DFD0</td><td class="mono">232 · 223 · 208</td><td>Card + panel borders, grid lines</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#D6C9B6;display:inline-block;margin-right:8px;vertical-align:middle"></span>Border mid</td><td class="mono">#D6C9B6</td><td class="mono">214 · 201 · 182</td><td>Chip border, slicer border</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#1A0D12;display:inline-block;margin-right:8px;vertical-align:middle"></span>Text</td><td class="mono">#1A0D12</td><td class="mono">26 · 13 · 18</td><td>Body text, matrix values</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#524148;display:inline-block;margin-right:8px;vertical-align:middle"></span>Text mid</td><td class="mono">#524148</td><td class="mono">82 · 65 · 72</td><td>Labels, muted content</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#9C8680;display:inline-block;margin-right:8px;vertical-align:middle"></span>Text light</td><td class="mono">#9C8680</td><td class="mono">156 · 134 · 128</td><td>Metadata, footer text</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#2E7D4F;display:inline-block;margin-right:8px;vertical-align:middle"></span>Green (fresh)</td><td class="mono">#2E7D4F</td><td class="mono">46 · 125 · 79</td><td>Real-time pill</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#8C1E2A;display:inline-block;margin-right:8px;vertical-align:middle"></span>Red (stale)</td><td class="mono">#8C1E2A</td><td class="mono">140 · 30 · 42</td><td>Weekly pill, stale warning</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ══════════════════════════════════════ APPENDIX · QUICK REF ══════════════════════════════════════ -->
+    <section id="quickref">
+      <h2>Appendix B · Dimensions quick-reference</h2>
+      <p class="lead">Copy-pasteable X / Y / W / H for every element.</p>
+
+<pre><code>CANVAS                        1280 × 1100
+
+RIBBON           X=0     Y=0     W=1280  H=28
+  Left text      X=24    Y=6     W=400   H=16
+  Right text     X=1140  Y=7     W=120   H=14
+
+BANNER           X=0     Y=28    W=1280  H=220
+  Image visual   X=0     Y=28    W=1280  H=220
+  Scrim rect    (same coords · #2A0311 · 25 %)
+  Gold hairline  X=0     Y=246   W=1280  H=2
+  Eyebrow txt    X=40    Y=54    W=260   H=14
+  Title txt      X=40    Y=74    W=540   H=64
+  Subtitle txt   X=40    Y=144   W=560   H=18
+  Pinned label   X=640   Y=90    W=120   H=14
+  Pin tile #1    X=640   Y=110   W=96    H=36
+  Pin tile #2    X=744   Y=110   W=96    H=36
+  Pin tile #3    X=848   Y=110   W=96    H=36
+  Search label   X=988   Y=90    W=100   H=14
+  Search slicer  X=988   Y=110   W=252   H=40
+
+NAV STRIP        X=0     Y=248   W=1280  H=44
+  BG rect        X=0     Y=248   W=1280  H=44
+  Tile slicer    X=28    Y=254   W=900   H=32
+  Count card     X=948   Y=258   W=300   H=22
+
+PANEL (white)    X=32    Y=308   W=1216  H=820
+
+  Examples lbl   X=60    Y=332   W=90    H=22
+  Chip #1 OTP    X=156   Y=332   W=56    H=26
+  Chip #2 Delay  X=218   Y=332   W=64    H=26
+  Chip #3 Fuel   X=288   Y=332   W=82    H=26
+  Chip #4 GLP    X=376   Y=332   W=74    H=26
+  Chip #5 Crew   X=456   Y=332   W=92    H=26
+
+  KPI #1         X=60    Y=382   W=228   H=88
+  KPI #2         X=298   Y=382   W=228   H=88
+  KPI #3         X=536   Y=382   W=228   H=88
+  KPI #4         X=774   Y=382   W=228   H=88
+  KPI #5         X=1012  Y=382   W=228   H=88
+
+  Col 1 (Pop.)   X=60    Y=490   W=375   H=450
+  Col 2 (Cloud)  X=453   Y=490   W=340   H=450
+  Col 3 (List)   X=811   Y=490   W=409   H=450
+  Sort slicer    X=811   Y=500   W=409   H=26
+  Matrix         X=811   Y=530   W=409   H=410
+
+  Gallery sep.   X=60    Y=964   W=1160  H=1
+  Tile #1        X=60    Y=984   W=227   H=120
+  Tile #2        X=297   Y=984   W=227   H=120
+  Tile #3        X=534   Y=984   W=227   H=120
+  Tile #4        X=771   Y=984   W=227   H=120
+  Tile #5        X=1008  Y=984   W=227   H=120
+
+FOOTER
+  Separator      X=60    Y=1112  W=1160  H=1
+  Left text      X=60    Y=1124  W=300   H=16
+  Refresh dot    X=838   Y=1129  W=10    H=10
+  Right text     X=860   Y=1124  W=360   H=16
+</code></pre>
+    </section>
+
+    <!-- ══════════════════════════════════════ APPENDIX · PADDING & MARGINS ══════════════════════════════════════ -->
+    <section id="spacing">
+      <h2>Appendix C · Padding &amp; margins</h2>
+      <p class="lead">Power BI doesn't expose CSS-style margins. Every gap between visuals is created by the X/Y coordinate you set. Every "padding" is either a text-padding property on a Shape/Button/Matrix, or extra whitespace around content inside a Text box. Here's a consolidated reference for both.</p>
+
+      <h3>C.1 Outer rhythm <em>· gaps between sections</em></h3>
+      <p>Reading the page top-to-bottom, these are the vertical gaps. Each is produced by the next element's Y coordinate being exactly X pixels below the previous element's bottom edge.</p>
+      <table>
+        <thead><tr><th>From</th><th>To</th><th>Gap (px)</th><th>How</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Canvas top</td><td>Ribbon</td><td class="mono">0</td><td>Flush — ribbon starts at Y=0</td></tr>
+          <tr><td class="k">Ribbon</td><td>Banner</td><td class="mono">0</td><td>Banner starts at Y=28 (= ribbon height)</td></tr>
+          <tr><td class="k">Banner</td><td>Nav strip</td><td class="mono">0</td><td>Nav starts at Y=248 (= 28 + 220)</td></tr>
+          <tr><td class="k">Nav strip</td><td>Panel</td><td class="mono">16</td><td>Panel starts at Y=308; extra 16 px of cream canvas shows through</td></tr>
+          <tr><td class="k">Panel</td><td>Footer</td><td class="mono">16</td><td>Footer separator at Y=1144; panel ends Y=1128</td></tr>
+          <tr><td class="k">Footer</td><td>Canvas bottom</td><td class="mono">~60</td><td>Footer content ends ~Y=1140; canvas is 1100 (or 1180 if you extend)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>C.2 Panel side margins <em>· horizontal breathing room</em></h3>
+      <table>
+        <tbody>
+          <tr><td class="k">Panel left margin (from canvas edge)</td><td class="mono">32 px</td></tr>
+          <tr><td class="k">Panel right margin (from canvas edge)</td><td class="mono">32 px</td></tr>
+          <tr><td class="k">Panel width</td><td class="mono">1280 − (32 × 2) = 1216</td></tr>
+        </tbody>
+      </table>
+
+      <h3>C.3 Panel inner padding <em>· from panel edge to content</em></h3>
+      <table>
+        <thead><tr><th>Side</th><th>Padding (px)</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Top</td><td class="mono">24</td><td>Panel starts Y=308; first element (Examples) at Y=332</td></tr>
+          <tr><td class="k">Left</td><td class="mono">28</td><td>Panel starts X=32; content starts X=60</td></tr>
+          <tr><td class="k">Right</td><td class="mono">28</td><td>Content ends X=1220; panel ends X=1248</td></tr>
+          <tr><td class="k">Bottom</td><td class="mono">24</td><td>Last panel element (gallery or grid) sits 24 px above panel bottom</td></tr>
+        </tbody>
+      </table>
+
+      <h3>C.4 Vertical margins between panel rows</h3>
+      <p>These are the gaps you should maintain between stacked rows inside the panel.</p>
+      <table>
+        <thead><tr><th>Between</th><th>Gap (px)</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Examples row → KPI band</td><td class="mono">24</td></tr>
+          <tr><td class="k">KPI band → Main grid</td><td class="mono">20</td></tr>
+          <tr><td class="k">Main grid → Gallery separator</td><td class="mono">24</td></tr>
+          <tr><td class="k">Gallery separator → Gallery tiles</td><td class="mono">20</td></tr>
+          <tr><td class="k">Inside a column card: header border → content</td><td class="mono">12</td></tr>
+        </tbody>
+      </table>
+
+      <h3>C.5 Horizontal gaps within rows</h3>
+      <table>
+        <thead><tr><th>Between</th><th>Gap (px)</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Example chips</td><td class="mono">10</td></tr>
+          <tr><td class="k">Pinned banner tiles</td><td class="mono">8</td></tr>
+          <tr><td class="k">KPI band cards</td><td class="mono">10</td></tr>
+          <tr><td class="k">Main grid columns</td><td class="mono">18</td></tr>
+          <tr><td class="k">Gallery tiles</td><td class="mono">10</td></tr>
+          <tr><td class="k">Sort-pills (inside Tile slicer)</td><td class="mono">4</td></tr>
+          <tr><td class="k">Category pills (inside Tile slicer)</td><td class="mono">6</td></tr>
+        </tbody>
+      </table>
+
+      <h3>C.6 Inside-visual padding</h3>
+      <p>These are the <em>text-padding</em> / <em>cell-padding</em> values set inside each visual's Format pane.</p>
+
+      <h4>Top ribbon text boxes</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Left text box: padding L/R</td><td class="mono">0 px</td></tr>
+          <tr><td class="k">Left text box: vertical align</td><td>Middle</td></tr>
+          <tr><td class="k">Space between ● bullet and text</td><td class="mono">10 px</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Banner title block</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Banner top padding</td><td class="mono">40 px</td><td>title block starts Y=54 from banner top (Y=28)</td></tr>
+          <tr><td class="k">Banner left padding</td><td class="mono">40 px</td></tr>
+          <tr><td class="k">Banner right padding</td><td class="mono">40 px</td></tr>
+          <tr><td class="k">Gap: eyebrow → title</td><td class="mono">6 px</td></tr>
+          <tr><td class="k">Gap: title → subtitle</td><td class="mono">6 px</td></tr>
+          <tr><td class="k">Gap: eyebrow text → preceding bar</td><td class="mono">10 px</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Pinned tile (banner button)</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Text padding top/bottom</td><td class="mono">4 px</td></tr>
+          <tr><td class="k">Text padding left/right</td><td class="mono">6 px</td></tr>
+          <tr><td class="k">Gap: line 1 → line 2 inside tile</td><td class="mono">1 px</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Search slicer</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Input padding L/R</td><td class="mono">10 px</td></tr>
+          <tr><td class="k">Gap: search icon → input text</td><td class="mono">8 px</td></tr>
+          <tr><td class="k">Inner content vertical padding</td><td class="mono">Auto (set slicer height to 40)</td></tr>
+          <tr><td class="k">Gap: label above → slicer</td><td class="mono">6 px</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Category tile slicer (nav strip)</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Pill internal padding top/bottom</td><td class="mono">5 px</td></tr>
+          <tr><td class="k">Pill internal padding left/right</td><td class="mono">12 px</td></tr>
+          <tr><td class="k">Horizontal gap between pills</td><td class="mono">6 px</td></tr>
+          <tr><td class="k">Nav strip vertical padding</td><td class="mono">9 px top / 9 px bottom</td></tr>
+          <tr><td class="k">Nav strip horizontal padding</td><td class="mono">40 px left / 40 px right</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Example chip buttons</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Text padding top/bottom</td><td class="mono">4 px</td></tr>
+          <tr><td class="k">Text padding left/right</td><td class="mono">14 px</td></tr>
+        </tbody>
+      </table>
+
+      <h4>KPI card (Card visual)</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Card internal padding top</td><td class="mono">12 px</td></tr>
+          <tr><td class="k">Card internal padding left/right</td><td class="mono">14 px</td></tr>
+          <tr><td class="k">Card internal padding bottom</td><td class="mono">14 px</td></tr>
+          <tr><td class="k">Gap: label → value</td><td class="mono">6 px</td></tr>
+          <tr><td class="k">Gap: value → sub text</td><td class="mono">4 px</td></tr>
+          <tr><td class="k">Bottom accent bar height</td><td class="mono">2 px (optional)</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Column card (Most Popular / Cloud / List)</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Card internal padding top</td><td class="mono">14 px</td></tr>
+          <tr><td class="k">Card internal padding left/right</td><td class="mono">16 px</td></tr>
+          <tr><td class="k">Card internal padding bottom</td><td class="mono">16 px</td></tr>
+          <tr><td class="k">Gap: header border → first content row</td><td class="mono">10 px</td></tr>
+          <tr><td class="k">Gap: header title text → hint text</td><td class="mono">fills row — baseline-aligned</td></tr>
+          <tr><td class="k">Gap: header row → divider line</td><td class="mono">8 px</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Matrix (dashboard list)</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Column header padding</td><td class="mono">10 px top/bottom · 12 px left/right</td></tr>
+          <tr><td class="k">Value cell padding</td><td class="mono">10 px top/bottom · 10 px left</td></tr>
+          <tr><td class="k">Row height (auto)</td><td class="mono">~38 px (font 12 + padding 20 + line 6)</td></tr>
+          <tr><td class="k">Gap between columns (grid vertical off)</td><td class="mono">0 px — relies on column-header spacing</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Refresh-frequency pill (conditional background)</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Text padding top/bottom</td><td class="mono">2 px</td></tr>
+          <tr><td class="k">Text padding left/right</td><td class="mono">8 px</td></tr>
+          <tr><td class="k">Border radius</td><td class="mono">50 px (fully rounded)</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Gallery tile</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Tile internal padding (from edge to text)</td><td class="mono">12 px top/bottom · 14 px left/right</td></tr>
+          <tr><td class="k">Gap: kicker → title (inside overlay)</td><td class="mono">3 px</td></tr>
+          <tr><td class="k">Image-to-tile fit</td><td>Scaling: Fill (no inner padding)</td></tr>
+          <tr><td class="k">Overlay gradient zone</td><td>Bottom 55 % of tile</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Footer bar</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Padding top (separator → content)</td><td class="mono">12 px</td></tr>
+          <tr><td class="k">Padding bottom (content → canvas edge)</td><td class="mono">20 px</td></tr>
+          <tr><td class="k">Gap: yellow square → "Powered by…" text</td><td class="mono">6 px</td></tr>
+        </tbody>
+      </table>
+
+      <h3>C.7 Quick rules of thumb</h3>
+      <div class="callout callout-note">
+        <strong>When positioning a new element</strong>
+        <ul class="plain" style="margin:6px 0 0">
+          <li><b>Panel edge → content: 24–28 px</b> always — don't let anything touch the panel border.</li>
+          <li><b>Row-to-row vertical gap: 20 px</b> is the default. Bump to 24 when moving between logically different zones (e.g. above the gallery strip).</li>
+          <li><b>Card-to-card horizontal gap: 10 px</b> for dense rows (KPI, gallery), <b>18 px</b> for the main column grid.</li>
+          <li><b>Inside a card: 14–16 px</b> on all four sides. Less makes it feel cramped, more wastes space.</li>
+          <li><b>Pill padding: 4 × 12 px</b> minimum (5 × 14 for larger pills). Anything smaller clips descenders.</li>
+          <li><b>Section heading → first row of content: 10 px</b>, always with a 1 px divider on the heading's bottom border.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════ APPENDIX · TROUBLESHOOTING ══════════════════════════════════════ -->
+    <section id="trouble">
+      <h2>Appendix D · Troubleshooting</h2>
+      <table>
+        <thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>Dashboard column shows plain text, not a link.</td><td>Re-apply Column tools → Data category → <b>Web URL</b> to the URL column. Then re-apply conditional formatting → Web URL on the Dashboard column.</td></tr>
+          <tr><td>Clicking a category pill does nothing.</td><td>You built it as individual buttons, not a Tile slicer. Replace with a single Slicer visual on <code>Category</code> with Tile style, single-select, show "Select all".</td></tr>
+          <tr><td>Example chip pushes nothing into search.</td><td>Button action → Type must be <b>Set slicer</b>, not <em>Page navigation</em>. Destination must be the search slicer. Value must be the literal string.</td></tr>
+          <tr><td>Banner title unreadable over image.</td><td>Increase scrim opacity to 35 % or add the two-layer scrim described in step 4.2. Add text shadow (Format → Text → Shadow) if PBI version supports it.</td></tr>
+          <tr><td>Matrix shows blue highlight on hover instead of cream.</td><td>The theme's <code>tableAccent</code> didn't apply. Re-import <code>qatar-theme.json</code>.</td></tr>
+          <tr><td>Fresh % shows blank.</td><td>The measure expects <code>LastRefresh</code> as datetime. Check the column's data type in Power Query; change to Date/time if it's text.</td></tr>
+          <tr><td>Gallery tile image is squashed.</td><td>Image visual → Scaling = Fill (not Fit). Tiles must be 227 × 120 exactly; don't rely on auto-resize.</td></tr>
+          <tr><td>Category pill text is cut off.</td><td>Tile slicer padding is too tight. Increase left/right padding to 14 px and check font size (11 pt max for "Crew Hotels" / "Network Ops" to fit).</td></tr>
+          <tr><td>Search slicer shows a big checkbox list.</td><td>Format → Visual → Selection controls → hide the value list, OR set the slicer height to exactly 40 so only the search bar portion renders.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>Still stuck?</strong>
+        Compare your build side-by-side with the <a href="qa-landing-option-e-aircraft.html" target="_blank">Option E mockup</a>. Every pixel position in this guide corresponds exactly to what that HTML renders.
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<div class="footer">
+  <div><span class="ribbon-dot"></span> Qatar Airways · Implementation Guide · <a href="index.html">preview hub</a></div>
+  <div>Source · <a href="https://github.com/rbansal42/qa-dashboard-directory-assets" target="_blank">rbansal42/qa-dashboard-directory-assets</a></div>
+</div>
+
+<script>
+  // Active-link highlighting on scroll
+  const links = Array.from(document.querySelectorAll('aside a'));
+  const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  function update() {
+    const scroll = window.scrollY + 120;
+    let active = sections[0];
+    sections.forEach(s => { if (s.offsetTop <= scroll) active = s; });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active.id));
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('load', update);
+</script>
+
+</body>
+</html>
