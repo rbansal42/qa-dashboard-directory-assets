@@ -6,20 +6,20 @@
 <title>Find Your Dashboard · Preview Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
   :root{
-    --ink:#1F0310; --oxblood-0:#2A0311; --oxblood-1:#43061F; --oxblood-2:#591029;
-    --amber:#B8893A; --amber-dark:#7A4E1A; --amber-light:#D9B268; --honey:#E6C179;
-    --cream:#FBF6EC; --cream-warm:#F3EADA; --cream-title:#F7EBD4; --white:#FFFFFF;
-    --border:#E8DFD0; --border-mid:#D6C9B6; --text:#1A0D12; --text-mid:#524148; --text-light:#9C8680;
+    --ink:#3C0026; --oxblood-0:#3C0026; --oxblood-1:#64003A; --oxblood-2:#780044;
+    --amber:#6B6C6E; --amber-dark:#5E6A71; --amber-light:#818A8F; --honey:#E1E1E2;
+    --cream:#FFFFFF; --cream-warm:#F0F0F0; --cream-title:#FFFFFF; --white:#FFFFFF;
+    --border:#E1E1E2; --border-mid:#E9E9E9; --text:#1A1A1A; --text-mid:#5E6A71; --text-light:#6B6C6E;
   }
   html{scroll-behavior:smooth}
   body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--text);font-size:14px;line-height:1.55}
 
   /* ── Ribbon ── */
-  .ribbon{background:var(--ink);color:rgba(247,235,212,0.78);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;padding:7px 28px;display:flex;justify-content:space-between;align-items:center;font-weight:500;border-bottom:1px solid rgba(184,137,58,0.2)}
+  .ribbon{background:var(--ink);color:rgba(247,235,212,0.78);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;padding:7px 28px;display:flex;justify-content:space-between;align-items:center;font-weight:500;border-bottom:1px solid rgba(107,108,110,0.2)}
   .ribbon-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);display:inline-block;margin-right:10px;vertical-align:middle}
   .ribbon a{color:var(--honey);text-decoration:none;font-weight:600;letter-spacing:0.1em}
   .ribbon a:hover{color:var(--cream-title);text-decoration:underline}
@@ -27,7 +27,7 @@
   /* ── Hero ── */
   .hero{
     background:
-      linear-gradient(125deg, rgba(26,3,14,0.94) 0%, rgba(42,3,17,0.78) 45%, rgba(67,6,31,0.55) 80%, rgba(89,16,41,0.35) 100%),
+      linear-gradient(125deg, rgba(26,3,14,0.94) 0%, rgba(60,0,38,0.78) 45%, rgba(100,0,58,0.55) 80%, rgba(120,0,68,0.35) 100%),
       url("qatar-777-worldcup.jpg") center 55% / cover no-repeat;
     color:var(--cream-title);
     padding:60px 40px 54px;
@@ -35,27 +35,27 @@
     overflow:hidden;
     min-height:280px;
   }
-  .hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(217,178,104,0.65),transparent)}
+  .hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(225,225,226,0.65),transparent)}
   .hero-inner{max-width:900px;position:relative;z-index:1}
   .kicker{display:inline-flex;align-items:center;gap:12px;font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--honey);margin-bottom:16px;text-shadow:0 1px 4px rgba(0,0,0,0.45)}
   .kicker::before{content:'';width:24px;height:1px;background:var(--amber);opacity:0.8}
-  h1{font-family:'Cormorant Garamond','Georgia',serif;font-size:56px;font-weight:500;line-height:1.04;color:var(--cream-title);margin-bottom:12px;text-shadow:0 2px 14px rgba(0,0,0,0.5);letter-spacing:-0.01em}
+  h1{font-family:'Jotia','Noto Sans',sans-serif;font-size:56px;font-weight:500;line-height:1.04;color:var(--cream-title);margin-bottom:12px;text-shadow:0 2px 14px rgba(0,0,0,0.5);letter-spacing:-0.01em}
   h1 em{font-style:italic;font-weight:400;color:var(--honey)}
   .lede{font-size:16px;color:rgba(247,235,212,0.78);font-weight:300;max-width:640px;line-height:1.55;text-shadow:0 1px 4px rgba(0,0,0,0.4)}
   .meta-row{display:flex;gap:24px;margin-top:24px;flex-wrap:wrap;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,235,212,0.55)}
   .meta-row b{color:var(--honey);font-weight:600}
 
   /* ── Nav ── */
-  .jumpnav{background:linear-gradient(180deg,rgba(184,137,58,0.22) 0%,rgba(184,137,58,0.08) 100%);border-top:1px solid rgba(184,137,58,0.35);border-bottom:1px solid rgba(184,137,58,0.2);padding:10px 40px;display:flex;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:10;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  .jumpnav{background:linear-gradient(180deg,rgba(107,108,110,0.22) 0%,rgba(107,108,110,0.08) 100%);border-top:1px solid rgba(107,108,110,0.35);border-bottom:1px solid rgba(107,108,110,0.2);padding:10px 40px;display:flex;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:10;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
   .jumpnav a{padding:5px 14px;font-size:11px;font-weight:600;letter-spacing:0.04em;color:var(--oxblood-1);text-decoration:none;border:1px solid transparent;border-radius:50px;transition:all 0.15s}
-  .jumpnav a:hover{background:rgba(67,6,31,0.08)}
+  .jumpnav a:hover{background:rgba(100,0,58,0.08)}
   .jumpnav a.strong{background:var(--oxblood-1);color:var(--cream-title);border-color:var(--oxblood-1)}
 
   /* ── Container ── */
   .container{max-width:1280px;margin:0 auto;padding:40px 32px 80px}
   section.block{margin-bottom:56px}
   .section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;padding-bottom:10px;border-bottom:2px solid var(--oxblood-1)}
-  .section-head h2{font-family:'Cormorant Garamond','Georgia',serif;font-size:30px;font-weight:600;color:var(--oxblood-0);letter-spacing:-0.005em}
+  .section-head h2{font-family:'Jotia','Noto Sans',sans-serif;font-size:30px;font-weight:600;color:var(--oxblood-0);letter-spacing:-0.005em}
   .section-head h2 em{font-style:italic;font-weight:400;color:var(--amber-dark);font-size:22px;margin-left:6px}
   .section-count{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-light)}
   .section-intro{font-size:13.5px;color:var(--text-mid);margin-bottom:20px;max-width:780px;line-height:1.6}
@@ -64,15 +64,15 @@
   .variant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
 
   .variant{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:all 0.2s;position:relative}
-  .variant:hover{border-color:var(--amber);transform:translateY(-2px);box-shadow:0 10px 32px rgba(42,3,17,0.10)}
+  .variant:hover{border-color:var(--amber);transform:translateY(-2px);box-shadow:0 10px 32px rgba(60,0,38,0.10)}
   .variant-preview{position:relative;height:160px;overflow:hidden;background:#1a0410}
   .variant-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.4s}
   .variant:hover .variant-preview img{transform:scale(1.04)}
   .variant-preview.noimg{background:linear-gradient(135deg, var(--oxblood-0) 0%, var(--oxblood-1) 55%, var(--oxblood-2) 100%);display:flex;align-items:center;justify-content:center}
   .variant-preview.noimg::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(184%2C137%2C58%2C0.2)' stroke-width='0.5'%3E%3Cpolygon points='40%2C4 74%2C22 74%2C58 40%2C76 6%2C58 6%2C22'/%3E%3C/g%3E%3C/svg%3E");background-size:80px 80px}
-  .preview-badge{position:absolute;top:10px;left:10px;background:rgba(26,3,14,0.75);color:var(--honey);font-size:9.5px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:3px 10px;border-radius:50px;border:1px solid rgba(217,178,104,0.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+  .preview-badge{position:absolute;top:10px;left:10px;background:rgba(26,3,14,0.75);color:var(--honey);font-size:9.5px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:3px 10px;border-radius:50px;border:1px solid rgba(225,225,226,0.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
   .preview-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;padding:14px 16px;background:linear-gradient(180deg, rgba(26,3,14,0) 45%, rgba(26,3,14,0.75) 100%);color:var(--cream-title);pointer-events:none}
-  .preview-overlay .po-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;line-height:1.15;text-shadow:0 1px 6px rgba(0,0,0,0.5)}
+  .preview-overlay .po-title{font-family:'Jotia','Noto Sans',sans-serif;font-size:16px;font-weight:500;line-height:1.15;text-shadow:0 1px 6px rgba(0,0,0,0.5)}
   .preview-overlay .po-title em{font-style:italic;color:var(--honey)}
 
   .variant-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column;gap:6px}
@@ -88,7 +88,7 @@
   .btn-ghost.source{margin-left:auto}
 
   /* Recommended pin */
-  .variant.pick::before{content:'Recommended';position:absolute;top:-1px;right:-1px;background:var(--amber);color:var(--oxblood-dark);font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;padding:4px 12px;border-bottom-left-radius:8px;z-index:2;box-shadow:0 2px 8px rgba(42,3,17,0.2)}
+  .variant.pick::before{content:'Recommended';position:absolute;top:-1px;right:-1px;background:var(--amber);color:var(--oxblood-dark);font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;padding:4px 12px;border-bottom-left-radius:8px;z-index:2;box-shadow:0 2px 8px rgba(60,0,38,0.2)}
 
   /* Assets table */
   .asset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
@@ -282,7 +282,7 @@
         <div class="variant-preview noimg">
           <span class="preview-badge">Option 2</span>
           <div style="position:relative;z-index:1;color:var(--cream-title);text-align:center;padding:16px">
-            <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:26px;line-height:1.1">About this <em style="color:var(--honey)">dashboard</em></div>
+            <div style="font-family:'Jotia','Noto Sans',sans-serif;font-style:italic;font-size:26px;line-height:1.1">About this <em style="color:var(--honey)">dashboard</em></div>
             <div style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--honey);margin-top:8px">Description · Questions · Limits</div>
           </div>
         </div>

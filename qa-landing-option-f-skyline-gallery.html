@@ -6,36 +6,36 @@
   <title>Find Your Dashboard · Option F — Skyline header + photo gallery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:           #1F0310;
-      --oxblood-0:     #2A0311;
-      --oxblood-1:     #43061F;
-      --oxblood-2:     #591029;
-      --amber:         #B8893A;
-      --amber-dark:    #7A4E1A;
-      --amber-light:   #D9B268;
-      --honey:         #E6C179;
-      --cream:         #FBF6EC;
-      --cream-warm:    #F3EADA;
-      --cream-title:   #F7EBD4;
+      --ink:           #3C0026;
+      --oxblood-0:     #3C0026;
+      --oxblood-1:     #64003A;
+      --oxblood-2:     #780044;
+      --amber:         #6B6C6E;
+      --amber-dark:    #5E6A71;
+      --amber-light:   #818A8F;
+      --honey:         #E1E1E2;
+      --cream:         #FFFFFF;
+      --cream-warm:    #F0F0F0;
+      --cream-title:   #FFFFFF;
       --white:         #FFFFFF;
-      --border:        #E8DFD0;
-      --border-mid:    #D6C9B6;
-      --text:          #1A0D12;
-      --text-mid:      #524148;
-      --text-light:    #9C8680;
-      --link-visited:  #330418;
+      --border:        #E1E1E2;
+      --border-mid:    #E9E9E9;
+      --text:          #1A1A1A;
+      --text-mid:      #5E6A71;
+      --text-light:    #6B6C6E;
+      --link-visited:  #3C0026;
       --green:         #2E7D4F;
-      --red:           #8C1E2A;
+      --red:           #780044;
     }
 
     html, body { height: 100%; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Noto Sans', 'Graphik', 'Segoe UI', system-ui, sans-serif;
       background: var(--cream);
       color: var(--text);
       font-size: 14px;
@@ -54,7 +54,7 @@
       justify-content: space-between;
       align-items: center;
       font-weight: 500;
-      border-bottom: 1px solid rgba(184,137,58,0.18);
+      border-bottom: 1px solid rgba(107,108,110,0.18);
     }
     .ribbon-left { display: flex; align-items: center; gap: 10px; }
     .ribbon-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
@@ -65,7 +65,7 @@
     /* ── Banner (Doha skyline at dusk · layered scrim for contrast) ── */
     .banner {
       background:
-        linear-gradient(110deg, rgba(26,3,14,0.92) 0%, rgba(42,3,17,0.82) 35%, rgba(42,3,17,0.72) 65%, rgba(42,3,17,0.78) 100%),
+        linear-gradient(110deg, rgba(26,3,14,0.92) 0%, rgba(60,0,38,0.82) 35%, rgba(60,0,38,0.72) 65%, rgba(60,0,38,0.78) 100%),
         url("doha-skyline.jpg") center 45% / cover no-repeat;
       color: var(--cream-title);
       padding: 40px 40px 36px;
@@ -78,7 +78,7 @@
       position: absolute; inset: 0;
       background:
         /* subtle amber glow in bottom-right corner */
-        radial-gradient(ellipse 65% 50% at 85% 100%, rgba(184,137,58,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 65% 50% at 85% 100%, rgba(107,108,110,0.12) 0%, transparent 60%),
         /* vertical scrim: darker top, darker bottom, middle slightly lighter so the skyline peeks */
         linear-gradient(180deg, rgba(26,3,14,0.25) 0%, rgba(26,3,14,0) 35%, rgba(26,3,14,0) 65%, rgba(26,3,14,0.22) 100%);
       pointer-events: none;
@@ -86,7 +86,7 @@
     .banner::after {
       content: '';
       position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(217,178,104,0.65), transparent);
+      background: linear-gradient(90deg, transparent, rgba(225,225,226,0.65), transparent);
     }
 
     /* Contrast boosts — stronger shadows + slightly brighter text on this variant */
@@ -99,7 +99,7 @@
     .banner .pinned-label { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
     .banner .pin-slot {
       background: rgba(26,3,14,0.55);
-      border: 1px solid rgba(217,178,104,0.55);
+      border: 1px solid rgba(225,225,226,0.55);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
     }
@@ -113,8 +113,8 @@
     /* Search box: darker glass, cream input area */
     .banner .bs-label { color: var(--honey); text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
     .banner .bs-box {
-      background: rgba(251,246,236,0.97);
-      border: 1.5px solid rgba(217,178,104,0.7);
+      background: rgba(255,255,255,0.97);
+      border: 1.5px solid rgba(225,225,226,0.7);
       box-shadow: 0 4px 14px rgba(0,0,0,0.25);
     }
     .banner-grid {
@@ -132,7 +132,7 @@
     }
     .eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--amber); opacity: 0.7; }
     .title {
-      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-family: 'Jotia','Noto Sans',sans-serif;
       font-size: 36px; font-weight: 500; line-height: 1.06;
       color: var(--cream-title); margin-bottom: 6px;
     }
@@ -142,41 +142,41 @@
     .pinned { display: flex; flex-direction: column; gap: 6px; }
     .pinned-label {
       font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
-      text-transform: uppercase; color: rgba(217,178,104,0.75); margin-bottom: 4px;
+      text-transform: uppercase; color: rgba(225,225,226,0.75); margin-bottom: 4px;
     }
     .pinned-row { display: flex; gap: 8px; }
     .pin-slot {
       width: 96px; height: 36px;
       background: rgba(247,235,212,0.06);
-      border: 1px solid rgba(217,178,104,0.28);
+      border: 1px solid rgba(225,225,226,0.28);
       border-radius: 4px;
       display: flex; flex-direction: column; justify-content: center; align-items: center;
       padding: 2px 6px; text-align: center; cursor: pointer;
       transition: background 0.15s, border-color 0.15s;
     }
-    .pin-slot:hover { background: rgba(217,178,104,0.14); border-color: var(--amber-light); }
+    .pin-slot:hover { background: rgba(225,225,226,0.14); border-color: var(--amber-light); }
     .pin-slot-name {
       font-size: 10px; color: var(--cream-title); font-weight: 600;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px;
       line-height: 1.15;
     }
     .pin-slot-cat {
-      font-size: 8px; color: rgba(217,178,104,0.65);
+      font-size: 8px; color: rgba(225,225,226,0.65);
       letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1px;
     }
 
     .banner-search { display: flex; flex-direction: column; gap: 6px; min-width: 240px; }
     .bs-label {
       font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
-      text-transform: uppercase; color: rgba(217,178,104,0.75);
+      text-transform: uppercase; color: rgba(225,225,226,0.75);
     }
     .bs-box {
       display: flex; align-items: center;
-      background: rgba(251,246,236,0.95);
-      border: 1px solid rgba(217,178,104,0.4);
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(225,225,226,0.4);
       border-radius: 4px; height: 34px; padding: 0 10px;
     }
-    .bs-box:focus-within { border-color: var(--amber-light); box-shadow: 0 0 0 2px rgba(217,178,104,0.25); }
+    .bs-box:focus-within { border-color: var(--amber-light); box-shadow: 0 0 0 2px rgba(225,225,226,0.25); }
     .bs-icon { color: var(--oxblood-1); opacity: 0.55; flex-shrink: 0; margin-right: 8px; }
     .bs-input { flex: 1; border: none; background: transparent; font: inherit; font-size: 13px; outline: none; height: 100%; }
     .bs-clear {
@@ -190,9 +190,9 @@
 
     /* ── Nav strip ── */
     .navstrip {
-      background: linear-gradient(180deg, rgba(184,137,58,0.22) 0%, rgba(184,137,58,0.08) 100%);
-      border-top: 1px solid rgba(184,137,58,0.35);
-      border-bottom: 1px solid rgba(184,137,58,0.2);
+      background: linear-gradient(180deg, rgba(107,108,110,0.22) 0%, rgba(107,108,110,0.08) 100%);
+      border-top: 1px solid rgba(107,108,110,0.35);
+      border-bottom: 1px solid rgba(107,108,110,0.2);
       padding: 9px 40px;
       display: flex;
       justify-content: space-between;
@@ -207,14 +207,14 @@
       color: var(--oxblood-1); background: transparent; cursor: pointer;
       transition: all 0.15s; font-family: inherit;
     }
-    .nav-pill:hover { background: rgba(67,6,31,0.08); }
+    .nav-pill:hover { background: rgba(100,0,58,0.08); }
     .nav-pill.active {
       background: var(--oxblood-1); color: var(--cream-title);
       border-color: var(--oxblood-1);
-      box-shadow: 0 1px 4px rgba(42,3,17,0.25);
+      box-shadow: 0 1px 4px rgba(60,0,38,0.25);
     }
     .nav-count {
-      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-family: 'Jotia','Noto Sans',sans-serif;
       font-style: italic; font-size: 14px; color: var(--oxblood-1);
     }
     .nav-count b { font-weight: 600; }
@@ -224,7 +224,7 @@
       background: var(--white);
       margin: 16px 32px;
       border-radius: 6px;
-      box-shadow: 0 8px 32px rgba(42,3,17,0.08), 0 1px 3px rgba(42,3,17,0.05);
+      box-shadow: 0 8px 32px rgba(60,0,38,0.08), 0 1px 3px rgba(60,0,38,0.05);
       padding: 20px 28px 24px;
       border: 1px solid var(--border);
     }
@@ -233,7 +233,7 @@
       margin-bottom: 18px; flex-wrap: wrap;
     }
     .examples-label {
-      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-family: 'Jotia','Noto Sans',sans-serif;
       font-style: italic; font-size: 14px; color: var(--text-mid);
     }
     .ex-chip {
@@ -271,7 +271,7 @@
       text-transform: uppercase; color: var(--text-mid); margin-bottom: 6px;
     }
     .kpi-val {
-      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-family: 'Jotia','Noto Sans',sans-serif;
       font-size: 30px; font-weight: 600; line-height: 1;
       color: var(--oxblood-0);
     }
@@ -287,10 +287,10 @@
 
     /* Special KPI: top dashboard */
     .kpi.feature {
-      background: linear-gradient(160deg, rgba(67,6,31,0.04) 0%, rgba(184,137,58,0.08) 100%);
+      background: linear-gradient(160deg, rgba(100,0,58,0.04) 0%, rgba(107,108,110,0.08) 100%);
     }
     .kpi.feature .kpi-val {
-      font-size: 15px; font-family: 'Segoe UI', sans-serif; font-style: normal;
+      font-size: 15px; font-family: 'Noto Sans', 'Graphik', 'Segoe UI', sans-serif; font-style: normal;
       font-weight: 600; color: var(--oxblood-1); line-height: 1.2;
     }
 
@@ -300,7 +300,7 @@
       margin-bottom: 10px;
     }
     .section-title {
-      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-family: 'Jotia','Noto Sans',sans-serif;
       font-size: 19px; font-weight: 600; color: var(--oxblood-0);
     }
     .section-title em { font-style: italic; color: var(--amber-dark); font-weight: 500; }
@@ -342,7 +342,7 @@
       border-bottom: 1px solid var(--border);
     }
     .col-title {
-      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-family: 'Jotia','Noto Sans',sans-serif;
       font-size: 15px; font-weight: 600;
       color: var(--oxblood-0);
     }
@@ -361,7 +361,7 @@
       cursor: pointer;
     }
     .pop-rank {
-      font-family: 'Cormorant Garamond','Georgia',serif;
+      font-family: 'Jotia','Noto Sans',sans-serif;
       font-size: 26px; font-weight: 600;
       color: var(--amber);
       line-height: 0.9;
@@ -412,7 +412,7 @@
     }
     .cloud span:hover { opacity: 1 !important; transform: scale(1.05); }
     .cloud span.dim { opacity: 0.3; }
-    .w-xl { font-size: 25px; font-family: 'Cormorant Garamond',serif; font-style: italic; }
+    .w-xl { font-size: 25px; font-family: 'Jotia','Noto Sans',sans-serif; font-style: italic; }
     .w-lg { font-size: 20px; }
     .w-md { font-size: 16px; }
     .w-sm { font-size: 13px; }
@@ -478,7 +478,7 @@
     }
     .dt-row:hover .dt-name { color: var(--oxblood-0); }
     .dt-name mark {
-      background: rgba(184,137,58,0.25); color: var(--oxblood-0);
+      background: rgba(107,108,110,0.25); color: var(--oxblood-0);
       padding: 0 2px; border-radius: 2px; font-weight: 700;
     }
     .dt-dept {
@@ -493,8 +493,8 @@
       display: inline-block;
     }
     .freq-realtime { background: rgba(46,125,79,0.12); color: var(--green); }
-    .freq-hourly { background: rgba(67,6,31,0.10); color: var(--oxblood-1); }
-    .freq-daily { background: rgba(184,137,58,0.18); color: var(--amber-dark); }
+    .freq-hourly { background: rgba(100,0,58,0.10); color: var(--oxblood-1); }
+    .freq-daily { background: rgba(107,108,110,0.18); color: var(--amber-dark); }
     .freq-weekly { background: rgba(140,30,42,0.10); color: var(--red); }
     .freq-ondemand { background: var(--border); color: var(--text-mid); }
     .dt-upd {
@@ -515,7 +515,7 @@
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: 6px;
-      box-shadow: 0 12px 36px rgba(42,3,17,0.18), 0 2px 6px rgba(42,3,17,0.08);
+      box-shadow: 0 12px 36px rgba(60,0,38,0.18), 0 2px 6px rgba(60,0,38,0.08);
       padding: 14px 16px;
       font-size: 12px;
       color: var(--text);
@@ -535,7 +535,7 @@
       transform: rotate(45deg);
     }
     .tt-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Jotia', 'Noto Sans', sans-serif;
       font-size: 15px; font-weight: 600;
       color: var(--oxblood-0);
       line-height: 1.2;
@@ -607,7 +607,7 @@
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
     }
-    .gal-tile:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(42,3,17,0.14); }
+    .gal-tile:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(60,0,38,0.14); }
     .gal-tile img {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
@@ -617,7 +617,7 @@
     .gal-tile:hover img { transform: scale(1.05); }
     .gal-tile-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(42,3,17,0.08) 0%, rgba(42,3,17,0.78) 100%);
+      background: linear-gradient(180deg, rgba(60,0,38,0.08) 0%, rgba(60,0,38,0.78) 100%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -631,7 +631,7 @@
       text-shadow: 0 1px 4px rgba(0,0,0,0.4);
     }
     .gal-tile-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Jotia', 'Noto Sans', sans-serif;
       font-size: 15px; font-weight: 500;
       color: var(--cream-title);
       line-height: 1.15;
@@ -972,7 +972,7 @@
       CLOUD_WORDS.forEach(c => {
         const s = document.createElement("span");
         s.className = `w-${c.size} ${c.color}`;
-        if (c.italic) { s.style.fontFamily = "'Cormorant Garamond',serif"; s.style.fontStyle = "italic"; }
+        if (c.italic) { s.style.fontFamily = "'Jotia','Noto Sans',sans-serif"; s.style.fontStyle = "italic"; }
         s.textContent = c.w;
         s.addEventListener("click", () => setSearch(c.w));
         wrap.appendChild(s);

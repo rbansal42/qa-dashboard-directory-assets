@@ -1,57 +1,57 @@
 {
-  "name": "Qatar Airways — Dashboard Directory (v2)",
+  "name": "Qatar Airways — Dashboard Directory (v3, brand-strict)",
   "dataColors": [
-    "#43061F",
-    "#B8893A",
-    "#591029",
-    "#D9B268",
-    "#2A0311",
-    "#8E7355",
-    "#7A4E1A",
-    "#4E1E3A"
+    "#64003A",
+    "#5E6A71",
+    "#3C0026",
+    "#818A8F",
+    "#780044",
+    "#6B6C6E",
+    "#003F87",
+    "#E1E1E2"
   ],
-  "background": "#FBF6EC",
-  "foreground": "#1A0D12",
-  "tableAccent": "#43061F",
+  "background": "#FFFFFF",
+  "foreground": "#1A1A1A",
+  "tableAccent": "#64003A",
   "good": "#2E7D4F",
-  "neutral": "#B8893A",
-  "bad": "#8C1E2A",
-  "maximum": "#2A0311",
-  "center": "#B8893A",
-  "minimum": "#FBF6EC",
-  "null": "#E8DFD0",
+  "neutral": "#5E6A71",
+  "bad": "#780044",
+  "maximum": "#3C0026",
+  "center": "#5E6A71",
+  "minimum": "#FFFFFF",
+  "null": "#E1E1E2",
   "textClasses": {
     "title": {
-      "fontFace": "Segoe UI Semibold",
+      "fontFace": "Jotia Light, Noto Sans, Segoe UI Semibold",
       "fontSize": 22,
-      "color": "#43061F"
+      "color": "#64003A"
     },
     "header": {
-      "fontFace": "Segoe UI",
+      "fontFace": "Noto Sans, Segoe UI",
       "fontSize": 11,
-      "color": "#524148"
+      "color": "#5E6A71"
     },
     "label": {
-      "fontFace": "Segoe UI",
+      "fontFace": "Noto Sans, Segoe UI",
       "fontSize": 12,
-      "color": "#1A0D12"
+      "color": "#1A1A1A"
     },
     "callout": {
-      "fontFace": "Georgia",
+      "fontFace": "Jotia Light, Noto Sans, Georgia",
       "fontSize": 36,
-      "color": "#2A0311"
+      "color": "#3C0026"
     },
     "largeTitle": {
-      "fontFace": "Georgia",
+      "fontFace": "Jotia Light, Noto Sans, Georgia",
       "fontSize": 28,
-      "color": "#2A0311"
+      "color": "#3C0026"
     }
   },
   "visualStyles": {
     "*": {
       "*": {
         "background": [{ "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }],
-        "border": [{ "color": { "solid": { "color": "#E8DFD0" } }, "radius": 6, "show": true }],
+        "border": [{ "color": { "solid": { "color": "#E1E1E2" } }, "radius": 6, "show": true }],
         "visualHeader": [{ "show": false }]
       }
     },
@@ -63,22 +63,22 @@
     },
     "button": {
       "*": {
-        "fill": [{ "show": true, "fillColor": { "solid": { "color": "#43061F" } }, "transparency": 0 }],
-        "text": [{ "show": true, "fontColor": { "solid": { "color": "#F7EBD4" } }, "fontFamily": "Segoe UI Semibold", "fontSize": 10, "horizontalAlignment": "center" }],
+        "fill": [{ "show": true, "fillColor": { "solid": { "color": "#64003A" } }, "transparency": 0 }],
+        "text": [{ "show": true, "fontColor": { "solid": { "color": "#FFFFFF" } }, "fontFamily": "Noto Sans Medium", "fontSize": 10, "horizontalAlignment": "center" }],
         "outline": [{ "show": false }]
       }
     },
     "slicer": {
       "*": {
-        "background": [{ "show": true, "color": { "solid": { "color": "#FBF6EC" } } }],
-        "border": [{ "color": { "solid": { "color": "#D6C9B6" } }, "show": true, "radius": 4 }]
+        "background": [{ "show": true, "color": { "solid": { "color": "#F0F0F0" } } }],
+        "border": [{ "color": { "solid": { "color": "#E1E1E2" } }, "show": true, "radius": 4 }]
       }
     },
     "pivotTable": {
       "*": {
-        "columnHeaders": [{ "fontColor": { "solid": { "color": "#524148" } }, "backColor": { "solid": { "color": "#F3EADA" } }, "fontFamily": "Segoe UI", "fontSize": 9, "bold": true }],
-        "values":       [{ "fontColor": { "solid": { "color": "#1A0D12" } }, "backColor": { "solid": { "color": "#FFFFFF" } }, "fontFamily": "Segoe UI", "fontSize": 12 }],
-        "grid":         [{ "gridHorizontal": true, "gridVertical": false, "gridHorizontalColor": { "solid": { "color": "#E8DFD0" } }, "gridHorizontalWeight": 1 }],
+        "columnHeaders": [{ "fontColor": { "solid": { "color": "#5E6A71" } }, "backColor": { "solid": { "color": "#F0F0F0" } }, "fontFamily": "Noto Sans", "fontSize": 9, "bold": true }],
+        "values":       [{ "fontColor": { "solid": { "color": "#1A1A1A" } }, "backColor": { "solid": { "color": "#FFFFFF" } }, "fontFamily": "Noto Sans", "fontSize": 12 }],
+        "grid":         [{ "gridHorizontal": true, "gridVertical": false, "gridHorizontalColor": { "solid": { "color": "#E1E1E2" } }, "gridHorizontalWeight": 1 }],
         "total":        [{ "show": false }]
       }
     }

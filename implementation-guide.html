@@ -6,32 +6,32 @@
 <title>Implementation Guide — Find Your Dashboard · Power BI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
   :root{
-    --ink:#1F0310; --oxblood-0:#2A0311; --oxblood-1:#43061F; --oxblood-2:#591029;
-    --amber:#B8893A; --amber-dark:#7A4E1A; --amber-light:#D9B268; --honey:#E6C179;
-    --cream:#FBF6EC; --cream-warm:#F3EADA; --cream-title:#F7EBD4; --white:#FFFFFF;
-    --border:#E8DFD0; --border-mid:#D6C9B6; --text:#1A0D12; --text-mid:#524148; --text-light:#9C8680;
-    --green:#2E7D4F; --red:#8C1E2A;
+    --ink:#3C0026; --oxblood-0:#3C0026; --oxblood-1:#64003A; --oxblood-2:#780044;
+    --amber:#6B6C6E; --amber-dark:#5E6A71; --amber-light:#818A8F; --honey:#E1E1E2;
+    --cream:#FFFFFF; --cream-warm:#F0F0F0; --cream-title:#FFFFFF; --white:#FFFFFF;
+    --border:#E1E1E2; --border-mid:#E9E9E9; --text:#1A1A1A; --text-mid:#5E6A71; --text-light:#6B6C6E;
+    --green:#2E7D4F; --red:#780044;
   }
   html{scroll-behavior:smooth}
   body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--text);font-size:14px;line-height:1.6}
 
   /* Ribbon */
-  .ribbon{background:var(--ink);color:rgba(247,235,212,0.78);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;padding:7px 28px;display:flex;justify-content:space-between;align-items:center;font-weight:500;border-bottom:1px solid rgba(184,137,58,0.2)}
+  .ribbon{background:var(--ink);color:rgba(247,235,212,0.78);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;padding:7px 28px;display:flex;justify-content:space-between;align-items:center;font-weight:500;border-bottom:1px solid rgba(107,108,110,0.2)}
   .ribbon-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);display:inline-block;margin-right:10px;vertical-align:middle}
   .ribbon a{color:var(--honey);text-decoration:none}
   .ribbon a:hover{text-decoration:underline}
 
   /* Hero */
-  .hero{background:linear-gradient(125deg, rgba(26,3,14,0.94) 0%, rgba(42,3,17,0.82) 45%, rgba(67,6,31,0.58) 80%, rgba(89,16,41,0.4) 100%),url("qatar-777-worldcup.jpg") center 55%/cover no-repeat;color:var(--cream-title);padding:50px 40px 46px;position:relative;overflow:hidden}
-  .hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(217,178,104,0.65),transparent)}
+  .hero{background:linear-gradient(125deg, rgba(26,3,14,0.94) 0%, rgba(60,0,38,0.82) 45%, rgba(100,0,58,0.58) 80%, rgba(120,0,68,0.4) 100%),url("qatar-777-worldcup.jpg") center 55%/cover no-repeat;color:var(--cream-title);padding:50px 40px 46px;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(225,225,226,0.65),transparent)}
   .hero-inner{max-width:780px;position:relative;z-index:1}
   .kicker{display:inline-flex;align-items:center;gap:12px;font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--honey);margin-bottom:14px;text-shadow:0 1px 4px rgba(0,0,0,0.45)}
   .kicker::before{content:'';width:24px;height:1px;background:var(--amber);opacity:0.8}
-  h1{font-family:'Cormorant Garamond','Georgia',serif;font-size:44px;font-weight:500;line-height:1.04;margin-bottom:10px;text-shadow:0 2px 14px rgba(0,0,0,0.5);letter-spacing:-0.01em}
+  h1{font-family:'Jotia','Noto Sans',sans-serif;font-size:44px;font-weight:500;line-height:1.04;margin-bottom:10px;text-shadow:0 2px 14px rgba(0,0,0,0.5);letter-spacing:-0.01em}
   h1 em{font-style:italic;font-weight:400;color:var(--honey)}
   .lede{font-size:15px;color:rgba(247,235,212,0.78);font-weight:300;max-width:620px;line-height:1.55;text-shadow:0 1px 4px rgba(0,0,0,0.4)}
   .hero-meta{display:flex;gap:22px;margin-top:22px;flex-wrap:wrap;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,235,212,0.55)}
@@ -50,10 +50,10 @@
 
   main{padding:40px 44px 80px;min-width:0}
   main section{margin-bottom:52px;scroll-margin-top:20px}
-  main h2{font-family:'Cormorant Garamond','Georgia',serif;font-size:30px;font-weight:600;color:var(--oxblood-0);margin-bottom:4px;padding-bottom:10px;border-bottom:2px solid var(--oxblood-1);display:flex;align-items:baseline;justify-content:space-between;letter-spacing:-0.005em}
+  main h2{font-family:'Jotia','Noto Sans',sans-serif;font-size:30px;font-weight:600;color:var(--oxblood-0);margin-bottom:4px;padding-bottom:10px;border-bottom:2px solid var(--oxblood-1);display:flex;align-items:baseline;justify-content:space-between;letter-spacing:-0.005em}
   main h2 em{font-style:italic;font-weight:400;color:var(--amber-dark);font-size:22px}
   .section-num{font-family:'Consolas',monospace;font-size:12px;color:var(--text-light);font-weight:700;letter-spacing:0.1em}
-  main h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--oxblood-1);margin:24px 0 10px}
+  main h3{font-family:'Jotia','Noto Sans',sans-serif;font-size:20px;font-weight:600;color:var(--oxblood-1);margin:24px 0 10px}
   main h3 em{font-style:italic;color:var(--amber-dark);font-weight:400;font-size:15px}
   main h4{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);margin:16px 0 8px}
   main p{margin-bottom:10px;color:var(--text)}
@@ -76,15 +76,15 @@
   .swatch span{color:var(--text-light)}
 
   /* Code blocks */
-  code{background:var(--cream-warm);color:var(--maroon-dark,#7A4E1A);padding:1.5px 6px;border-radius:3px;font-size:12px}
+  code{background:var(--cream-warm);color:var(--maroon-dark,#5E6A71);padding:1.5px 6px;border-radius:3px;font-size:12px}
   pre{background:var(--cream-warm);color:var(--oxblood-0);padding:14px 16px;border-radius:6px;border:1px solid var(--border);font-size:12px;line-height:1.55;overflow-x:auto;margin:12px 0;white-space:pre}
   pre code{background:none;padding:0;font-size:inherit;color:inherit}
 
   /* Callouts */
   .callout{border-left:3px solid;padding:12px 16px 12px 14px;margin:14px 0;border-radius:0 6px 6px 0;font-size:13px;line-height:1.55}
-  .callout-tip{background:rgba(184,137,58,0.08);border-color:var(--amber)}
+  .callout-tip{background:rgba(107,108,110,0.08);border-color:var(--amber)}
   .callout-warn{background:rgba(140,30,42,0.06);border-color:var(--red)}
-  .callout-note{background:rgba(67,6,31,0.05);border-color:var(--oxblood-1)}
+  .callout-note{background:rgba(100,0,58,0.05);border-color:var(--oxblood-1)}
   .callout-do{background:rgba(46,125,79,0.08);border-color:var(--green)}
   .callout strong{display:block;font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:3px}
   .callout-tip strong{color:var(--amber-dark)}
@@ -104,8 +104,8 @@
   /* Text snippets */
   .snippet{background:var(--white);border:1px solid var(--border-mid);border-radius:6px;padding:12px 16px;font-size:13px;margin:8px 0 14px;display:flex;align-items:center;gap:12px}
   .snippet-label{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-dark);flex-shrink:0}
-  .snippet-text{flex:1;font-family:'Segoe UI',sans-serif;color:var(--text)}
-  .snippet.italic .snippet-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px}
+  .snippet-text{flex:1;font-family:'Noto Sans','Graphik','Segoe UI',sans-serif;color:var(--text)}
+  .snippet.italic .snippet-text{font-family:'Jotia','Noto Sans',sans-serif;font-style:italic;font-size:16px}
 
   /* Layer list */
   .layers{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:14px 18px;margin:12px 0;font-size:13px}
@@ -238,7 +238,7 @@
       <table>
         <tbody>
           <tr><td class="k">Colour</td><td>
-            <span class="swatch"><span class="sw-dot" style="background:#FBF6EC"></span><b>#FBF6EC</b> <span>· 251 · 246 · 236</span></span>
+            <span class="swatch"><span class="sw-dot" style="background:#FFFFFF"></span><b>#FFFFFF</b> <span>· 251 · 246 · 236</span></span>
           </td></tr>
           <tr><td class="k">Transparency</td><td class="mono">0 %</td></tr>
         </tbody>
@@ -251,7 +251,7 @@
       </ol>
       <div class="callout callout-do">
         <strong>What this unlocks</strong>
-        Button fills default to <code>#43061F</code>, button text to <code>#F7EBD4</code>, matrix grid lines to <code>#E8DFD0</code>, slicer border to <code>#D6C9B6</code>. You can place visuals freely and they inherit the brand.
+        Button fills default to <code>#64003A</code>, button text to <code>#FFFFFF</code>, matrix grid lines to <code>#E1E1E2</code>, slicer border to <code>#E9E9E9</code>. You can place visuals freely and they inherit the brand.
       </div>
     </section>
 
@@ -343,7 +343,7 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
       <p>Format → Shape:</p>
       <table>
         <tbody>
-          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#1F0310"></span><b>#1F0310</b> <span>· 31 · 3 · 16</span></span> · 0 % transparency</td></tr>
+          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#3C0026"></span><b>#3C0026</b> <span>· 31 · 3 · 16</span></span> · 0 % transparency</td></tr>
           <tr><td class="k">Border</td><td>Off</td></tr>
           <tr><td class="k">Shadow</td><td>Off</td></tr>
         </tbody>
@@ -356,7 +356,7 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
         <tbody>
           <tr><td class="k">Font</td><td>Segoe UI 9 pt · not bold</td></tr>
           <tr><td class="k">Colour (main text)</td><td><span class="swatch"><span class="sw-dot" style="background:#BCA9AE"></span><b>#BCA9AE</b> <span>· 188 · 169 · 174</span></span></td></tr>
-          <tr><td class="k">Colour (● bullet only)</td><td><span class="swatch"><span class="sw-dot" style="background:#B8893A"></span><b>#B8893A</b> <span>· 184 · 137 · 58</span></span></td></tr>
+          <tr><td class="k">Colour (● bullet only)</td><td><span class="swatch"><span class="sw-dot" style="background:#6B6C6E"></span><b>#6B6C6E</b> <span>· 184 · 137 · 58</span></span></td></tr>
           <tr><td class="k">Letter spacing</td><td>Use UPPERCASE text (PBI doesn't expose tracking)</td></tr>
         </tbody>
       </table>
@@ -395,7 +395,7 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
       <h4>Simple version — one shape</h4>
       <table>
         <tbody>
-          <tr><td class="k">Fill colour</td><td><span class="swatch"><span class="sw-dot" style="background:#2A0311"></span><b>#2A0311</b> <span>· 42 · 3 · 17</span></span></td></tr>
+          <tr><td class="k">Fill colour</td><td><span class="swatch"><span class="sw-dot" style="background:#3C0026"></span><b>#3C0026</b> <span>· 42 · 3 · 17</span></span></td></tr>
           <tr><td class="k">Transparency</td><td class="mono">25 %</td></tr>
           <tr><td class="k">Border</td><td>Off</td></tr>
         </tbody>
@@ -408,7 +408,7 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
           <tr>
             <td class="k">Base wash</td>
             <td class="mono">X=0 Y=28 W=1280 H=220</td>
-            <td><span class="swatch"><span class="sw-dot" style="background:#2A0311"></span><b>#2A0311</b></span></td>
+            <td><span class="swatch"><span class="sw-dot" style="background:#3C0026"></span><b>#3C0026</b></span></td>
             <td class="mono">30 %</td>
           </tr>
           <tr>
@@ -424,7 +424,7 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
       <p>Insert <b>Rectangle</b> at X=0, Y=246, W=1280, H=2:</p>
       <table>
         <tbody>
-          <tr><td class="k">Fill colour</td><td><span class="swatch"><span class="sw-dot" style="background:#D9B268"></span><b>#D9B268</b> <span>· 217 · 178 · 104</span></span></td></tr>
+          <tr><td class="k">Fill colour</td><td><span class="swatch"><span class="sw-dot" style="background:#818A8F"></span><b>#818A8F</b> <span>· 217 · 178 · 104</span></span></td></tr>
           <tr><td class="k">Transparency</td><td class="mono">35 %</td></tr>
         </tbody>
       </table>
@@ -436,22 +436,22 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
       <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">— BUSINESS INTELLIGENCE PORTAL</span></div>
       <ul class="plain">
         <li>Font: Segoe UI Semibold 9 pt</li>
-        <li>Colour: <span class="swatch"><span class="sw-dot" style="background:#E6C179"></span><b>#E6C179</b> <span>· 230 · 193 · 121</span></span> (honey)</li>
+        <li>Colour: <span class="swatch"><span class="sw-dot" style="background:#E1E1E2"></span><b>#E1E1E2</b> <span>· 230 · 193 · 121</span></span> (honey)</li>
       </ul>
 
       <h4>Title · X=40 Y=74 W=540 H=64</h4>
       <div class="snippet italic"><span class="snippet-label">Text</span><span class="snippet-text">Find Your <em>Dashboard.</em></span></div>
       <ul class="plain">
         <li>Font: Georgia 40 pt (or Cormorant Garamond if installed on your machine)</li>
-        <li>"Find Your" colour: <span class="swatch"><span class="sw-dot" style="background:#F7EBD4"></span><b>#F7EBD4</b> <span>· 247 · 235 · 212</span></span></li>
-        <li>"Dashboard." word only: <b>Italic</b>, colour <span class="swatch"><span class="sw-dot" style="background:#E6C179"></span><b>#E6C179</b> <span>· 230 · 193 · 121</span></span></li>
+        <li>"Find Your" colour: <span class="swatch"><span class="sw-dot" style="background:#FFFFFF"></span><b>#FFFFFF</b> <span>· 247 · 235 · 212</span></span></li>
+        <li>"Dashboard." word only: <b>Italic</b>, colour <span class="swatch"><span class="sw-dot" style="background:#E1E1E2"></span><b>#E1E1E2</b> <span>· 230 · 193 · 121</span></span></li>
       </ul>
 
       <h4>Subtitle · X=40 Y=144 W=560 H=18</h4>
       <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">Search by dashboard name, keyword or business description.</span></div>
       <ul class="plain">
         <li>Font: Segoe UI 12 pt</li>
-        <li>Colour: <span class="swatch"><span class="sw-dot" style="background:#F7EBD4"></span><b>#F7EBD4</b></span> at <b>65 % opacity</b> (use alpha channel or set to <code>#A89A8B</code>)</li>
+        <li>Colour: <span class="swatch"><span class="sw-dot" style="background:#FFFFFF"></span><b>#FFFFFF</b></span> at <b>65 % opacity</b> (use alpha channel or set to <code>#A89A8B</code>)</li>
       </ul>
 
       <h3>4.5 Pinned tiles <em>· centre zone</em></h3>
@@ -459,7 +459,7 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
 
       <h4>"Pinned by you" label · X=640 Y=90 W=120 H=14</h4>
       <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">PINNED BY YOU</span></div>
-      <ul class="plain"><li>Font: Segoe UI 9 pt Semibold · colour <code>#E6C179</code></li></ul>
+      <ul class="plain"><li>Font: Segoe UI 9 pt Semibold · colour <code>#E1E1E2</code></li></ul>
 
       <h4>Each tile · 96 × 36 px · 8 px gap between tiles</h4>
       <table>
@@ -473,10 +473,10 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
       <p>Format → Button → Shape:</p>
       <table>
         <tbody>
-          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#F7EBD4;opacity:0.08"></span><b>rgba(247,235,212,0.08)</b></span></td></tr>
-          <tr><td class="k">Border</td><td><span class="swatch"><span class="sw-dot" style="background:#D9B268;opacity:0.4"></span><b>#D9B268</b></span> · 1 px · 55 % transparency · rounded 4 px</td></tr>
-          <tr><td class="k">Text line 1</td><td>Segoe UI Semibold 10 pt · <code>#F7EBD4</code></td></tr>
-          <tr><td class="k">Text line 2</td><td>Segoe UI 8 pt · <code>#E6C179</code> · uppercase · letter-space 0.1 em</td></tr>
+          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#FFFFFF;opacity:0.08"></span><b>rgba(247,235,212,0.08)</b></span></td></tr>
+          <tr><td class="k">Border</td><td><span class="swatch"><span class="sw-dot" style="background:#818A8F;opacity:0.4"></span><b>#818A8F</b></span> · 1 px · 55 % transparency · rounded 4 px</td></tr>
+          <tr><td class="k">Text line 1</td><td>Segoe UI Semibold 10 pt · <code>#FFFFFF</code></td></tr>
+          <tr><td class="k">Text line 2</td><td>Segoe UI 8 pt · <code>#E1E1E2</code> · uppercase · letter-space 0.1 em</td></tr>
           <tr><td class="k">Action</td><td>Type: <b>Web URL</b> · paste the dashboard's link</td></tr>
         </tbody>
       </table>
@@ -486,7 +486,7 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
 
       <h4>Label · X=988 Y=90 W=100 H=14</h4>
       <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">SEARCH</span></div>
-      <ul class="plain"><li>Font: Segoe UI 9 pt Semibold · colour <code>#E6C179</code></li></ul>
+      <ul class="plain"><li>Font: Segoe UI 9 pt Semibold · colour <code>#E1E1E2</code></li></ul>
 
       <h4>Slicer · X=988 Y=110 W=252 H=40</h4>
       <ol class="steps">
@@ -497,10 +497,10 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
       </ol>
       <table>
         <tbody>
-          <tr><td class="k">Background</td><td><span class="swatch"><span class="sw-dot" style="background:#FBF6EC"></span><b>#FBF6EC</b> <span>· 251 · 246 · 236</span></span> · 3 % transparency</td></tr>
-          <tr><td class="k">Border</td><td><code>#D9B268</code> · 1.5 px · rounded 4 px</td></tr>
+          <tr><td class="k">Background</td><td><span class="swatch"><span class="sw-dot" style="background:#FFFFFF"></span><b>#FFFFFF</b> <span>· 251 · 246 · 236</span></span> · 3 % transparency</td></tr>
+          <tr><td class="k">Border</td><td><code>#818A8F</code> · 1.5 px · rounded 4 px</td></tr>
           <tr><td class="k">Shadow</td><td>Outer · <code>#000000</code> · 75 % transparency · blur 14 · distance 4</td></tr>
-          <tr><td class="k">Input font</td><td>Segoe UI 13 pt · colour <code>#1A0D12</code></td></tr>
+          <tr><td class="k">Input font</td><td>Segoe UI 13 pt · colour <code>#1A1A1A</code></td></tr>
         </tbody>
       </table>
     </section>
@@ -514,9 +514,9 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
       <p>Insert <b>Rectangle</b> at X=0, Y=248, W=1280, H=44.</p>
       <table>
         <tbody>
-          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#B8893A"></span><b>#B8893A</b></span> at <b>22 % opacity</b> (≈ <code>rgba(184,137,58,0.22)</code>)</td></tr>
-          <tr><td class="k">Border top</td><td>1 px · <code>#B8893A</code> · 35 % opacity</td></tr>
-          <tr><td class="k">Border bottom</td><td>1 px · <code>#B8893A</code> · 20 % opacity</td></tr>
+          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#6B6C6E"></span><b>#6B6C6E</b></span> at <b>22 % opacity</b> (≈ <code>rgba(107,108,110,0.22)</code>)</td></tr>
+          <tr><td class="k">Border top</td><td>1 px · <code>#6B6C6E</code> · 35 % opacity</td></tr>
+          <tr><td class="k">Border bottom</td><td>1 px · <code>#6B6C6E</code> · 20 % opacity</td></tr>
         </tbody>
       </table>
 
@@ -532,11 +532,11 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
       <table>
         <tbody>
           <tr><td class="k">Font</td><td>Segoe UI Semibold 11 pt</td></tr>
-          <tr><td class="k">Default text</td><td><code>#43061F</code></td></tr>
+          <tr><td class="k">Default text</td><td><code>#64003A</code></td></tr>
           <tr><td class="k">Default background</td><td>Transparent</td></tr>
-          <tr><td class="k">Selected text</td><td><code>#F7EBD4</code></td></tr>
-          <tr><td class="k">Selected background</td><td><code>#43061F</code></td></tr>
-          <tr><td class="k">Hover background</td><td><code>#43061F</code> at 8 % opacity</td></tr>
+          <tr><td class="k">Selected text</td><td><code>#FFFFFF</code></td></tr>
+          <tr><td class="k">Selected background</td><td><code>#64003A</code></td></tr>
+          <tr><td class="k">Hover background</td><td><code>#64003A</code> at 8 % opacity</td></tr>
           <tr><td class="k">Padding</td><td>5 top/bottom · 12 left/right</td></tr>
           <tr><td class="k">Border radius</td><td>50 px (fully rounded)</td></tr>
         </tbody>
@@ -548,7 +548,7 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
         <li>Insert → <b>Card</b></li>
         <li>Field: <code>[ResultsCount]</code></li>
         <li>Format → Callout value → Font Cormorant Garamond italic 14 pt (or Georgia italic 14 pt)</li>
-        <li>Colour: <code>#43061F</code></li>
+        <li>Colour: <code>#64003A</code></li>
         <li>Label: Off · Background: Transparent</li>
       </ol>
     </section>
@@ -564,8 +564,8 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
         <tbody>
           <tr><td class="k">X · Y · W · H</td><td class="mono">32 · 308 · 1216 · 820</td></tr>
           <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#FFFFFF"></span><b>#FFFFFF</b> <span>· 255 · 255 · 255</span></span></td></tr>
-          <tr><td class="k">Border</td><td><code>#E8DFD0</code> · 1 px · rounded 6 px</td></tr>
-          <tr><td class="k">Shadow</td><td>Outer · Colour <code>#2A0311</code> · Transparency <b>88 %</b> · Blur <b>24</b> · Distance <b>6</b></td></tr>
+          <tr><td class="k">Border</td><td><code>#E1E1E2</code> · 1 px · rounded 6 px</td></tr>
+          <tr><td class="k">Shadow</td><td>Outer · Colour <code>#3C0026</code> · Transparency <b>88 %</b> · Blur <b>24</b> · Distance <b>6</b></td></tr>
         </tbody>
       </table>
 
@@ -582,7 +582,7 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
 
       <h3>7.1 Label · X=60 Y=332 W=90 H=22</h3>
       <div class="snippet italic"><span class="snippet-label">Text</span><span class="snippet-text">Examples:</span></div>
-      <ul class="plain"><li>Font: Georgia italic 14 pt · colour <code>#524148</code></li></ul>
+      <ul class="plain"><li>Font: Georgia italic 14 pt · colour <code>#5E6A71</code></li></ul>
 
       <h3>7.2 Five chip buttons · each ~100 × 26 px · 10 px gap</h3>
       <table>
@@ -599,10 +599,10 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
       <h4>Chip formatting</h4>
       <table>
         <tbody>
-          <tr><td class="k">Fill</td><td><code>#F3EADA</code> · 243 · 234 · 218</td></tr>
-          <tr><td class="k">Border</td><td><code>#D6C9B6</code> · 1 px · rounded 50 px (pill)</td></tr>
-          <tr><td class="k">Text</td><td>Segoe UI Semibold 11 pt · <code>#43061F</code></td></tr>
-          <tr><td class="k">Hover fill</td><td><code>#43061F</code> · text becomes <code>#F7EBD4</code></td></tr>
+          <tr><td class="k">Fill</td><td><code>#F0F0F0</code> · 243 · 234 · 218</td></tr>
+          <tr><td class="k">Border</td><td><code>#E9E9E9</code> · 1 px · rounded 50 px (pill)</td></tr>
+          <tr><td class="k">Text</td><td>Segoe UI Semibold 11 pt · <code>#64003A</code></td></tr>
+          <tr><td class="k">Hover fill</td><td><code>#64003A</code> · text becomes <code>#FFFFFF</code></td></tr>
           <tr><td class="k">Action type</td><td><b>Set slicer</b></td></tr>
           <tr><td class="k">Destination</td><td>The search slicer built in step 4.6</td></tr>
           <tr><td class="k">Value</td><td>The literal term in the last column of the table above</td></tr>
@@ -634,11 +634,11 @@ LastRefreshFmt = "Last refresh: " &amp; FORMAT(NOW(), "dd mmm yyyy, HH:MM")
       </ol>
       <table>
         <tbody>
-          <tr><td class="k">Background</td><td><code>#FBF6EC</code> · 0 % transparency</td></tr>
-          <tr><td class="k">Border</td><td><code>#E8DFD0</code> · 1 px · rounded 6 px</td></tr>
-          <tr><td class="k">Callout value font</td><td>Cormorant Garamond (or Georgia) Semibold 30 pt · <code>#2A0311</code></td></tr>
-          <tr><td class="k">Reference label font</td><td>Segoe UI 9.5 pt Bold · <code>#524148</code> · UPPERCASE · letter-space 0.12 em</td></tr>
-          <tr><td class="k">Bottom accent (optional)</td><td>Draw a 2-px rectangle at card bottom, fill linear gradient <code>#B8893A → #D9B268</code>, transparency 30 %</td></tr>
+          <tr><td class="k">Background</td><td><code>#FFFFFF</code> · 0 % transparency</td></tr>
+          <tr><td class="k">Border</td><td><code>#E1E1E2</code> · 1 px · rounded 6 px</td></tr>
+          <tr><td class="k">Callout value font</td><td>Cormorant Garamond (or Georgia) Semibold 30 pt · <code>#3C0026</code></td></tr>
+          <tr><td class="k">Reference label font</td><td>Segoe UI 9.5 pt Bold · <code>#5E6A71</code> · UPPERCASE · letter-space 0.12 em</td></tr>
+          <tr><td class="k">Bottom accent (optional)</td><td>Draw a 2-px rectangle at card bottom, fill linear gradient <code>#6B6C6E → #818A8F</code>, transparency 30 %</td></tr>
         </tbody>
       </table>
 
@@ -652,7 +652,7 @@ CALCULATE(
     DashboardDirectory[CreatedOn] = _max
 )
 </code></pre>
-      <p>Font: Segoe UI Semibold 15 pt · colour <code>#43061F</code> · 2 lines max, wrap enabled.</p>
+      <p>Font: Segoe UI Semibold 15 pt · colour <code>#64003A</code> · 2 lines max, wrap enabled.</p>
     </section>
 
     <!-- ══════════════════════════════════════ 09 · MAIN GRID ══════════════════════════════════════ -->
@@ -681,17 +681,17 @@ CALCULATE(
       </ol>
       <table>
         <tbody>
-          <tr><td class="k">Bar fill</td><td>Linear gradient <code>#43061F → #B8893A</code> (use data-colour conditional on rank)</td></tr>
-          <tr><td class="k">Data labels</td><td>On · Segoe UI Semibold 10.5 pt · <code>#524148</code></td></tr>
-          <tr><td class="k">Axis title</td><td>Off · X-axis hidden · Y-axis values font 12.5 pt · <code>#43061F</code></td></tr>
-          <tr><td class="k">Background</td><td><code>#FBF6EC</code></td></tr>
-          <tr><td class="k">Border</td><td><code>#E8DFD0</code> · 1 px · rounded 6 px</td></tr>
+          <tr><td class="k">Bar fill</td><td>Linear gradient <code>#64003A → #6B6C6E</code> (use data-colour conditional on rank)</td></tr>
+          <tr><td class="k">Data labels</td><td>On · Segoe UI Semibold 10.5 pt · <code>#5E6A71</code></td></tr>
+          <tr><td class="k">Axis title</td><td>Off · X-axis hidden · Y-axis values font 12.5 pt · <code>#64003A</code></td></tr>
+          <tr><td class="k">Background</td><td><code>#FFFFFF</code></td></tr>
+          <tr><td class="k">Border</td><td><code>#E1E1E2</code> · 1 px · rounded 6 px</td></tr>
         </tbody>
       </table>
 
       <h4>Column title · X=76 Y=506 W=340 H=22</h4>
       <div class="snippet italic"><span class="snippet-label">Text</span><span class="snippet-text">Most Popular <em>· across all areas</em></span></div>
-      <ul class="plain"><li>Font: Cormorant Garamond 16 pt Semibold · <code>#2A0311</code></li></ul>
+      <ul class="plain"><li>Font: Cormorant Garamond 16 pt Semibold · <code>#3C0026</code></li></ul>
 
       <h3>9.3 Column 2 · Keyword cloud</h3>
       <ol class="steps">
@@ -727,9 +727,9 @@ CALCULATE(
       <table>
         <tbody>
           <tr><td class="k">Style preset</td><td>None</td></tr>
-          <tr><td class="k">Column headers</td><td>Segoe UI Bold 9.5 pt · <code>#524148</code> · background <code>#F3EADA</code> · padding 10</td></tr>
-          <tr><td class="k">Values</td><td>Segoe UI 12 pt · <code>#1A0D12</code> · padding 10</td></tr>
-          <tr><td class="k">Grid horizontal</td><td>On · <code>#E8DFD0</code> · 1 px</td></tr>
+          <tr><td class="k">Column headers</td><td>Segoe UI Bold 9.5 pt · <code>#5E6A71</code> · background <code>#F0F0F0</code> · padding 10</td></tr>
+          <tr><td class="k">Values</td><td>Segoe UI 12 pt · <code>#1A1A1A</code> · padding 10</td></tr>
+          <tr><td class="k">Grid horizontal</td><td>On · <code>#E1E1E2</code> · 1 px</td></tr>
           <tr><td class="k">Grid vertical</td><td>Off</td></tr>
           <tr><td class="k">Totals</td><td>Off</td></tr>
           <tr><td class="k">Column widths</td><td>Dashboard 180 · Dept 95 · Freq 70 · Updated 64 (drag manually)</td></tr>
@@ -741,7 +741,7 @@ CALCULATE(
         <li>Right-click <code>DashboardName</code> in Values → <b>Conditional formatting → Web URL</b></li>
         <li>Base on field: <code>URL</code></li>
         <li><b>OK</b> — the cell now underlines and becomes clickable</li>
-        <li>Format → Values → Font colour → conditional rule → apply <code>#43061F</code> to the DashboardName column only</li>
+        <li>Format → Values → Font colour → conditional rule → apply <code>#64003A</code> to the DashboardName column only</li>
       </ol>
 
       <h4>Refresh-frequency pill colours</h4>
@@ -750,10 +750,10 @@ CALCULATE(
         <thead><tr><th>Value</th><th>Background</th><th>Font colour</th></tr></thead>
         <tbody>
           <tr><td class="k">Real-time</td><td><span class="swatch"><span class="sw-dot" style="background:#2E7D4F;opacity:0.12"></span><b>#2E7D4F</b> @ 12 %</span></td><td><code>#2E7D4F</code></td></tr>
-          <tr><td class="k">Hourly</td><td><span class="swatch"><span class="sw-dot" style="background:#43061F;opacity:0.10"></span><b>#43061F</b> @ 10 %</span></td><td><code>#43061F</code></td></tr>
-          <tr><td class="k">Daily</td><td><span class="swatch"><span class="sw-dot" style="background:#B8893A;opacity:0.18"></span><b>#B8893A</b> @ 18 %</span></td><td><code>#7A4E1A</code></td></tr>
-          <tr><td class="k">Weekly</td><td><span class="swatch"><span class="sw-dot" style="background:#8C1E2A;opacity:0.10"></span><b>#8C1E2A</b> @ 10 %</span></td><td><code>#8C1E2A</code></td></tr>
-          <tr><td class="k">On-demand</td><td><code>#E8DFD0</code></td><td><code>#524148</code></td></tr>
+          <tr><td class="k">Hourly</td><td><span class="swatch"><span class="sw-dot" style="background:#64003A;opacity:0.10"></span><b>#64003A</b> @ 10 %</span></td><td><code>#64003A</code></td></tr>
+          <tr><td class="k">Daily</td><td><span class="swatch"><span class="sw-dot" style="background:#6B6C6E;opacity:0.18"></span><b>#6B6C6E</b> @ 18 %</span></td><td><code>#5E6A71</code></td></tr>
+          <tr><td class="k">Weekly</td><td><span class="swatch"><span class="sw-dot" style="background:#780044;opacity:0.10"></span><b>#780044</b> @ 10 %</span></td><td><code>#780044</code></td></tr>
+          <tr><td class="k">On-demand</td><td><code>#E1E1E2</code></td><td><code>#5E6A71</code></td></tr>
         </tbody>
       </table>
 
@@ -776,7 +776,7 @@ CALCULATE(
       <h3>10.1 Separator line · X=60 Y=964 W=1160 H=1</h3>
       <table>
         <tbody>
-          <tr><td class="k">Fill</td><td><code>#E8DFD0</code></td></tr>
+          <tr><td class="k">Fill</td><td><code>#E1E1E2</code></td></tr>
         </tbody>
       </table>
 
@@ -797,9 +797,9 @@ CALCULATE(
         <div class="layers-title">Bottom to top</div>
         <ol>
           <li><b>Image visual</b> · same coords as tile · scaling: Fill · rounded 6 px</li>
-          <li><b>Gradient scrim</b> · rectangle, same coords, fill <code>#2A0311</code> transparency 22 %, with a top-to-bottom linear gradient simulated by a second shape (top half 0 % fill)</li>
-          <li><b>Kicker text box</b> at bottom-left (padding 12 × 14 px from tile corner) · Segoe UI 9 pt Semibold · <code>#D9B268</code> · letter-space 0.22 em</li>
-          <li><b>Title text box</b> below kicker · Cormorant Garamond 15 pt · <code>#F7EBD4</code> · italic portion in <code>#E6C179</code></li>
+          <li><b>Gradient scrim</b> · rectangle, same coords, fill <code>#3C0026</code> transparency 22 %, with a top-to-bottom linear gradient simulated by a second shape (top half 0 % fill)</li>
+          <li><b>Kicker text box</b> at bottom-left (padding 12 × 14 px from tile corner) · Segoe UI 9 pt Semibold · <code>#818A8F</code> · letter-space 0.22 em</li>
+          <li><b>Title text box</b> below kicker · Cormorant Garamond 15 pt · <code>#FFFFFF</code> · italic portion in <code>#E1E1E2</code></li>
         </ol>
       </div>
 
@@ -815,17 +815,17 @@ CALCULATE(
       <p class="lead">A thin strip below the panel with page indicator and refresh timestamp.</p>
 
       <h3>11.1 Separator line · X=60 Y=1112 W=1160 H=1</h3>
-      <p>Fill <code>#E8DFD0</code>.</p>
+      <p>Fill <code>#E1E1E2</code>.</p>
 
       <h3>11.2 Left text · X=60 Y=1124 W=300 H=16</h3>
       <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">PAGE 1 OF 3</span></div>
-      <ul class="plain"><li>Font: Segoe UI 9 pt Semibold · <code>#9C8680</code> · UPPERCASE · letter-space 0.08 em</li></ul>
+      <ul class="plain"><li>Font: Segoe UI 9 pt Semibold · <code>#6B6C6E</code> · UPPERCASE · letter-space 0.08 em</li></ul>
 
       <h3>11.3 Right text · X=860 Y=1124 W=360 H=16</h3>
       <p>Card visual with <code>[LastRefreshFmt]</code> measure. Add a yellow square ahead of it:</p>
       <ul class="plain">
         <li>Small rectangle at X=838 Y=1129 W=10 H=10 · fill <code>#F2C811</code> · rounded 2 px</li>
-        <li>Card text: Segoe UI 10 pt Italic · <code>#9C8680</code></li>
+        <li>Card text: Segoe UI 10 pt Italic · <code>#6B6C6E</code></li>
       </ul>
 
       <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">Powered by Power BI · Last refresh: 22 Apr 2026, 09:40</span></div>
@@ -891,25 +891,25 @@ CALCULATE(
       <table>
         <thead><tr><th>Role</th><th>Hex</th><th>RGB</th><th>Used in</th></tr></thead>
         <tbody>
-          <tr><td class="k"><span class="sw-dot" style="background:#1F0310;display:inline-block;margin-right:8px;vertical-align:middle"></span>Ink (ribbon)</td><td class="mono">#1F0310</td><td class="mono">31 · 3 · 16</td><td>Top ribbon</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#3C0026;display:inline-block;margin-right:8px;vertical-align:middle"></span>Ink (ribbon)</td><td class="mono">#3C0026</td><td class="mono">31 · 3 · 16</td><td>Top ribbon</td></tr>
           <tr><td class="k"><span class="sw-dot" style="background:#1A030E;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood darkest</td><td class="mono">#1A030E</td><td class="mono">26 · 3 · 14</td><td>Left-emphasis scrim</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#2A0311;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood primary</td><td class="mono">#2A0311</td><td class="mono">42 · 3 · 17</td><td>Banner scrim, KPI value text</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#43061F;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood accent</td><td class="mono">#43061F</td><td class="mono">67 · 6 · 31</td><td>Button fill, active pill, links</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#591029;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood muted</td><td class="mono">#591029</td><td class="mono">89 · 16 · 41</td><td>Banner gradient end</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#7A4E1A;display:inline-block;margin-right:8px;vertical-align:middle"></span>Amber dark</td><td class="mono">#7A4E1A</td><td class="mono">122 · 78 · 26</td><td>Daily-pill text, kicker text</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#B8893A;display:inline-block;margin-right:8px;vertical-align:middle"></span>Amber</td><td class="mono">#B8893A</td><td class="mono">184 · 137 · 58</td><td>Gold accents, bar highlight</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#D9B268;display:inline-block;margin-right:8px;vertical-align:middle"></span>Amber light</td><td class="mono">#D9B268</td><td class="mono">217 · 178 · 104</td><td>Gold hairline, pin border</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#E6C179;display:inline-block;margin-right:8px;vertical-align:middle"></span>Honey</td><td class="mono">#E6C179</td><td class="mono">230 · 193 · 121</td><td>"Dashboard." italic, eyebrow</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#F7EBD4;display:inline-block;margin-right:8px;vertical-align:middle;border-color:#D6C9B6"></span>Cream title</td><td class="mono">#F7EBD4</td><td class="mono">247 · 235 · 212</td><td>Banner title text, pill selected</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#F3EADA;display:inline-block;margin-right:8px;vertical-align:middle;border-color:#D6C9B6"></span>Cream warm</td><td class="mono">#F3EADA</td><td class="mono">243 · 234 · 218</td><td>Matrix headers, chip default</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#FBF6EC;display:inline-block;margin-right:8px;vertical-align:middle;border-color:#D6C9B6"></span>Cream</td><td class="mono">#FBF6EC</td><td class="mono">251 · 246 · 236</td><td>Canvas background, card fills</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#E8DFD0;display:inline-block;margin-right:8px;vertical-align:middle"></span>Border</td><td class="mono">#E8DFD0</td><td class="mono">232 · 223 · 208</td><td>Card + panel borders, grid lines</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#D6C9B6;display:inline-block;margin-right:8px;vertical-align:middle"></span>Border mid</td><td class="mono">#D6C9B6</td><td class="mono">214 · 201 · 182</td><td>Chip border, slicer border</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#1A0D12;display:inline-block;margin-right:8px;vertical-align:middle"></span>Text</td><td class="mono">#1A0D12</td><td class="mono">26 · 13 · 18</td><td>Body text, matrix values</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#524148;display:inline-block;margin-right:8px;vertical-align:middle"></span>Text mid</td><td class="mono">#524148</td><td class="mono">82 · 65 · 72</td><td>Labels, muted content</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#9C8680;display:inline-block;margin-right:8px;vertical-align:middle"></span>Text light</td><td class="mono">#9C8680</td><td class="mono">156 · 134 · 128</td><td>Metadata, footer text</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#3C0026;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood primary</td><td class="mono">#3C0026</td><td class="mono">42 · 3 · 17</td><td>Banner scrim, KPI value text</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#64003A;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood accent</td><td class="mono">#64003A</td><td class="mono">67 · 6 · 31</td><td>Button fill, active pill, links</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#780044;display:inline-block;margin-right:8px;vertical-align:middle"></span>Oxblood muted</td><td class="mono">#780044</td><td class="mono">89 · 16 · 41</td><td>Banner gradient end</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#5E6A71;display:inline-block;margin-right:8px;vertical-align:middle"></span>Amber dark</td><td class="mono">#5E6A71</td><td class="mono">122 · 78 · 26</td><td>Daily-pill text, kicker text</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#6B6C6E;display:inline-block;margin-right:8px;vertical-align:middle"></span>Amber</td><td class="mono">#6B6C6E</td><td class="mono">184 · 137 · 58</td><td>Gold accents, bar highlight</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#818A8F;display:inline-block;margin-right:8px;vertical-align:middle"></span>Amber light</td><td class="mono">#818A8F</td><td class="mono">217 · 178 · 104</td><td>Gold hairline, pin border</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#E1E1E2;display:inline-block;margin-right:8px;vertical-align:middle"></span>Honey</td><td class="mono">#E1E1E2</td><td class="mono">230 · 193 · 121</td><td>"Dashboard." italic, eyebrow</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#FFFFFF;display:inline-block;margin-right:8px;vertical-align:middle;border-color:#E9E9E9"></span>Cream title</td><td class="mono">#FFFFFF</td><td class="mono">247 · 235 · 212</td><td>Banner title text, pill selected</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#F0F0F0;display:inline-block;margin-right:8px;vertical-align:middle;border-color:#E9E9E9"></span>Cream warm</td><td class="mono">#F0F0F0</td><td class="mono">243 · 234 · 218</td><td>Matrix headers, chip default</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#FFFFFF;display:inline-block;margin-right:8px;vertical-align:middle;border-color:#E9E9E9"></span>Cream</td><td class="mono">#FFFFFF</td><td class="mono">251 · 246 · 236</td><td>Canvas background, card fills</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#E1E1E2;display:inline-block;margin-right:8px;vertical-align:middle"></span>Border</td><td class="mono">#E1E1E2</td><td class="mono">232 · 223 · 208</td><td>Card + panel borders, grid lines</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#E9E9E9;display:inline-block;margin-right:8px;vertical-align:middle"></span>Border mid</td><td class="mono">#E9E9E9</td><td class="mono">214 · 201 · 182</td><td>Chip border, slicer border</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#1A1A1A;display:inline-block;margin-right:8px;vertical-align:middle"></span>Text</td><td class="mono">#1A1A1A</td><td class="mono">26 · 13 · 18</td><td>Body text, matrix values</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#5E6A71;display:inline-block;margin-right:8px;vertical-align:middle"></span>Text mid</td><td class="mono">#5E6A71</td><td class="mono">82 · 65 · 72</td><td>Labels, muted content</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#6B6C6E;display:inline-block;margin-right:8px;vertical-align:middle"></span>Text light</td><td class="mono">#6B6C6E</td><td class="mono">156 · 134 · 128</td><td>Metadata, footer text</td></tr>
           <tr><td class="k"><span class="sw-dot" style="background:#2E7D4F;display:inline-block;margin-right:8px;vertical-align:middle"></span>Green (fresh)</td><td class="mono">#2E7D4F</td><td class="mono">46 · 125 · 79</td><td>Real-time pill</td></tr>
-          <tr><td class="k"><span class="sw-dot" style="background:#8C1E2A;display:inline-block;margin-right:8px;vertical-align:middle"></span>Red (stale)</td><td class="mono">#8C1E2A</td><td class="mono">140 · 30 · 42</td><td>Weekly pill, stale warning</td></tr>
+          <tr><td class="k"><span class="sw-dot" style="background:#780044;display:inline-block;margin-right:8px;vertical-align:middle"></span>Red (stale)</td><td class="mono">#780044</td><td class="mono">140 · 30 · 42</td><td>Weekly pill, stale warning</td></tr>
         </tbody>
       </table>
     </section>
@@ -927,7 +927,7 @@ RIBBON           X=0     Y=0     W=1280  H=28
 
 BANNER           X=0     Y=28    W=1280  H=220
   Image visual   X=0     Y=28    W=1280  H=220
-  Scrim rect    (same coords · #2A0311 · 25 %)
+  Scrim rect    (same coords · #3C0026 · 25 %)
   Gold hairline  X=0     Y=246   W=1280  H=2
   Eyebrow txt    X=40    Y=54    W=260   H=14
   Title txt      X=40    Y=74    W=540   H=64
