@@ -3,447 +3,1070 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>How to Build a Dashboard Detail Page · Qatar Airways Dashboard Directory</title>
+<title>Dashboard Detail · Implementation Guide — Power BI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
   :root{
     --ink:#3C0026; --oxblood-0:#3C0026; --oxblood-1:#64003A; --oxblood-2:#780044;
-    --amber:#6B6C6E; --amber-light:#818A8F; --honey:#E1E1E2;
-    --cream:#FFFFFF; --cream-warm:#F0F0F0; --white:#FFFFFF;
-    --border:#E1E1E2; --border-mid:#E9E9E9;
-    --text:#1A1A1A; --text-mid:#5E6A71; --text-light:#6B6C6E;
+    --amber:#6B6C6E; --amber-dark:#5E6A71; --amber-light:#818A8F; --honey:#E1E1E2;
+    --cream:#FFFFFF; --cream-warm:#F0F0F0; --cream-title:#FFFFFF; --white:#FFFFFF;
+    --border:#E1E1E2; --border-mid:#E9E9E9; --text:#1A1A1A; --text-mid:#5E6A71; --text-light:#6B6C6E;
+    --green:#2E7D4F; --red:#780044;
   }
-  html,body{background:var(--cream);color:var(--text);font-family:'Noto Sans','Graphik','Segoe UI',sans-serif;font-size:15px;line-height:1.6}
-  .ribbon{background:var(--ink);color:rgba(247,235,212,0.78);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;padding:6px 24px;display:flex;justify-content:space-between;align-items:center;font-weight:500}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--text);font-size:14px;line-height:1.6}
+
+  .ribbon{background:var(--ink);color:rgba(247,235,212,0.78);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;padding:7px 28px;display:flex;justify-content:space-between;align-items:center;font-weight:500;border-bottom:1px solid rgba(107,108,110,0.2)}
   .ribbon-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);display:inline-block;margin-right:10px;vertical-align:middle}
-  .title-block{padding:36px 40px 30px;background:linear-gradient(135deg,var(--oxblood-0) 0%,var(--oxblood-1) 55%,var(--oxblood-2) 100%);color:#FFFFFF;position:relative;overflow:hidden}
-  .title-block::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(107,108,110,0.10)' stroke-width='0.6'%3E%3Cpolygon points='50,6 90,28 90,72 50,94 10,72 10,28'/%3E%3Ccircle cx='50' cy='50' r='14'/%3E%3C/g%3E%3C/svg%3E");background-size:100px 100px;pointer-events:none}
-  .title-block .eyebrow{position:relative;z-index:1;font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-light);margin-bottom:8px}
-  .title-block .eyebrow::before{content:'';display:inline-block;width:22px;height:1px;background:var(--amber);vertical-align:middle;margin-right:10px;opacity:0.7}
-  .title-block h1.banner{position:relative;z-index:1;font-family:'Jotia','Noto Sans',sans-serif;font-size:34px;font-weight:500;line-height:1.1;color:#FFFFFF}
-  .title-block h1.banner em{font-style:italic;font-weight:400;color:var(--honey)}
-  main{max-width:880px;margin:0 auto;padding:36px 40px 80px}
-  main > h1{display:none}
-  main h2{font-family:'Jotia','Noto Sans',sans-serif;font-size:22px;font-weight:600;color:var(--oxblood-0);margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
-  main h2:first-of-type{margin-top:0}
-  main h3{font-family:'Jotia','Noto Sans',sans-serif;font-size:16px;font-weight:600;color:var(--oxblood-1);margin:22px 0 8px}
-  main p{margin:0 0 12px;color:var(--text)}
-  main strong{color:var(--oxblood-0)}
-  main em{color:var(--text-mid)}
-  main code{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:12.5px;background:var(--cream-warm);color:var(--oxblood-1);padding:1px 6px;border-radius:3px;border:1px solid var(--border)}
-  main pre{background:#1A1A1A;color:#F0F0F0;padding:14px 18px;border-radius:6px;overflow-x:auto;margin:8px 0 18px}
-  main pre code{background:none;color:inherit;padding:0;border:none;font-size:12.5px;line-height:1.55}
-  main ul{margin:0 0 14px 20px}
-  main ul.checklist{list-style:none;margin-left:0}
-  main ul.checklist li{padding:3px 0;color:var(--text-mid)}
-  main ul.checklist input{margin-right:10px;accent-color:var(--oxblood-1)}
-  main li{margin:3px 0}
-  main li::marker{color:var(--amber)}
-  main a{color:var(--oxblood-1);text-decoration:underline;text-underline-offset:2px}
-  main a:hover{color:var(--oxblood-0)}
-  main hr{border:none;border-top:1px solid var(--border);margin:32px 0}
-  main table{width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:13.5px}
-  main th{background:var(--cream-warm);color:var(--text-mid);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-align:left;padding:10px 12px;border-bottom:1px solid var(--border-mid)}
-  main td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text-mid);vertical-align:top}
-  main tr:last-child td{border-bottom:none}
-  footer{margin:40px auto 0;max-width:880px;padding:18px 40px 30px;border-top:1px solid var(--border);font-size:11px;color:var(--text-light);display:flex;justify-content:space-between}
-  footer a{color:var(--oxblood-1)}
+  .ribbon a{color:var(--honey);text-decoration:none}
+  .ribbon a:hover{text-decoration:underline}
+
+  .hero{background:linear-gradient(125deg, rgba(26,3,14,0.94) 0%, rgba(60,0,38,0.82) 45%, rgba(100,0,58,0.58) 80%, rgba(120,0,68,0.4) 100%),url("qatar-qsuite.jpg") center 40%/cover no-repeat;color:var(--cream-title);padding:50px 40px 46px;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(225,225,226,0.65),transparent)}
+  .hero-inner{max-width:780px;position:relative;z-index:1}
+  .kicker{display:inline-flex;align-items:center;gap:12px;font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--honey);margin-bottom:14px;text-shadow:0 1px 4px rgba(0,0,0,0.45)}
+  .kicker::before{content:'';width:24px;height:1px;background:var(--amber);opacity:0.8}
+  h1{font-family:'Jotia','Noto Sans',sans-serif;font-size:44px;font-weight:500;line-height:1.04;margin-bottom:10px;text-shadow:0 2px 14px rgba(0,0,0,0.5);letter-spacing:-0.01em}
+  h1 em{font-style:italic;font-weight:400;color:var(--honey)}
+  .lede{font-size:15px;color:rgba(247,235,212,0.78);font-weight:300;max-width:620px;line-height:1.55;text-shadow:0 1px 4px rgba(0,0,0,0.4)}
+  .hero-meta{display:flex;gap:22px;margin-top:22px;flex-wrap:wrap;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,235,212,0.55)}
+  .hero-meta b{color:var(--honey);font-weight:600}
+
+  .shell{display:grid;grid-template-columns:260px 1fr;gap:0;max-width:1320px;margin:0 auto}
+
+  aside{background:var(--cream);border-right:1px solid var(--border);padding:32px 20px 60px;position:sticky;top:0;height:100vh;overflow-y:auto;font-size:12.5px}
+  aside h4{font-size:9.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-light);margin:18px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  aside h4:first-child{margin-top:0}
+  aside a{display:block;color:var(--text-mid);text-decoration:none;padding:5px 10px;border-left:2px solid transparent;margin-left:-12px;transition:all 0.12s;line-height:1.4}
+  aside a:hover{color:var(--oxblood-1);border-left-color:var(--amber-light);background:var(--cream-warm)}
+  aside a.active{color:var(--oxblood-0);border-left-color:var(--oxblood-1);font-weight:600;background:var(--cream-warm)}
+  .step-num{display:inline-block;width:22px;font-family:'Consolas',monospace;font-size:11px;color:var(--amber-dark);font-weight:600}
+
+  main{padding:40px 44px 80px;min-width:0}
+  main section{margin-bottom:52px;scroll-margin-top:20px}
+  main h2{font-family:'Jotia','Noto Sans',sans-serif;font-size:30px;font-weight:600;color:var(--oxblood-0);margin-bottom:4px;padding-bottom:10px;border-bottom:2px solid var(--oxblood-1);display:flex;align-items:baseline;justify-content:space-between;letter-spacing:-0.005em}
+  main h2 em{font-style:italic;font-weight:400;color:var(--amber-dark);font-size:22px}
+  .section-num{font-family:'Consolas',monospace;font-size:12px;color:var(--text-light);font-weight:700;letter-spacing:0.1em}
+  main h3{font-family:'Jotia','Noto Sans',sans-serif;font-size:20px;font-weight:600;color:var(--oxblood-1);margin:24px 0 10px}
+  main h3 em{font-style:italic;color:var(--amber-dark);font-weight:400;font-size:15px}
+  main h4{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);margin:16px 0 8px}
+  main p{margin-bottom:10px;color:var(--text)}
+  main p.lead{color:var(--text-mid);font-size:14px;margin-bottom:16px}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 16px;background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+  thead th{background:var(--cream-warm);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);text-align:left;padding:10px 12px;border-bottom:1px solid var(--border-mid)}
+  tbody td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:var(--cream)}
+  td.k{font-weight:600;color:var(--oxblood-1);font-size:12px}
+  td.mono, code, pre{font-family:'Consolas','Monaco',monospace}
+  td.mono{color:var(--amber-dark);font-size:12px;font-weight:600}
+
+  .swatch{display:inline-flex;align-items:center;gap:8px;font-family:'Consolas',monospace;font-size:12px;padding:3px 10px 3px 3px;background:var(--white);border:1px solid var(--border);border-radius:50px;margin:2px 4px 2px 0;color:var(--text)}
+  .sw-dot{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,0.1);flex-shrink:0}
+  .swatch b{font-weight:700;color:var(--oxblood-0)}
+  .swatch span{color:var(--text-light)}
+
+  code{background:var(--cream-warm);color:#5E6A71;padding:1.5px 6px;border-radius:3px;font-size:12px}
+  pre{background:var(--cream-warm);color:var(--oxblood-0);padding:14px 16px;border-radius:6px;border:1px solid var(--border);font-size:12px;line-height:1.55;overflow-x:auto;margin:12px 0;white-space:pre}
+  pre code{background:none;padding:0;font-size:inherit;color:inherit}
+
+  .callout{border-left:3px solid;padding:12px 16px 12px 14px;margin:14px 0;border-radius:0 6px 6px 0;font-size:13px;line-height:1.55}
+  .callout-tip{background:rgba(107,108,110,0.08);border-color:var(--amber)}
+  .callout-warn{background:rgba(140,30,42,0.06);border-color:var(--red)}
+  .callout-note{background:rgba(100,0,58,0.05);border-color:var(--oxblood-1)}
+  .callout-do{background:rgba(46,125,79,0.08);border-color:var(--green)}
+  .callout strong{display:block;font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:3px}
+  .callout-tip strong{color:var(--amber-dark)}
+  .callout-warn strong{color:var(--red)}
+  .callout-note strong{color:var(--oxblood-1)}
+  .callout-do strong{color:var(--green)}
+
+  ol.steps{counter-reset:step;list-style:none;padding:0;margin:8px 0 16px}
+  ol.steps > li{counter-increment:step;position:relative;padding-left:38px;margin-bottom:12px;color:var(--text)}
+  ol.steps > li::before{content:counter(step);position:absolute;left:0;top:-2px;width:26px;height:26px;border-radius:50%;background:var(--oxblood-1);color:var(--cream-title);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Consolas',monospace}
+
+  ul.plain{list-style:none;padding:0;margin:8px 0 14px}
+  ul.plain li{padding-left:20px;position:relative;margin-bottom:6px;color:var(--text)}
+  ul.plain li::before{content:'▸';position:absolute;left:0;color:var(--amber);font-weight:600}
+
+  .snippet{background:var(--white);border:1px solid var(--border-mid);border-radius:6px;padding:12px 16px;font-size:13px;margin:8px 0 14px;display:flex;align-items:center;gap:12px}
+  .snippet-label{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-dark);flex-shrink:0}
+  .snippet-text{flex:1;font-family:'Noto Sans','Graphik','Segoe UI',sans-serif;color:var(--text)}
+  .snippet.italic .snippet-text{font-family:'Jotia','Noto Sans',sans-serif;font-style:italic;font-size:16px}
+
+  .footer{background:var(--ink);color:rgba(247,235,212,0.55);padding:28px 40px;font-size:11px;letter-spacing:0.08em;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .footer a{color:var(--honey);text-decoration:none;font-weight:600}
+  .footer a:hover{text-decoration:underline}
+
+  @media (max-width:960px){
+    .shell{grid-template-columns:1fr}
+    aside{position:relative;height:auto;border-right:none;border-bottom:1px solid var(--border)}
+    main{padding:28px 24px 60px}
+  }
 </style>
 </head>
 <body>
+
 <div class="ribbon">
-  <div><span class="ribbon-dot"></span>Qatar Airways · Dashboard Directory</div>
-  <div style="color:rgba(247,235,212,0.5);font-size:10px;letter-spacing:0.2em">Internal Use Only</div>
+  <div><span class="ribbon-dot"></span>Qatar Airways · Dashboard Detail · Implementation Guide</div>
+  <div><a href="implementation-guide.html">← Landing-page guide</a> · <a href="index.html">Preview hub</a></div>
 </div>
-<div class="title-block">
-  <div class="eyebrow">Build Guideline</div>
-  <h1 class="banner">How to Build a <em>Dashboard Detail</em> Page</h1>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="kicker">Power BI Drillthrough Page Tutorial</div>
+    <h1>Build the <em>detail page,</em> step by step.</h1>
+    <p class="lede">Reproduces the <code>qa-dashboard-detail-mockup.html</code> design as a Power BI drillthrough page on top of the existing <code>DashboardDirectory</code> model. Exact coordinates, hex values, DAX, and edit-interaction settings.</p>
+    <div class="hero-meta">
+      <span>⏱ <b>~2 hours</b> total</span>
+      <span>📐 <b>1280 × 900</b> canvas</span>
+      <span>🎨 <b>Same theme</b> as landing</span>
+      <span>🧩 <b>7 sections</b></span>
+      <span>📊 <b>5 new measures</b></span>
+    </div>
+  </div>
+</section>
+
+<div class="shell">
+
+  <aside>
+    <h4>Setup</h4>
+    <a href="#prereq"><span class="step-num">00</span> Prerequisites</a>
+    <a href="#page"><span class="step-num">01</span> New page &amp; canvas</a>
+    <a href="#drill"><span class="step-num">02</span> Drillthrough binding</a>
+    <a href="#data"><span class="step-num">03</span> New tables &amp; DAX</a>
+
+    <h4>Build</h4>
+    <a href="#ribbon"><span class="step-num">04</span> Top ribbon</a>
+    <a href="#action"><span class="step-num">05</span> Action bar</a>
+    <a href="#title"><span class="step-num">06</span> Title block</a>
+    <a href="#meta"><span class="step-num">07</span> Meta bar</a>
+    <a href="#left"><span class="step-num">08</span> Left column · variant</a>
+    <a href="#usage"><span class="step-num">09</span> Usage card</a>
+    <a href="#related"><span class="step-num">10</span> Related dashboards</a>
+    <a href="#history"><span class="step-num">11</span> Refresh history</a>
+    <a href="#footerbar"><span class="step-num">12</span> Footer bar</a>
+
+    <h4>Finish</h4>
+    <a href="#interactions"><span class="step-num">13</span> Edit interactions</a>
+    <a href="#test"><span class="step-num">14</span> Test &amp; publish</a>
+
+    <h4>Reference</h4>
+    <a href="#dax">Appendix A · DAX</a>
+    <a href="#palette">Appendix B · Palette</a>
+    <a href="#trouble">Appendix C · Troubleshooting</a>
+  </aside>
+
+  <main>
+
+    <!-- 00 PREREQUISITES -->
+    <section id="prereq">
+      <h2>Before you start <span class="section-num">00</span></h2>
+      <p class="lead">This guide assumes the landing page is already built (sections 00–13 of the <a href="implementation-guide.html">main implementation guide</a>) and the <code>DashboardDirectory</code> table is loaded. The detail page reuses that model and adds two fact tables.</p>
+
+      <h4>What you should already have</h4>
+      <ul class="plain">
+        <li><b>DashboardDirectory</b> table loaded with at least 13 rows</li>
+        <li><code>qatar-theme.json</code> imported as the report theme</li>
+        <li>Find Your Dashboard landing page complete on Page 1</li>
+      </ul>
+
+      <h4>New assets needed</h4>
+      <table>
+        <thead><tr><th>File</th><th>What it is</th><th>Used in</th></tr></thead>
+        <tbody>
+          <tr><td class="mono"><a href="qatar-qsuite.jpg" download>qatar-qsuite.jpg</a></td><td>Drillthrough hero image · 1600 × 1067</td><td>Step 08 (Hero variant)</td></tr>
+          <tr><td class="mono"><a href="qatar-cabin.jpg" download>qatar-cabin.jpg</a></td><td>Alternative hero image</td><td>Step 08 (Hero variant)</td></tr>
+          <tr><td class="mono">UsageMetrics.csv</td><td>Daily report-views per dashboard, last 90 days</td><td>Step 03 / 09</td></tr>
+          <tr><td class="mono">RefreshHistory.csv</td><td>Refresh runs per dataset, last 30 days</td><td>Step 03 / 11</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>Tip</strong>
+        Don't have <b>UsageMetrics</b> or <b>RefreshHistory</b> yet? Pull them from the Power BI Activity Log API and Datasets API respectively. For the build, mock them with the same column structure listed in step 03.
+      </div>
+    </section>
+
+    <!-- 01 NEW PAGE & CANVAS -->
+    <section id="page">
+      <h2>New page &amp; canvas <span class="section-num">01</span></h2>
+      <p class="lead">Add a new report page sized for the drillthrough. The detail page is taller than the landing page because the refresh-history table needs vertical room.</p>
+
+      <h3>1.1 Add the page</h3>
+      <ol class="steps">
+        <li>Bottom of the report → <b>+ New page</b></li>
+        <li>Right-click the page tab → <b>Rename</b> → <code>Dashboard Detail</code></li>
+        <li>Right-click again → <b>Hide page</b> <span style="color:var(--text-light)">(drillthrough pages should not show as tabs)</span></li>
+      </ol>
+
+      <h3>1.2 Canvas size</h3>
+      <p>With no visual selected → <b>Format page → Canvas settings</b>:</p>
+      <table>
+        <tbody>
+          <tr><td class="k">Type</td><td>Custom</td></tr>
+          <tr><td class="k">Width</td><td class="mono">1280</td></tr>
+          <tr><td class="k">Height</td><td class="mono">900</td></tr>
+          <tr><td class="k">Vertical alignment</td><td>Top</td></tr>
+        </tbody>
+      </table>
+
+      <h3>1.3 Canvas background</h3>
+      <table>
+        <tbody>
+          <tr><td class="k">Colour</td><td><span class="swatch"><span class="sw-dot" style="background:#FFFFFF"></span><b>#FFFFFF</b></span></td></tr>
+          <tr><td class="k">Transparency</td><td class="mono">0 %</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-note">
+        <strong>Why 1280 × 900</strong>
+        The detail page stacks 8 vertical zones (ribbon · action bar · title · meta · main grid · related · history · footer). 820 isn't enough; 900 fits without a scroll bar inside the embed.
+      </div>
+    </section>
+
+    <!-- 02 DRILLTHROUGH BINDING -->
+    <section id="drill">
+      <h2>Drillthrough binding <span class="section-num">02</span></h2>
+      <p class="lead">Drillthrough is what makes a single page render dynamically for any selected dashboard. Configure it before placing visuals — every visual you add afterward will inherit the filter.</p>
+
+      <h3>2.1 Bind DashboardName as the drillthrough field</h3>
+      <ol class="steps">
+        <li>With the <code>Dashboard Detail</code> page active and no visual selected, open <b>Visualizations → Drill through</b></li>
+        <li>Set <b>Cross-report</b> = Off</li>
+        <li>Set <b>Keep all filters</b> = Off</li>
+        <li>Drag <code>DashboardDirectory[DashboardName]</code> into the <b>Add drill-through fields here</b> well</li>
+      </ol>
+
+      <div class="callout callout-do">
+        <strong>What this unlocks</strong>
+        Every visual on this page is now implicitly filtered to the single row whose <code>DashboardName</code> the user clicked from the landing-page matrix. No card needs an explicit filter; the page filter does the work.
+      </div>
+
+      <h3>2.2 Auto-generated back button</h3>
+      <p>Power BI inserts a back button at <b>X=14, Y=14</b> automatically. Move it later (Step 05) — keep the page-back behaviour.</p>
+
+      <h3>2.3 Wire the matrix on Page 1 to call this page</h3>
+      <p>Switch back to the landing page. Drillthrough is invoked by right-click on a row in the dashboard matrix. To make it discoverable:</p>
+      <ol class="steps">
+        <li>Add a small "Right-click → Drill through → Dashboard Detail" hint as a Card visual or text box near the matrix header</li>
+        <li>Optionally insert a small drillthrough icon button per row using a calculation group; keep right-click as the canonical path</li>
+      </ol>
+
+      <div class="callout callout-warn">
+        <strong>Critical</strong>
+        Leave <b>Keep all filters</b> Off. If you turn it On, the search slicer text and category pill from the landing page leak in and corrupt the meta bar.
+      </div>
+    </section>
+
+    <!-- 03 NEW TABLES & DAX -->
+    <section id="data">
+      <h2>New tables &amp; DAX <span class="section-num">03</span></h2>
+      <p class="lead">Two fact tables join to <code>DashboardDirectory</code>, plus five measures specific to the detail page.</p>
+
+      <h3>3.1 UsageMetrics table</h3>
+      <p><b>Home → Get Data → Text/CSV</b> → <code>UsageMetrics.csv</code> → Load. Rename to <code>UsageMetrics</code>.</p>
+      <table>
+        <thead><tr><th>Column</th><th>Type</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="k">DashboardName</td><td>Text</td><td>OTP &amp; Delay Analysis</td></tr>
+          <tr><td class="k">Date</td><td>Date</td><td>2026-04-22</td></tr>
+          <tr><td class="k">Hour</td><td>Whole number</td><td>9</td></tr>
+          <tr><td class="k">Views</td><td>Whole number</td><td>42</td></tr>
+          <tr><td class="k">UniqueUsers</td><td>Whole number</td><td>12</td></tr>
+        </tbody>
+      </table>
+
+      <h3>3.2 RefreshHistory table</h3>
+      <p>Same flow → <code>RefreshHistory.csv</code> → rename to <code>RefreshHistory</code>.</p>
+      <table>
+        <thead><tr><th>Column</th><th>Type</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="k">DashboardName</td><td>Text</td><td>OTP &amp; Delay Analysis</td></tr>
+          <tr><td class="k">StartedAt</td><td>Datetime</td><td>2026-04-19 10:00</td></tr>
+          <tr><td class="k">DurationSec</td><td>Whole number</td><td>192</td></tr>
+          <tr><td class="k">RowsLoaded</td><td>Whole number</td><td>184212</td></tr>
+          <tr><td class="k">Status</td><td>Text</td><td>Success</td></tr>
+          <tr><td class="k">FailureReason</td><td>Text · nullable</td><td>source timeout</td></tr>
+        </tbody>
+      </table>
+
+      <h3>3.3 Relationships</h3>
+      <ol class="steps">
+        <li><b>Model view</b> → drag <code>UsageMetrics[DashboardName]</code> → <code>DashboardDirectory[DashboardName]</code></li>
+        <li>Drag <code>RefreshHistory[DashboardName]</code> → <code>DashboardDirectory[DashboardName]</code></li>
+        <li>Both relationships: cardinality <b>Many to one (*:1)</b>, cross-filter <b>Single</b>, active</li>
+      </ol>
+
+      <h3>3.4 Detail-page measures <em>· paste into DashboardDirectory</em></h3>
+<pre><code>Views30d =
+CALCULATE(
+    SUM(UsageMetrics[Views]),
+    DATESINPERIOD(UsageMetrics[Date], TODAY(), -30, DAY)
+)
+
+UniqueUsers30d =
+CALCULATE(
+    SUM(UsageMetrics[UniqueUsers]),
+    DATESINPERIOD(UsageMetrics[Date], TODAY(), -30, DAY)
+)
+
+PeakSlot =
+VAR _peak =
+    TOPN(
+        1,
+        SUMMARIZE(
+            UsageMetrics,
+            UsageMetrics[Date].[DayOfWeek],
+            UsageMetrics[Hour],
+            "v", SUM(UsageMetrics[Views])
+        ),
+        [v], DESC
+    )
+RETURN
+    CONCATENATEX(_peak, FORMAT(UsageMetrics[Date], "ddd") &amp; " " &amp; UsageMetrics[Hour] &amp; " AM")
+
+LastRefreshRel =
+VAR _last = MAX(RefreshHistory[StartedAt])
+VAR _diff = NOW() - _last
+RETURN
+    SWITCH(TRUE(),
+        _diff &lt; 1/24,    INT(_diff*24*60) &amp; " min ago",
+        _diff &lt; 1,       INT(_diff*24) &amp; " hr "
+                         &amp; MOD(INT(_diff*24*60), 60) &amp; " min ago",
+        _diff &lt; 7,       INT(_diff) &amp; " d ago",
+                         FORMAT(_last, "dd mmm")
+    )
+
+SLAState =
+VAR _last  = MAX(RefreshHistory[StartedAt])
+VAR _freq  = SELECTEDVALUE(DashboardDirectory[RefreshFrequency])
+VAR _slaHr = SWITCH(_freq,
+                "Real-time", 0.083,
+                "Hourly",    2,
+                "Daily",     26,
+                "Weekly",    192, 999)
+VAR _ok    = (NOW() - _last) * 24 &lt;= _slaHr
+RETURN IF(_ok, "● Within SLA", "● Behind SLA")
+</code></pre>
+    </section>
+
+    <!-- 04 TOP RIBBON -->
+    <section id="ribbon">
+      <h2>Top ribbon <span class="section-num">04</span></h2>
+      <p class="lead">Identical to the landing page — copy the three shapes from Page 1 and paste at the same coordinates.</p>
+
+      <table>
+        <thead><tr><th>Element</th><th>X</th><th>Y</th><th>W</th><th>H</th><th>Style</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Background rect</td><td class="mono">0</td><td class="mono">0</td><td class="mono">1280</td><td class="mono">28</td><td>Fill <code>#3C0026</code> · no border</td></tr>
+          <tr><td class="k">Left text</td><td class="mono">24</td><td class="mono">6</td><td class="mono">400</td><td class="mono">16</td><td>"● QATAR AIRWAYS · DASHBOARD DIRECTORY" · Segoe UI 9 pt · <code>#BCA9AE</code></td></tr>
+          <tr><td class="k">Right text</td><td class="mono">1140</td><td class="mono">7</td><td class="mono">120</td><td class="mono">14</td><td>"INTERNAL USE ONLY" · Segoe UI 8 pt · <code>#BCA9AE</code> · right-align</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>Shortcut</strong>
+        On Page 1, lasso-select the three ribbon elements → <b>Ctrl+C</b> → switch to <code>Dashboard Detail</code> → <b>Ctrl+V</b>. Paste preserves coordinates.
+      </div>
+    </section>
+
+    <!-- 05 ACTION BAR -->
+    <section id="action">
+      <h2>Action bar <span class="section-num">05</span></h2>
+      <p class="lead">A 44-pixel white strip below the ribbon. Holds the back button on the left and three action buttons on the right.</p>
+
+      <h3>5.1 Background rectangle</h3>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=0 · Y=28 · W=1280 · H=44</td></tr>
+          <tr><td class="k">Fill</td><td><span class="swatch"><span class="sw-dot" style="background:#FFFFFF"></span><b>#FFFFFF</b></span></td></tr>
+          <tr><td class="k">Border bottom</td><td>1 px <code>#E1E1E2</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>5.2 Back button <em>· left</em></h3>
+      <p>Power BI generated this in step 02. Move it and restyle.</p>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=24 · Y=42 · W=160 · H=18</td></tr>
+          <tr><td class="k">Style</td><td>Format → Button → <b>Style: Default</b></td></tr>
+          <tr><td class="k">Text</td><td>"← Back to directory"</td></tr>
+          <tr><td class="k">Font</td><td>Segoe UI Semibold 11 pt · <code>#64003A</code></td></tr>
+          <tr><td class="k">Fill</td><td>Off</td></tr>
+          <tr><td class="k">Border</td><td>Off</td></tr>
+          <tr><td class="k">Hover text</td><td><code>#3C0026</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>5.3 Action buttons <em>· right (3 buttons)</em></h3>
+      <p>Insert <b>Button → Blank</b> three times. Place from right to left so the primary "Open dashboard" sits at the far right edge.</p>
+      <table>
+        <thead><tr><th>Button</th><th>X</th><th>Y</th><th>W</th><th>H</th><th>Variant</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Open dashboard ↗</td><td class="mono">1106</td><td class="mono">38</td><td class="mono">150</td><td class="mono">28</td><td>Primary</td></tr>
+          <tr><td class="k">Request access</td><td class="mono">980</td><td class="mono">38</td><td class="mono">120</td><td class="mono">28</td><td>Ghost</td></tr>
+          <tr><td class="k">Subscribe to updates</td><td class="mono">820</td><td class="mono">38</td><td class="mono">154</td><td class="mono">28</td><td>Ghost</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Primary variant</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill</td><td><code>#64003A</code> · 0 % transparency</td></tr>
+          <tr><td class="k">Border</td><td>Off</td></tr>
+          <tr><td class="k">Border radius</td><td class="mono">4 px</td></tr>
+          <tr><td class="k">Text</td><td>Segoe UI Semibold 11 pt · <code>#FFFFFF</code></td></tr>
+          <tr><td class="k">Hover fill</td><td><code>#3C0026</code></td></tr>
+          <tr><td class="k">Action · type</td><td>Web URL</td></tr>
+          <tr><td class="k">Action · destination</td><td>fx → <code>SELECTEDVALUE(DashboardDirectory[URL])</code></td></tr>
+        </tbody>
+      </table>
+
+      <h4>Ghost variant</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill</td><td>Off</td></tr>
+          <tr><td class="k">Border</td><td>1 px <code>#E9E9E9</code> · radius 4 px</td></tr>
+          <tr><td class="k">Text</td><td>Segoe UI Semibold 11 pt · <code>#5E6A71</code></td></tr>
+          <tr><td class="k">Hover border</td><td><code>#64003A</code></td></tr>
+          <tr><td class="k">Hover text</td><td><code>#64003A</code></td></tr>
+          <tr><td class="k">Action</td><td>None until subscription / access workflow exists. Leave inert.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-warn">
+        <strong>Critical</strong>
+        The Open dashboard URL must use a <em>dynamic Web URL action</em>. Format → Button → Action → Type: <b>Web URL</b> → click <b>fx</b> → Field value: <code>SELECTEDVALUE(DashboardDirectory[URL])</code>. Hardcoding a single URL ships the same target for every dashboard.
+      </div>
+    </section>
+
+    <!-- 06 TITLE BLOCK -->
+    <section id="title">
+      <h2>Title block <span class="section-num">06</span></h2>
+      <p class="lead">A 110-pixel burgundy gradient banner with the dashboard name pulled dynamically from the drillthrough filter.</p>
+
+      <h3>6.1 Gradient background</h3>
+      <p>Power BI shapes don't support multi-stop gradients natively. Use three stacked rectangles to approximate the <code>linear-gradient(135deg, #3C0026, #64003A, #780044)</code>.</p>
+      <table>
+        <thead><tr><th>Layer</th><th>Position</th><th>Fill</th><th>Transparency</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Base</td><td class="mono">X=0 Y=72 W=1280 H=110</td><td><span class="swatch"><span class="sw-dot" style="background:#64003A"></span><b>#64003A</b></span></td><td class="mono">0 %</td></tr>
+          <tr><td class="k">Left wash</td><td class="mono">X=0 Y=72 W=640 H=110</td><td><span class="swatch"><span class="sw-dot" style="background:#3C0026"></span><b>#3C0026</b></span></td><td class="mono">35 %</td></tr>
+          <tr><td class="k">Right wash</td><td class="mono">X=640 Y=72 W=640 H=110</td><td><span class="swatch"><span class="sw-dot" style="background:#780044"></span><b>#780044</b></span></td><td class="mono">35 %</td></tr>
+        </tbody>
+      </table>
+
+      <h3>6.2 Eyebrow</h3>
+      <p>Static text — drillthrough doesn't change it. Place at <code>X=40 Y=92 W=300 H=14</code>.</p>
+      <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">— DASHBOARD DETAIL</span></div>
+      <ul class="plain">
+        <li>Font: Segoe UI Semibold 9 pt · uppercase · letter-spaced</li>
+        <li>Colour: <span class="swatch"><span class="sw-dot" style="background:#818A8F"></span><b>#818A8F</b></span></li>
+      </ul>
+
+      <h3>6.3 Title <em>· dynamic</em></h3>
+      <p>A Card visual bound to <code>DashboardDirectory[DashboardName]</code>. The drillthrough filter has narrowed the table to one row, so the card displays that name.</p>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=40 Y=110 W=820 H=46</td></tr>
+          <tr><td class="k">Visual</td><td>Card</td></tr>
+          <tr><td class="k">Field</td><td><code>DashboardDirectory[DashboardName]</code> · First</td></tr>
+          <tr><td class="k">Callout font</td><td>Georgia 32 pt (or Jotia Light if installed)</td></tr>
+          <tr><td class="k">Callout colour</td><td><code>#FFFFFF</code></td></tr>
+          <tr><td class="k">Callout alignment</td><td>Left</td></tr>
+          <tr><td class="k">Category label</td><td>Off</td></tr>
+          <tr><td class="k">Background</td><td>Off</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-note">
+        <strong>About the italic highlight</strong>
+        The mockup italicises the second word ("OTP &amp; <em>Delay Analysis</em>"). PBI's Card visual can't bold/italicise a substring. Either accept a fully roman title, or split into two side-by-side cards with the italic word styled separately. The roman version is acceptable on the live build.
+      </div>
+
+      <h3>6.4 Category pill <em>· top right</em></h3>
+      <p>Card visual at the right edge of the title block.</p>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=1090 Y=126 W=150 H=22</td></tr>
+          <tr><td class="k">Field</td><td><code>UPPER(SELECTEDVALUE(DashboardDirectory[Category]))</code> as a measure</td></tr>
+          <tr><td class="k">Callout font</td><td>Segoe UI Semibold 10 pt · uppercase</td></tr>
+          <tr><td class="k">Callout colour</td><td><code>#818A8F</code></td></tr>
+          <tr><td class="k">Background</td><td>Fill <code>#E1E1E2</code> · 80 % transparency</td></tr>
+          <tr><td class="k">Border</td><td>1 px <code>#E1E1E2</code> · 65 % transparency · radius 50 px</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 07 META BAR -->
+    <section id="meta">
+      <h2>Meta bar <span class="section-num">07</span></h2>
+      <p class="lead">Six equal columns showing dashboard provenance. All six are required — render <code>—</code> for unknowns.</p>
+
+      <h3>7.1 Background rectangle</h3>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=0 Y=182 W=1280 H=70</td></tr>
+          <tr><td class="k">Fill</td><td><code>#FFFFFF</code></td></tr>
+          <tr><td class="k">Border bottom</td><td>1 px <code>#E1E1E2</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>7.2 Six column cards</h3>
+      <p>Each column is a stacked label + Card visual. Column width 200 px, gap 8 px, x-origin 40.</p>
+      <table>
+        <thead><tr><th>#</th><th>Label</th><th>X</th><th>Field</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">1</td><td>OWNER</td><td class="mono">40</td><td><code>SELECTEDVALUE(DashboardDirectory[Owner])</code></td></tr>
+          <tr><td class="mono">2</td><td>DEPARTMENT</td><td class="mono">248</td><td><code>SELECTEDVALUE(DashboardDirectory[Department])</code></td></tr>
+          <tr><td class="mono">3</td><td>DATA SOURCE</td><td class="mono">456</td><td><code>SELECTEDVALUE(DashboardDirectory[DataSource])</code></td></tr>
+          <tr><td class="mono">4</td><td>REFRESH</td><td class="mono">664</td><td><code>SELECTEDVALUE(DashboardDirectory[RefreshFrequency])</code> &amp; SLA suffix</td></tr>
+          <tr><td class="mono">5</td><td>LAST REFRESH</td><td class="mono">872</td><td><code>[LastRefreshRel]</code></td></tr>
+          <tr><td class="mono">6</td><td>STATUS</td><td class="mono">1080</td><td><code>[SLAState]</code></td></tr>
+        </tbody>
+      </table>
+
+      <h4>Label row</h4>
+      <ul class="plain">
+        <li>Font: Segoe UI 9 pt Semibold · uppercase</li>
+        <li>Colour: <code>#6B6C6E</code></li>
+        <li>Position: each label X+0, Y=200, H=12</li>
+      </ul>
+
+      <h4>Value row</h4>
+      <ul class="plain">
+        <li>Font: Segoe UI 12 pt · 500 weight</li>
+        <li>Colour: <code>#1A1A1A</code></li>
+        <li>Position: each value X+0, Y=216, H=20, W=190</li>
+      </ul>
+
+      <h3>7.3 Status pill <em>· conditional</em></h3>
+      <p>The Status column uses conditional formatting on its background.</p>
+      <ol class="steps">
+        <li>Select the Status card → Format → Visual → Callout value → <b>Background</b> → fx</li>
+        <li>Format style: Rules</li>
+        <li>If <code>[SLAState]</code> contains "Within SLA" → fill <code>#2E7D4F</code> at 88 % transparency</li>
+        <li>If <code>[SLAState]</code> contains "Behind SLA" → fill <code>#780044</code> at 90 % transparency</li>
+      </ol>
+      <table>
+        <tbody>
+          <tr><td class="k">Border radius</td><td class="mono">50 px</td></tr>
+          <tr><td class="k">Padding</td><td class="mono">3 px top/bottom · 10 px left/right</td></tr>
+          <tr><td class="k">Text colour · Within SLA</td><td><code>#2E7D4F</code></td></tr>
+          <tr><td class="k">Text colour · Behind SLA</td><td><code>#780044</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-warn">
+        <strong>Critical</strong>
+        Status must signal more than colour. The <code>SLAState</code> measure already prepends "● " — keep it. The dot makes the pill accessible to colour-blind users.
+      </div>
+    </section>
+
+    <!-- 08 LEFT COLUMN VARIANT -->
+    <section id="left">
+      <h2>Left column · pick a variant <span class="section-num">08</span></h2>
+      <p class="lead">The main grid is two columns: left = descriptive surface, right = Usage card (built in Step 09). Pick <b>one</b> left-column variant before placing visuals — they share screen real-estate and stacking creates visual conflict.</p>
+
+      <table>
+        <thead><tr><th>Variant</th><th>When to use</th><th>Reference</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Description</td><td>Steward gave 1–2 paragraphs + bullets</td><td><a href="qa-dashboard-detail-option2-description.html" target="_blank">option2-description.html</a></td></tr>
+          <tr><td class="k">Hero image</td><td>Flagship / executive dashboard, presentation matters</td><td><a href="qa-dashboard-detail-option1-image.html" target="_blank">option1-image.html</a></td></tr>
+          <tr><td class="k">Compact</td><td>Steward gave only 2 lines + you want chip prompts</td><td><a href="qa-dashboard-detail-option3-compact.html" target="_blank">option3-compact.html</a></td></tr>
+        </tbody>
+      </table>
+
+      <p>All three variants live inside the same outer card:</p>
+      <table>
+        <tbody>
+          <tr><td class="k">Outer card position</td><td class="mono">X=40 Y=276 W=620 H=440</td></tr>
+          <tr><td class="k">Fill</td><td><code>#FFFFFF</code></td></tr>
+          <tr><td class="k">Border</td><td>1 px <code>#E1E1E2</code> · radius 6 px</td></tr>
+          <tr><td class="k">Padding</td><td class="mono">20 px top · 22 px L/R · 22 px bottom</td></tr>
+        </tbody>
+      </table>
+
+      <h3>8A · Description variant</h3>
+      <h4>Heading text box · X=62 Y=296 W=580 H=26</h4>
+      <div class="snippet italic"><span class="snippet-label">Text</span><span class="snippet-text">About this dashboard <em>· what it answers</em></span></div>
+      <ul class="plain">
+        <li>Font: Georgia 17 pt · weight 600 · colour <code>#3C0026</code></li>
+        <li>Bottom border: 1 px <code>#E1E1E2</code> · 8 px below baseline</li>
+      </ul>
+
+      <h4>Description body · Card visual</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=62 Y=336 W=580 H=180</td></tr>
+          <tr><td class="k">Visual</td><td>Card · word wrap on</td></tr>
+          <tr><td class="k">Field</td><td><code>SELECTEDVALUE(DashboardDirectory[Description])</code></td></tr>
+          <tr><td class="k">Font</td><td>Segoe UI 12 pt · weight 400 · <code>#5E6A71</code></td></tr>
+          <tr><td class="k">Line height</td><td>1.6</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Bullet list <em>· optional</em></h4>
+      <p>If the steward provided ≤4 bullets, store them in a single <code>HighlightBullets</code> column (newline-delimited). Display via a Multi-row card with one row per bullet, prefixed with "▸ " in colour <code>#6B6C6E</code>.</p>
+
+      <h3>8B · Hero image variant</h3>
+      <h4>Image visual</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=62 Y=296 W=580 H=400</td></tr>
+          <tr><td class="k">Image source</td><td><code>SELECTEDVALUE(DashboardDirectory[HeroImagePath])</code> via Image visual's URL field</td></tr>
+          <tr><td class="k">Scaling</td><td><b>Fill</b> · keeps aspect, crops</td></tr>
+          <tr><td class="k">Fallback</td><td>If the column is null, show <code>qatar-qsuite.jpg</code></td></tr>
+        </tbody>
+      </table>
+
+      <h4>Overlay scrim <em>· two layers</em></h4>
+      <table>
+        <thead><tr><th>Layer</th><th>Position</th><th>Fill</th><th>Transparency</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Top half</td><td class="mono">X=62 Y=296 W=580 H=200</td><td><code>#3C0026</code></td><td class="mono">100 % (off)</td></tr>
+          <tr><td class="k">Bottom scrim</td><td class="mono">X=62 Y=496 W=580 H=200</td><td><code>#1a0410</code></td><td class="mono">35 %</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Tagline overlay</h4>
+      <ul class="plain">
+        <li>Eyebrow "QATAR AIRWAYS" · X=84 Y=624 W=120 H=14 · Segoe UI Semibold 9 pt · <code>#818A8F</code></li>
+        <li>Tagline "Going <em>places</em> together." · X=84 Y=644 W=540 H=44 · Georgia 28 pt · <code>#FFFFFF</code> · italic on "places" only</li>
+      </ul>
+
+      <h3>8C · Compact variant</h3>
+      <p>Hybrid: image header (200 px tall) + 2-sentence body + chip row.</p>
+
+      <h4>Top image strip</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=62 Y=296 W=580 H=200</td></tr>
+          <tr><td class="k">Source</td><td><code>SELECTEDVALUE(DashboardDirectory[HeroImagePath])</code></td></tr>
+          <tr><td class="k">Scaling</td><td>Fill</td></tr>
+          <tr><td class="k">Tagline overlay</td><td>Same eyebrow + tagline pattern as 8B but at the bottom of the 200 px strip</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Body</h4>
+      <ul class="plain">
+        <li>Heading "About <em>· in brief</em>" — same style as 8A heading at X=62, Y=516, W=580, H=22</li>
+        <li>Description card · X=62 Y=546 W=580 H=60 · Segoe UI 11.5 pt · <code>#5E6A71</code></li>
+      </ul>
+
+      <h4>"Answers questions like" chips</h4>
+      <p>Three Button visuals laid out horizontally. Each chip is a separate button with its own text — the dashboard model needs three columns (<code>ChipQuestion1/2/3</code>) bound via <code>SELECTEDVALUE</code>.</p>
+      <table>
+        <thead><tr><th>Chip</th><th>X</th><th>Y</th><th>W</th><th>H</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">1</td><td class="mono">62</td><td class="mono">630</td><td class="mono">186</td><td class="mono">26</td></tr>
+          <tr><td class="mono">2</td><td class="mono">256</td><td class="mono">630</td><td class="mono">186</td><td class="mono">26</td></tr>
+          <tr><td class="mono">3</td><td class="mono">450</td><td class="mono">630</td><td class="mono">192</td><td class="mono">26</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill</td><td><code>#F0F0F0</code></td></tr>
+          <tr><td class="k">Border</td><td>1 px <code>#E9E9E9</code> · radius 50 px</td></tr>
+          <tr><td class="k">Text</td><td>Segoe UI 11 pt · <code>#64003A</code></td></tr>
+          <tr><td class="k">Hover fill</td><td><code>#64003A</code></td></tr>
+          <tr><td class="k">Hover text</td><td><code>#FFFFFF</code></td></tr>
+          <tr><td class="k">Action</td><td>Inert (or "Set slicer" if you want chips to filter another visual on click)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 09 USAGE CARD -->
+    <section id="usage">
+      <h2>Usage card <span class="section-num">09</span></h2>
+      <p class="lead">Right column of the main grid. A 90-day area chart plus three KPI cards.</p>
+
+      <h3>9.1 Outer card frame</h3>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=680 Y=276 W=560 H=440</td></tr>
+          <tr><td class="k">Fill</td><td><code>#FFFFFF</code></td></tr>
+          <tr><td class="k">Border</td><td>1 px <code>#E1E1E2</code> · radius 6 px</td></tr>
+        </tbody>
+      </table>
+
+      <h3>9.2 Heading · X=702 Y=296 W=520 H=26</h3>
+      <div class="snippet italic"><span class="snippet-label">Text</span><span class="snippet-text">Usage · last 90 days <em>· 90 d</em></span></div>
+      <ul class="plain">
+        <li>Font: Georgia 17 pt · weight 600 · colour <code>#3C0026</code></li>
+        <li>Italic suffix " · 90 d" colour <code>#6B6C6E</code></li>
+      </ul>
+
+      <h3>9.3 Area chart</h3>
+      <ol class="steps">
+        <li>Insert → <b>Area chart</b></li>
+        <li>X-axis: <code>UsageMetrics[Date]</code> · grouping = continuous</li>
+        <li>Y-axis: <code>SUM(UsageMetrics[Views])</code></li>
+        <li>Filter: <b>Filter on this visual</b> → <code>UsageMetrics[Date]</code> is in the last 90 days</li>
+      </ol>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=702 Y=336 W=520 H=180</td></tr>
+          <tr><td class="k">Line stroke</td><td><code>#64003A</code> · 2 px</td></tr>
+          <tr><td class="k">Area fill</td><td>Gradient · top <code>#6B6C6E</code> at 45 % opacity → bottom transparent</td></tr>
+          <tr><td class="k">X-axis</td><td>Off (custom tick row below)</td></tr>
+          <tr><td class="k">Y-axis</td><td>Off</td></tr>
+          <tr><td class="k">Gridlines · horizontal</td><td>3 lines · <code>#E1E1E2</code> · 1 px</td></tr>
+          <tr><td class="k">Gridlines · vertical</td><td>Off</td></tr>
+          <tr><td class="k">Data labels</td><td>Off</td></tr>
+          <tr><td class="k">Background / Border</td><td>Off / Off</td></tr>
+        </tbody>
+      </table>
+
+      <h3>9.4 Custom month-tick row · X=702 Y=520 W=520 H=14</h3>
+      <ul class="plain">
+        <li>4 text boxes evenly spread, bound to date offsets</li>
+        <li>Style: Segoe UI 9 pt · uppercase · <code>#6B6C6E</code></li>
+      </ul>
+
+      <h3>9.5 Three KPI cards</h3>
+      <table>
+        <thead><tr><th>#</th><th>Label</th><th>X</th><th>Y</th><th>W</th><th>Field</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">1</td><td>VIEWS · 30 D</td><td class="mono">702</td><td class="mono">560</td><td class="mono">170</td><td><code>[Views30d]</code></td></tr>
+          <tr><td class="mono">2</td><td>UNIQUE USERS</td><td class="mono">880</td><td class="mono">560</td><td class="mono">170</td><td><code>[UniqueUsers30d]</code></td></tr>
+          <tr><td class="mono">3</td><td>PEAK SLOT</td><td class="mono">1058</td><td class="mono">560</td><td class="mono">170</td><td><code>[PeakSlot]</code></td></tr>
+        </tbody>
+      </table>
+
+      <h4>Card style (each)</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Card height</td><td class="mono">90 px</td></tr>
+          <tr><td class="k">Top divider</td><td>1 px <code>#E1E1E2</code> at Y=552 spanning the card</td></tr>
+          <tr><td class="k">Label font</td><td>Segoe UI Semibold 9 pt uppercase · <code>#6B6C6E</code></td></tr>
+          <tr><td class="k">Value font</td><td>Georgia 22 pt · weight 600 · <code>#3C0026</code></td></tr>
+          <tr><td class="k">Background / Border</td><td>Off / Off</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>If usage data isn't ready</strong>
+        Don't fake numbers. Set the cards to a static placeholder ("—") and add a TODO comment in the page bookmark name. Stewards can see fake numbers but will trust the page less if they spot them.
+      </div>
+    </section>
+
+    <!-- 10 RELATED -->
+    <section id="related">
+      <h2>Related dashboards <span class="section-num">10</span></h2>
+      <p class="lead">A 3-row grid of peer dashboards. Implemented as a Matrix visual filtered to the same category as the drillthrough subject.</p>
+
+      <h3>10.1 Outer card · X=40 Y=736 W=1200 H=128</h3>
+      <table>
+        <tbody>
+          <tr><td class="k">Fill</td><td><code>#FFFFFF</code></td></tr>
+          <tr><td class="k">Border</td><td>1 px <code>#E1E1E2</code> · radius 6 px</td></tr>
+        </tbody>
+      </table>
+
+      <h3>10.2 Heading · X=62 Y=752 W=900 H=24</h3>
+      <div class="snippet italic"><span class="snippet-label">Text</span><span class="snippet-text">Related dashboards <em>· same area or shared keywords</em></span></div>
+
+      <h3>10.3 Matrix-driven peer list</h3>
+      <ol class="steps">
+        <li>Insert <b>Matrix</b></li>
+        <li>Rows: <code>DashboardDirectory[DashboardName]</code></li>
+        <li>Values: <code>DashboardDirectory[Category]</code> · <code>[Views30d]</code></li>
+        <li>Filter on this visual → <code>DashboardDirectory[Category]</code> = SELECTEDVALUE of drillthrough subject</li>
+        <li>Filter on this visual → <code>DashboardDirectory[DashboardName] &lt;&gt; SELECTEDVALUE(...)</code> (exclude self)</li>
+        <li>Visual filter: <b>Top N → 3</b> by <code>[Views30d]</code> descending</li>
+      </ol>
+
+      <h4>Matrix style</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Position</td><td class="mono">X=62 Y=786 W=1156 H=68</td></tr>
+          <tr><td class="k">Layout</td><td>Stepped layout = Off · Auto-size column width = On</td></tr>
+          <tr><td class="k">Row separators</td><td>Off</td></tr>
+          <tr><td class="k">Column separators</td><td>1 px <code>#E1E1E2</code></td></tr>
+          <tr><td class="k">Header background</td><td>Off (no headers shown)</td></tr>
+          <tr><td class="k">Values font</td><td>Segoe UI Semibold 12.5 pt · <code>#64003A</code> · underline</td></tr>
+          <tr><td class="k">Hover background</td><td><code>#F0F0F0</code></td></tr>
+          <tr><td class="k">Action</td><td>Conditional URL formatting on the <code>DashboardName</code> column → <code>DashboardDirectory[URL]</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-warn">
+        <strong>Critical</strong>
+        If only 2 peers exist, do not pad with unrelated dashboards. The Matrix will naturally render 2 rows. Accept the asymmetry — it's better than misleading the user.
+      </div>
+    </section>
+
+    <!-- 11 HISTORY -->
+    <section id="history">
+      <h2>Refresh history <span class="section-num">11</span></h2>
+      <p class="lead">Last 10 runs only. Powered by the <code>RefreshHistory</code> table.</p>
+
+      <div class="callout callout-note">
+        <strong>Decision · pick one approach</strong>
+        The 900 px canvas can't fit the entire history table after the related grid.
+        <ol class="steps" style="margin-top:6px">
+          <li><b>Inline · expanded canvas:</b> increase canvas H to 1100 like the landing page; place the history Table at Y=880 W=1200 H=180.</li>
+          <li><b>Tooltip page:</b> keep canvas at 900; render the history as a separate hidden page bound as a tooltip on the meta bar's "Last refresh" pill.</li>
+        </ol>
+        Pick (1) for a printable single-shot drillthrough; pick (2) for an interactive read.
+      </div>
+
+      <h3>11.1 Table visual <em>(approach 1)</em></h3>
+      <ol class="steps">
+        <li>Insert <b>Table</b></li>
+        <li>Columns:
+          <ul class="plain">
+            <li><code>FORMAT(RefreshHistory[StartedAt], "dd mmm yyyy · HH:MM")</code> as <b>Started</b></li>
+            <li><code>FORMAT(RefreshHistory[DurationSec]/60, "0")</code> &amp; "min " &amp; … as <b>Duration</b></li>
+            <li><code>RefreshHistory[RowsLoaded]</code> formatted with thousands separator</li>
+            <li><code>RefreshHistory[Status]</code> with conditional colour</li>
+          </ul>
+        </li>
+        <li>Visual filter: <b>Top N → 10</b> by <code>RefreshHistory[StartedAt]</code> descending</li>
+        <li>Sort: <code>StartedAt</code> descending</li>
+      </ol>
+
+      <h4>Table style</h4>
+      <table>
+        <tbody>
+          <tr><td class="k">Header</td><td>Background <code>#F0F0F0</code> · text Segoe UI Semibold 9 pt uppercase · <code>#5E6A71</code></td></tr>
+          <tr><td class="k">Row text</td><td>Segoe UI 12 pt · <code>#5E6A71</code></td></tr>
+          <tr><td class="k">Row padding</td><td class="mono">8 px top/bottom · 10 px left/right</td></tr>
+          <tr><td class="k">Row separators</td><td>1 px <code>#E1E1E2</code></td></tr>
+          <tr><td class="k">Hover</td><td>Off (read-only table)</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Status conditional formatting</h4>
+      <ol class="steps">
+        <li>Status column → Format → Cell elements → <b>Font color</b> → fx</li>
+        <li>If <code>Status</code> = "Success" → <code>#2E7D4F</code></li>
+        <li>If <code>Status</code> = "Failed" → <code>#780044</code> · weight 600</li>
+        <li>For failures, concatenate the failure reason: <code>Status &amp; " · " &amp; FailureReason</code></li>
+      </ol>
+    </section>
+
+    <!-- 12 FOOTER -->
+    <section id="footerbar">
+      <h2>Footer bar <span class="section-num">12</span></h2>
+      <p class="lead">Page indicator + Power BI mark + absolute timestamp.</p>
+
+      <h3>12.1 Top divider · X=40 Y=856 W=1200 H=1 · Fill <code>#E1E1E2</code></h3>
+
+      <h3>12.2 Page indicator <em>· left</em> · X=40 Y=872 W=300 H=14</h3>
+      <div class="snippet"><span class="snippet-label">Text</span><span class="snippet-text">PAGE 2 OF 3 · DRILLTHROUGH</span></div>
+      <ul class="plain"><li>Font: Segoe UI Semibold 9 pt · <code>#6B6C6E</code></li></ul>
+
+      <h3>12.3 Power BI mark <em>· right</em></h3>
+      <table>
+        <tbody>
+          <tr><td class="k">Yellow square</td><td class="mono">X=996 Y=874 W=10 H=10</td></tr>
+          <tr><td class="k">Square fill</td><td><span class="swatch"><span class="sw-dot" style="background:#F2C811"></span><b>#F2C811</b></span> <em>(Microsoft's mark — keep yellow)</em></td></tr>
+          <tr><td class="k">Square radius</td><td class="mono">2 px</td></tr>
+          <tr><td class="k">Note text</td><td class="mono">X=1010 Y=872 W=230 H=14</td></tr>
+        </tbody>
+      </table>
+      <div class="snippet italic"><span class="snippet-label">Text</span><span class="snippet-text">Powered by Power BI · <code>[LastRefreshFmt]</code></span></div>
+      <ul class="plain"><li>Font: Segoe UI Italic 11 pt · <code>#6B6C6E</code></li></ul>
+    </section>
+
+    <!-- 13 EDIT INTERACTIONS -->
+    <section id="interactions">
+      <h2>Edit interactions <span class="section-num">13</span></h2>
+      <p class="lead">A drillthrough page is read-only. The visuals must not cross-filter each other — the only filter is the page-level drillthrough.</p>
+
+      <ol class="steps">
+        <li>Select the <b>Title card</b> → ribbon → <b>Format → Edit interactions</b></li>
+        <li>Click each other visual on the page → set its interaction icon to <b>None</b> (no funnel, no highlight)</li>
+        <li>Repeat for the Meta cards · Description card · Usage chart · KPI cards · Related matrix · History table</li>
+        <li>Exit Edit interactions mode</li>
+      </ol>
+
+      <div class="callout callout-warn">
+        <strong>Critical</strong>
+        If you skip this step, clicking the area chart filters the description card to nothing because the chart's selected date doesn't match any row in <code>DashboardDirectory</code>. Test by clicking each visual after the build — every other visual must remain populated.
+      </div>
+    </section>
+
+    <!-- 14 TEST & PUBLISH -->
+    <section id="test">
+      <h2>Test &amp; publish <span class="section-num">14</span></h2>
+      <p class="lead">Run the drillthrough QA before pushing the .pbix to the workspace.</p>
+
+      <h3>14.1 Drillthrough QA · 5 dashboards</h3>
+      <p>Pick five varied rows from the directory (different categories, refresh frequencies, owners). For each:</p>
+      <ol class="steps">
+        <li>Right-click the dashboard name in the matrix → <b>Drill through → Dashboard Detail</b></li>
+        <li>Confirm: Title shows correct name. Category pill shows correct category. All six meta cells populate.</li>
+        <li>Confirm: Description / Hero / Compact (whichever variant) shows the right content for that row.</li>
+        <li>Confirm: Usage chart shows that dashboard's 90-day series, not the whole-portfolio sum.</li>
+        <li>Confirm: Related grid lists peers in the same category (and excludes the current dashboard).</li>
+        <li>Confirm: History table lists that dashboard's last 10 runs.</li>
+        <li>Confirm: Status pill colour matches the SLA state correctly.</li>
+        <li>Click <b>Open dashboard ↗</b> — opens that specific dashboard's PBI URL.</li>
+        <li>Click the <b>Back</b> button — returns to the landing page with original filters preserved.</li>
+      </ol>
+
+      <h3>14.2 Visual QA · 1280 × 900</h3>
+      <ul class="plain">
+        <li>No horizontal scroll. No vertical scroll if you chose the canvas-1100 approach.</li>
+        <li>Title gradient runs left-to-right with the deeper burgundy on the left.</li>
+        <li>All meta values render — none show "Blank" or empty.</li>
+        <li>Status pill colour matches the rule.</li>
+        <li>Only one left-column variant visible.</li>
+        <li>Related grid has at most 3 cards; never 4+.</li>
+      </ul>
+
+      <h3>14.3 Publish</h3>
+      <ol class="steps">
+        <li><b>Home → Publish</b> → choose the workspace</li>
+        <li>In the Power BI service, open the report → confirm drillthrough still works in the browser (some interactions render differently online)</li>
+        <li>If you embed via app, regenerate the app after publishing</li>
+      </ol>
+    </section>
+
+    <!-- APPENDIX A · DAX -->
+    <section id="dax">
+      <h2>Appendix A · DAX cheatsheet</h2>
+      <p class="lead">All measures specific to the detail page. Already shown inline in step 03; collated here for copy-paste.</p>
+<pre><code>-- 90-day views
+Views30d =
+CALCULATE(
+    SUM(UsageMetrics[Views]),
+    DATESINPERIOD(UsageMetrics[Date], TODAY(), -30, DAY)
+)
+
+-- Unique users in last 30 days
+UniqueUsers30d =
+CALCULATE(
+    SUM(UsageMetrics[UniqueUsers]),
+    DATESINPERIOD(UsageMetrics[Date], TODAY(), -30, DAY)
+)
+
+-- Peak day-of-week + hour
+PeakSlot =
+VAR _peak =
+    TOPN(
+        1,
+        SUMMARIZE(
+            UsageMetrics,
+            UsageMetrics[Date].[DayOfWeek],
+            UsageMetrics[Hour],
+            "v", SUM(UsageMetrics[Views])
+        ),
+        [v], DESC
+    )
+RETURN
+    CONCATENATEX(_peak, FORMAT(UsageMetrics[Date], "ddd") &amp; " " &amp; UsageMetrics[Hour] &amp; " AM")
+
+-- Relative last-refresh string ("1 hr 30 min ago")
+LastRefreshRel =
+VAR _last = MAX(RefreshHistory[StartedAt])
+VAR _diff = NOW() - _last
+RETURN
+    SWITCH(TRUE(),
+        _diff &lt; 1/24,    INT(_diff*24*60) &amp; " min ago",
+        _diff &lt; 1,       INT(_diff*24) &amp; " hr "
+                         &amp; MOD(INT(_diff*24*60),60) &amp; " min ago",
+        _diff &lt; 7,       INT(_diff) &amp; " d ago",
+                         FORMAT(_last, "dd mmm")
+    )
+
+-- SLA status — prepended dot for accessibility
+SLAState =
+VAR _last  = MAX(RefreshHistory[StartedAt])
+VAR _freq  = SELECTEDVALUE(DashboardDirectory[RefreshFrequency])
+VAR _slaHr = SWITCH(_freq, "Real-time", 0.083, "Hourly", 2, "Daily", 26, "Weekly", 192, 999)
+VAR _ok    = (NOW() - _last) * 24 &lt;= _slaHr
+RETURN IF(_ok, "● Within SLA", "● Behind SLA")
+</code></pre>
+    </section>
+
+    <!-- APPENDIX B · PALETTE -->
+    <section id="palette">
+      <h2>Appendix B · Palette quick reference</h2>
+      <p class="lead">Every colour used on the detail page. Same palette as the landing page — see the <a href="implementation-guide.html#palette">main implementation guide</a> for the full breakdown.</p>
+
+      <h4>Burgundy</h4>
+      <p>
+        <span class="swatch"><span class="sw-dot" style="background:#3C0026"></span><b>#3C0026</b> <span>· QR Deep</span></span>
+        <span class="swatch"><span class="sw-dot" style="background:#64003A"></span><b>#64003A</b> <span>· QR Burgundy</span></span>
+        <span class="swatch"><span class="sw-dot" style="background:#780044"></span><b>#780044</b> <span>· QR Bright</span></span>
+      </p>
+      <h4>Cool Grey</h4>
+      <p>
+        <span class="swatch"><span class="sw-dot" style="background:#5E6A71"></span><b>#5E6A71</b> <span>· QR Grey</span></span>
+        <span class="swatch"><span class="sw-dot" style="background:#6B6C6E"></span><b>#6B6C6E</b> <span>· Cloud Grey</span></span>
+        <span class="swatch"><span class="sw-dot" style="background:#818A8F"></span><b>#818A8F</b> <span>· Oryx</span></span>
+      </p>
+      <h4>Surface</h4>
+      <p>
+        <span class="swatch"><span class="sw-dot" style="background:#FFFFFF"></span><b>#FFFFFF</b> <span>· White</span></span>
+        <span class="swatch"><span class="sw-dot" style="background:#F0F0F0"></span><b>#F0F0F0</b> <span>· Cloud Grey 10%</span></span>
+        <span class="swatch"><span class="sw-dot" style="background:#E9E9E9"></span><b>#E9E9E9</b> <span>· Cloud Grey 15%</span></span>
+        <span class="swatch"><span class="sw-dot" style="background:#E1E1E2"></span><b>#E1E1E2</b> <span>· Cloud Grey 20%</span></span>
+      </p>
+      <h4>Semantic</h4>
+      <p>
+        <span class="swatch"><span class="sw-dot" style="background:#2E7D4F"></span><b>#2E7D4F</b> <span>· Within SLA</span></span>
+        <span class="swatch"><span class="sw-dot" style="background:#780044"></span><b>#780044</b> <span>· Behind SLA / Failed</span></span>
+        <span class="swatch"><span class="sw-dot" style="background:#F2C811"></span><b>#F2C811</b> <span>· Power BI mark (Microsoft)</span></span>
+      </p>
+    </section>
+
+    <!-- APPENDIX C · TROUBLESHOOTING -->
+    <section id="trouble">
+      <h2>Appendix C · Troubleshooting</h2>
+      <table>
+        <thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>Title card shows "Blank" instead of dashboard name.</td><td>The drillthrough binding didn't apply. Confirm <code>DashboardName</code> is in the page-level Drill through pane and you arrived via right-click → Drill through.</td></tr>
+          <tr><td>Title card shows ALL dashboard names concatenated.</td><td>You used the field directly without <code>SELECTEDVALUE</code> aggregation, or "Keep all filters" is On — turn it Off.</td></tr>
+          <tr><td>Open dashboard ↗ opens the same URL every time.</td><td>The Action → Web URL is hardcoded. Switch it to fx → <code>SELECTEDVALUE(DashboardDirectory[URL])</code>.</td></tr>
+          <tr><td>Status pill stays green even when refresh failed.</td><td>The <code>SLAState</code> measure looks at the most recent run's timestamp, not status. Add a check: <code>VAR _lastStatus = LOOKUPVALUE(RefreshHistory[Status], RefreshHistory[StartedAt], _last)</code> and force "Behind SLA" when status ≠ "Success".</td></tr>
+          <tr><td>Usage chart shows whole-portfolio totals, not the selected dashboard.</td><td>The visual is missing the drillthrough filter — drag <code>DashboardName</code> into the Visual-level filter, set "Filter type" to Auto, value = first.</td></tr>
+          <tr><td>Related matrix shows the current dashboard in the list.</td><td>Add a Visual filter: <code>DashboardName &lt;&gt; SELECTEDVALUE(DashboardDirectory[DashboardName])</code>.</td></tr>
+          <tr><td>History table shows more than 10 rows.</td><td>Visual-level Top N filter wasn't applied. Set N=10 by <code>StartedAt</code> descending.</td></tr>
+          <tr><td>Clicking the area chart blanks the description.</td><td>You forgot Edit Interactions (Step 13). Switch chart's interaction with every other visual to <b>None</b>.</td></tr>
+          <tr><td>Compact variant chip text overflows.</td><td>Either shorten the chip text (≤6 words) or widen each chip to 200 px and reduce the row to 2 chips.</td></tr>
+          <tr><td>Hero image is squashed.</td><td>Image visual → Scaling = <b>Fill</b>, not Fit. Image must be ≥1280 px wide.</td></tr>
+          <tr><td>Title block gradient looks muddy / flat.</td><td>The three-rectangle approximation needs the wash transparencies at exactly 35 %. Lower transparency darkens the centre; higher washes out the edges.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>Side-by-side check</strong>
+        Open <a href="qa-dashboard-detail-mockup.html" target="_blank">qa-dashboard-detail-mockup.html</a> in another tab while you build. Every coordinate in this guide corresponds to that mockup's pixel layout.
+      </div>
+    </section>
+
+  </main>
+
 </div>
-<main>
-<h1>How to Build a Dashboard Detail Page</h1>
 
-<p>A step-by-step walkthrough. Follow these in order. Reference mockups live in this folder</p>
-<p>(<code>qa-dashboard-detail-mockup.html</code>, <code>option1-image</code>, <code>option2-description</code>, <code>option3-compact</code>) —</p>
-<p>duplicate the closest variant rather than starting from a blank file.</p>
+<div class="footer">
+  <div><span class="ribbon-dot"></span> Qatar Airways · Dashboard Detail · Implementation Guide · <a href="index.html">preview hub</a></div>
+  <div>Source · <a href="https://github.com/rbansal42/qa-dashboard-directory-assets" target="_blank">rbansal42/qa-dashboard-directory-assets</a></div>
+</div>
+
+<script>
+  const links = Array.from(document.querySelectorAll('aside a'));
+  const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  function update() {
+    const scroll = window.scrollY + 120;
+    let active = sections[0];
+    sections.forEach(s => { if (s.offsetTop <= scroll) active = s; });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active.id));
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('load', update);
+</script>
 
-<hr>
-
-<h2>Step 1 — Gather inputs from the steward</h2>
-
-<p>Before you open a code editor, collect these from the dashboard owner. Don&#x27;t proceed until every</p>
-<p>field has a value.</p>
-
-<table>
-<tr><th>Input</th><th>Example</th><th>If missing</th></tr>
-<tr><td>Dashboard title</td><td>OTP &amp; Delay Analysis</td><td>Block — get from steward</td></tr>
-<tr><td>Italic highlight word(s)</td><td>&quot;Delay Analysis&quot;</td><td>Block — pick the noun phrase</td></tr>
-<tr><td>Category</td><td>Flight Ops</td><td>Must match an existing directory category</td></tr>
-<tr><td>Owner (single human)</td><td>Aisha Rahman</td><td>Use department head as fallback</td></tr>
-<tr><td>Department</td><td>IOC Control</td><td>Block — get from steward</td></tr>
-<tr><td>Data source label</td><td>AIMS · SQL Server</td><td>Free-text from steward; never auto-derive from connection string</td></tr>
-<tr><td>Refresh cadence + SLA</td><td>Hourly (SLA 2 hr)</td><td>Block — get from steward</td></tr>
-<tr><td>Description (1–2 paragraphs)</td><td>…</td><td>Block — get from steward</td></tr>
-<tr><td>3 &quot;answers questions like&quot; prompts</td><td>&quot;Flights behind schedule today?&quot;</td><td>Optional; required only for Compact variant</td></tr>
-<tr><td>Hero image (≥1280 px wide)</td><td><code>qatar-qsuite.jpg</code></td><td>Use existing stock photo from this folder</td></tr>
-<tr><td>3 related dashboards</td><td>IDs from the directory</td><td>Auto-pick: same category, then keyword overlap</td></tr>
-<tr><td>Power BI workspace ID + report ID</td><td>for &quot;Open dashboard ↗&quot;</td><td>Block — get from BI platform team</td></tr>
-</table>
-
-<hr>
-
-<h2>Step 2 — Pick a left-column variant</h2>
-
-<p>Decide one variant <em>before</em> writing any HTML. The four reference files differ only in this column.</p>
-
-<pre><code class="lang-">
-┌──────────────────────────────────────────────────────────┐
-│ Steward gave you 1–2 paragraphs + bullets?               │
-│  → Description variant   (option2-description.html)      │
-│                                                          │
-│ Steward gave you only a 2-line summary?                  │
-│  → Compact variant       (option3-compact.html)          │
-│                                                          │
-│ Flagship/exec dashboard, presentation matters?           │
-│  → Hero variant          (qa-dashboard-detail-mockup.html│
-│                           or option1-image.html)         │
-└──────────────────────────────────────────────────────────┘
-</code></pre>
-
-<p>Don&#x27;t stack two variants. Pick one.</p>
-
-<hr>
-
-<h2>Step 3 — Duplicate the closest mockup as your starting file</h2>
-
-<pre><code class="lang-bash">
-cp qa-dashboard-detail-option2-description.html  qa-dashboard-detail-&lt;dashboard-slug&gt;.html
-</code></pre>
-
-<p>Use a kebab-case slug. Open the new file. <strong>Do not</strong> rewrite the <code>&lt;style&gt;</code> block from</p>
-<p>scratch — every page must share the same tokens.</p>
-
-<hr>
-
-<h2>Step 4 — Verify the brand tokens at the top of <code>&lt;style&gt;</code></h2>
-
-<p>Search for <code>:root{</code> in the file. Confirm the block reads exactly:</p>
-
-<pre><code class="lang-css">
-:root{
-  --ink:#3C0026; --oxblood-0:#3C0026; --oxblood-1:#64003A; --oxblood-2:#780044;
-  --amber:#6B6C6E; --amber-dark:#5E6A71; --amber-light:#818A8F; --honey:#E1E1E2;
-  --cream:#FFFFFF; --cream-warm:#F0F0F0; --cream-title:#FFFFFF; --white:#FFFFFF;
-  --border:#E1E1E2; --border-mid:#E9E9E9;
-  --text:#1A1A1A; --text-mid:#5E6A71; --text-light:#6B6C6E;
-  --green:#2E7D4F; --red:#780044;
-}
-</code></pre>
-
-<p>If a value differs, replace it. Legacy variable names (<code>--amber<em></code>, <code>--cream</em></code>, <code>--oxblood*</code>) are</p>
-<p>preserved on purpose so existing component CSS keeps working — only the values changed when we</p>
-<p>moved to the strict brand kit.</p>
-
-<p>Confirm the body font stack is <code>&#x27;Noto Sans&#x27;,&#x27;Graphik&#x27;,&#x27;Segoe UI&#x27;,sans-serif</code> and that headlines</p>
-<p>use <code>&#x27;Jotia&#x27;,&#x27;Noto Sans&#x27;,sans-serif</code>. The Google Fonts <code>&lt;link&gt;</code> should load Noto Sans only.</p>
-
-<hr>
-
-<h2>Step 5 — Edit the ribbon and <code>&lt;title&gt;</code></h2>
-
-<pre><code class="lang-html">
-&lt;title&gt;Dashboard Detail — &lt;Your Dashboard Name&gt;&lt;/title&gt;
-</code></pre>
-
-<p>The ribbon stays as the canonical &quot;Qatar Airways · Dashboard Directory&quot; / &quot;Internal Use Only&quot;</p>
-<p>pair. Don&#x27;t customise it.</p>
-
-<hr>
-
-<h2>Step 6 — Wire the action bar</h2>
-
-<p>Three buttons, in this order. Don&#x27;t reorder, don&#x27;t add more.</p>
-
-<pre><code class="lang-html">
-&lt;button class=&quot;btn btn-ghost&quot;&gt;Subscribe to updates&lt;/button&gt;
-&lt;button class=&quot;btn btn-ghost&quot;&gt;Request access&lt;/button&gt;
-&lt;button class=&quot;btn btn-primary&quot;&gt;Open dashboard ↗&lt;/button&gt;
-</code></pre>
-
-<p>The <code>Open dashboard ↗</code> href points to the Power BI report URL collected in Step 1. The other two</p>
-<p>ghost buttons are placeholders until the subscription / access-request workflows are live — leave</p>
-<p>them as inert buttons; do not link them to &quot;#&quot;.</p>
-
-<hr>
-
-<h2>Step 7 — Fill the title block</h2>
-
-<pre><code class="lang-html">
-&lt;div class=&quot;eyebrow&quot;&gt;Dashboard Detail&lt;/div&gt;
-&lt;h1&gt;OTP &amp;amp; &lt;em&gt;Delay Analysis&lt;/em&gt;&lt;/h1&gt;
-&lt;span class=&quot;cat-pill&quot;&gt;Flight Ops&lt;/span&gt;
-</code></pre>
-
-<p>Rules:</p>
-
-<ul>
-<li>Eyebrow text is always literally <strong>Dashboard Detail</strong>. Don&#x27;t reword.</li>
-<li><code>&lt;h1&gt;</code> uses <strong>one</strong> italic <code>&lt;em&gt;</code> highlight on the noun phrase, never more than one.</li>
-<li>Title in sentence case, max 5 words.</li>
-<li>Category pill must match an existing directory category exactly. If you need a new category, update the directory first.</li>
-</ul>
-
-<p>Don&#x27;t touch the gradient or the SVG hex pattern — they&#x27;re part of the brand surface.</p>
-
-<hr>
-
-<h2>Step 8 — Fill the meta bar (six columns, all required)</h2>
-
-<pre><code class="lang-html">
-&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Owner&lt;/span&gt;&lt;span class=&quot;meta-v&quot;&gt;Aisha Rahman&lt;/span&gt;&lt;/div&gt;
-&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Department&lt;/span&gt;&lt;span class=&quot;meta-v&quot;&gt;IOC Control&lt;/span&gt;&lt;/div&gt;
-&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Data source&lt;/span&gt;&lt;span class=&quot;meta-v&quot;&gt;AIMS · SQL Server&lt;/span&gt;&lt;/div&gt;
-&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Refresh&lt;/span&gt;&lt;span class=&quot;meta-v&quot;&gt;Hourly (SLA 2 hr)&lt;/span&gt;&lt;/div&gt;
-&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Last refresh&lt;/span&gt;&lt;span class=&quot;meta-v&quot;&gt;1 hr 30 min ago&lt;/span&gt;&lt;/div&gt;
-&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Status&lt;/span&gt;&lt;span class=&quot;sla ok&quot;&gt;Within SLA&lt;/span&gt;&lt;/div&gt;
-</code></pre>
-
-<p>Rules:</p>
-
-<ul>
-<li>Render <code>—</code> for unknowns, never collapse a column.</li>
-<li>&quot;Last refresh&quot; is <strong>relative</strong> (<code>1 hr 30 min ago</code>). The footer carries the absolute timestamp.</li>
-<li>Status pill state:</li>
-</ul>
-<p>  - <code>&lt;span class=&quot;sla ok&quot;&gt;Within SLA&lt;/span&gt;</code> — last refresh is within SLA window AND the run succeeded.</p>
-<p>  - <code>&lt;span class=&quot;sla stale&quot;&gt;Behind SLA&lt;/span&gt;</code> — last refresh exceeded SLA OR latest run failed.</p>
-
-<hr>
-
-<h2>Step 9 — Fill the chosen left-column variant</h2>
-
-<h3>Step 9A — If you picked <strong>Description</strong></h3>
-
-<p>Inside the existing <code>.card.desc</code> block:</p>
-
-<pre><code class="lang-html">
-&lt;h2&gt;About this dashboard &lt;em&gt;· what it answers&lt;/em&gt;&lt;/h2&gt;
-&lt;p&gt;One paragraph of plain English. Refer to systems by business name (AIMS, GoNow, Sabre), not SQL hostnames.&lt;/p&gt;
-&lt;p&gt;An optional second paragraph — only if the steward gave you one.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Bullet 1 — under 12 words.&lt;/li&gt;
-  &lt;li&gt;Bullet 2.&lt;/li&gt;
-  &lt;li&gt;Bullet 3.&lt;/li&gt;
-  &lt;li&gt;Bullet 4 — max four bullets.&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-
-<h3>Step 9B — If you picked <strong>Hero image</strong></h3>
-
-<p>Inside <code>.hero-card</code>:</p>
-
-<pre><code class="lang-html">
-&lt;img class=&quot;hero-img&quot; src=&quot;qatar-qsuite.jpg&quot; alt=&quot;Qatar Airways Qsuite Business Class cabin&quot; loading=&quot;lazy&quot;&gt;
-&lt;div class=&quot;hero-overlay&quot;&gt;
-  &lt;div class=&quot;hero-eyebrow&quot;&gt;Qatar Airways&lt;/div&gt;
-  &lt;div class=&quot;hero-tagline&quot;&gt;Going &lt;em&gt;places&lt;/em&gt; together.&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-
-<p>The image must be ≥1280 px wide with the focal point near the centre. Keep <code>object-fit: cover</code>.</p>
-<p>Don&#x27;t change the tagline — it&#x27;s the brand line.</p>
-
-<h3>Step 9C — If you picked <strong>Compact</strong></h3>
-
-<p>Inside <code>.compact-card</code>:</p>
-
-<pre><code class="lang-html">
-&lt;div class=&quot;compact-img&quot;&gt;
-  &lt;img src=&quot;qatar-qsuite.jpg&quot; alt=&quot;Qatar Airways Qsuite&quot; loading=&quot;lazy&quot;&gt;
-  &lt;div class=&quot;compact-img-overlay&quot;&gt;
-    &lt;div class=&quot;compact-eyebrow&quot;&gt;Qatar Airways&lt;/div&gt;
-    &lt;div class=&quot;compact-tagline&quot;&gt;Going &lt;em&gt;places&lt;/em&gt; together.&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;compact-body&quot;&gt;
-  &lt;h2&gt;About &lt;em&gt;· in brief&lt;/em&gt;&lt;/h2&gt;
-  &lt;p class=&quot;compact-desc&quot;&gt;Two sentences max. State what the dashboard tracks and what it attributes.&lt;/p&gt;
-  &lt;div class=&quot;compact-qs&quot;&gt;
-    &lt;span class=&quot;compact-qs-lbl&quot;&gt;Answers questions like&lt;/span&gt;
-    &lt;div class=&quot;compact-chip-row&quot;&gt;
-      &lt;span class=&quot;compact-chip&quot;&gt;Flights behind schedule today?&lt;/span&gt;
-      &lt;span class=&quot;compact-chip&quot;&gt;Weekly OTP trend for DOH?&lt;/span&gt;
-      &lt;span class=&quot;compact-chip&quot;&gt;Highest-delay stations?&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-
-<p>Rules for the chips:</p>
-
-<ul>
-<li>Exactly <strong>3</strong> chips.</li>
-<li>Phrase as a question users actually ask.</li>
-<li>≤6 words each.</li>
-<li>No yes/no questions.</li>
-</ul>
-
-<hr>
-
-<h2>Step 10 — Update the Usage card (right column)</h2>
-
-<p>Don&#x27;t redraw the SVG. Replace only the data path coordinates and the three stat values.</p>
-
-<pre><code class="lang-html">
-&lt;h2&gt;Usage · last 90 days &lt;em&gt;· 90 d&lt;/em&gt;&lt;/h2&gt;
-&lt;!-- area path &quot;d=&quot; — keep the same shape; replace if you have real 90 d view counts --&gt;
-&lt;!-- line path &quot;d=&quot; — must match the area path&#x27;s top edge --&gt;
-&lt;div class=&quot;stat&quot;&gt;&lt;span class=&quot;stat-val&quot;&gt;1,842&lt;/span&gt;&lt;span class=&quot;stat-k&quot;&gt;Views · 30 d&lt;/span&gt;&lt;/div&gt;
-&lt;div class=&quot;stat&quot;&gt;&lt;span class=&quot;stat-val&quot;&gt;312&lt;/span&gt;&lt;span class=&quot;stat-k&quot;&gt;Unique users&lt;/span&gt;&lt;/div&gt;
-&lt;div class=&quot;stat&quot;&gt;&lt;span class=&quot;stat-val&quot;&gt;Mon&lt;em&gt;9 AM&lt;/em&gt;&lt;/span&gt;&lt;span class=&quot;stat-k&quot;&gt;Peak slot&lt;/span&gt;&lt;/div&gt;
-</code></pre>
-
-<p>The peak-slot stat uses an italic <code>&lt;em&gt;</code> for the time. The chart stroke stays <code>#64003A</code> and the</p>
-<p>gradient stops stay <code>#6B6C6E</code> — never tint these.</p>
-
-<p>If you don&#x27;t have real usage data yet, ship the page with the existing placeholder shape and a</p>
-<p>TODO comment; do <strong>not</strong> invent specific numbers.</p>
-
-<hr>
-
-<h2>Step 11 — Fill Related dashboards (exactly 3)</h2>
-
-<pre><code class="lang-html">
-&lt;div class=&quot;rel-item&quot;&gt;
-  &lt;div class=&quot;rel-name&quot;&gt;IOC Live Operations Board&lt;/div&gt;
-  &lt;div class=&quot;rel-meta&quot;&gt;&lt;span class=&quot;rel-cat&quot;&gt;IOC&lt;/span&gt; · 1,562 views 30d&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-
-<p>Selection rules, in order:</p>
-
-<p>1. Same category — pick the highest-traffic peers first.</p>
-<p>2. Then keyword overlap on title + description.</p>
-<p>3. Tie-break on highest 30 d views.</p>
-
-<p>If only 2 candidates exist, <strong>leave the third slot empty</strong>. Don&#x27;t pad with unrelated dashboards.</p>
-
-<hr>
-
-<h2>Step 12 — Fill the Refresh history table (last 10 runs only)</h2>
-
-<pre><code class="lang-html">
-&lt;tr&gt;&lt;td&gt;19 Apr 2026 · 10:00&lt;/td&gt;&lt;td&gt;3 min 12 s&lt;/td&gt;&lt;td&gt;184,212&lt;/td&gt;&lt;td class=&quot;status-ok&quot;&gt;Success&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;19 Apr 2026 · 09:00&lt;/td&gt;&lt;td&gt;3 min 04 s&lt;/td&gt;&lt;td&gt;183,990&lt;/td&gt;&lt;td class=&quot;status-ok&quot;&gt;Success&lt;/td&gt;&lt;/tr&gt;
-&lt;!-- … up to 10 rows total … --&gt;
-&lt;tr&gt;&lt;td&gt;19 Apr 2026 · 05:00&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td class=&quot;status-fail&quot;&gt;Failed · source timeout&lt;/td&gt;&lt;/tr&gt;
-</code></pre>
-
-<p>Rules:</p>
-
-<ul>
-<li>Cap at 10 rows. Never invent rows to fill the table.</li>
-<li>Failed runs use <code>class=&quot;status-fail&quot;</code> and include the failure reason inline.</li>
-<li>Timestamps in <code>DD MMM YYYY · HH:MM</code> format, GST.</li>
-<li>Source data: Power BI REST API <code>/datasets/{id}/refreshes?$top=10</code>.</li>
-</ul>
-
-<hr>
-
-<h2>Step 13 — Update the footer</h2>
-
-<pre><code class="lang-html">
-&lt;span class=&quot;page-ind&quot;&gt;Page 2 of 3 · Drillthrough&lt;/span&gt;
-&lt;span class=&quot;pbi-note&quot;&gt;&lt;span class=&quot;pbi-mark&quot;&gt;&lt;/span&gt;Powered by Power BI · Last refresh: 19 Apr 2026, 10:02 AM&lt;/span&gt;
-</code></pre>
-
-<p>The yellow Power BI mark (<code>#F2C811</code>) is the only non-brand colour on the page. It must stay</p>
-<p>yellow — it&#x27;s Microsoft&#x27;s mark.</p>
-
-<hr>
-
-<h2>Step 14 — Run the verification grep</h2>
-
-<p>From the <code>outputs/qa-assets/</code> folder:</p>
-
-<pre><code class="lang-bash">
-grep -nE &quot;Cormorant|#1F0310|#43061F|#591029|#B8893A|#D9B268|#FBF6EC|#F3EADA|#F7EBD4|#E8DFD0|#D6C9B6&quot; \
-  qa-dashboard-detail-&lt;your-slug&gt;.html
-</code></pre>
-
-<p>Expected output: nothing. Any hit means a v2 amber/cream token leaked in — fix before commit.</p>
-
-<hr>
-
-<h2>Step 15 — Visual QA at 1280 × 820</h2>
-
-<p>Open the file in a browser sized to <strong>1280 × 820</strong> (the Power BI page size). Confirm:</p>
-
-<ul class="checklist">
-<li><input type="checkbox" disabled> No horizontal scroll bar.</li>
-<li><input type="checkbox" disabled> Title gradient runs left-to-right at 135°.</li>
-<li><input type="checkbox" disabled> Hex pattern overlay on the title block is visible but very faint.</li>
-<li><input type="checkbox" disabled> All six meta columns render with values (or <code>—</code>).</li>
-<li><input type="checkbox" disabled> Status pill colour matches its state.</li>
-<li><input type="checkbox" disabled> Left column shows <strong>one</strong> variant only.</li>
-<li><input type="checkbox" disabled> Usage chart line is QR Burgundy <code>#64003A</code>.</li>
-<li><input type="checkbox" disabled> Related grid has exactly 3 cards (or 2 with one empty slot).</li>
-<li><input type="checkbox" disabled> History table has ≤10 rows.</li>
-<li><input type="checkbox" disabled> Footer shows the yellow Power BI mark and an absolute timestamp.</li>
-</ul>
-
-<hr>
-
-<h2>Step 16 — Commit and push</h2>
-
-<pre><code class="lang-bash">
-cd /tmp/qa-rb
-git pull
-cp /Volumes/Code/pa/outputs/qa-assets/qa-dashboard-detail-&lt;slug&gt;.html .
-git add qa-dashboard-detail-&lt;slug&gt;.html
-git commit -m &quot;Add dashboard detail page: &lt;Dashboard Name&gt;&quot;
-git -c credential.helper=&#x27;!gh auth git-credential&#x27; push origin main
-</code></pre>
-
-<p>Pages rebuilds within ~30 s. The page is then live at:</p>
-
-<pre><code class="lang-">
-https://rbansal42.github.io/qa-dashboard-directory-assets/qa-dashboard-detail-&lt;slug&gt;.html
-</code></pre>
-
-<p>Add a link to it from <code>index.html</code> and <code>implementation-guide.html</code> so the directory tile points</p>
-<p>at the new detail page.</p>
-
-<hr>
-
-<h2>Step 17 — Final accessibility pass</h2>
-
-<ul>
-<li>Every <code>&lt;img&gt;</code> has meaningful <code>alt</code> text — describe the subject (&quot;Qatar Airways Qsuite Business Class cabin&quot;), not &quot;image&quot;.</li>
-<li>Status pills carry both colour <strong>and</strong> the dot icon plus text label — never colour-only.</li>
-<li>Don&#x27;t <code>outline:none</code> on focusable elements without a replacement.</li>
-<li>Title gradient + white text contrast is ≥4.5 : 1 — verified for <code>#FFFFFF</code> on <code>#64003A</code>. Don&#x27;t darken the title text.</li>
-</ul>
-
-<hr>
-
-<h2>Quick reference — files in this folder</h2>
-
-<table>
-<tr><th>File</th><th>Use</th></tr>
-<tr><td><code>qa-dashboard-detail-mockup.html</code></td><td>Hero variant, full feature set</td></tr>
-<tr><td><code>qa-dashboard-detail-option1-image.html</code></td><td>Image-led variant</td></tr>
-<tr><td><code>qa-dashboard-detail-option2-description.html</code></td><td>Description-led variant</td></tr>
-<tr><td><code>qa-dashboard-detail-option3-compact.html</code></td><td>Compact hybrid variant</td></tr>
-<tr><td><code>qatar-theme.json</code></td><td>Power BI theme to match the report visuals</td></tr>
-<tr><td><code>qatar-qsuite.jpg</code>, <code>qatar-cabin.jpg</code>, <code>qatar-777-worldcup.jpg</code></td><td>Approved hero photography</td></tr>
-</table>
-
-</main>
-<footer>
-  <span>Qatar Airways · Dashboard Directory</span>
-  <span><a href="index.html">Back to index</a></span>
-</footer>
 </body>
 </html>
