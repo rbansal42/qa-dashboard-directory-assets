@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard Detail Page — Build Guideline · Qatar Airways Dashboard Directory</title>
+<title>How to Build a Dashboard Detail Page · Qatar Airways Dashboard Directory</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -25,8 +25,9 @@
   .title-block h1.banner{position:relative;z-index:1;font-family:'Jotia','Noto Sans',sans-serif;font-size:34px;font-weight:500;line-height:1.1;color:#FFFFFF}
   .title-block h1.banner em{font-style:italic;font-weight:400;color:var(--honey)}
   main{max-width:880px;margin:0 auto;padding:36px 40px 80px}
-  main > h1{font-family:'Jotia','Noto Sans',sans-serif;font-size:28px;font-weight:500;color:var(--oxblood-0);margin:0 0 18px}
-  main h2{font-family:'Jotia','Noto Sans',sans-serif;font-size:22px;font-weight:600;color:var(--oxblood-0);margin:32px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  main > h1{display:none}
+  main h2{font-family:'Jotia','Noto Sans',sans-serif;font-size:22px;font-weight:600;color:var(--oxblood-0);margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  main h2:first-of-type{margin-top:0}
   main h3{font-family:'Jotia','Noto Sans',sans-serif;font-size:16px;font-weight:600;color:var(--oxblood-1);margin:22px 0 8px}
   main p{margin:0 0 12px;color:var(--text)}
   main strong{color:var(--oxblood-0)}
@@ -42,7 +43,7 @@
   main li::marker{color:var(--amber)}
   main a{color:var(--oxblood-1);text-decoration:underline;text-underline-offset:2px}
   main a:hover{color:var(--oxblood-0)}
-  main hr{border:none;border-top:1px solid var(--border);margin:28px 0}
+  main hr{border:none;border-top:1px solid var(--border);margin:32px 0}
   main table{width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:13.5px}
   main th{background:var(--cream-warm);color:var(--text-mid);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-align:left;padding:10px 12px;border-bottom:1px solid var(--border-mid)}
   main td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text-mid);vertical-align:top}
@@ -58,50 +59,76 @@
 </div>
 <div class="title-block">
   <div class="eyebrow">Build Guideline</div>
-  <h1 class="banner">Dashboard Detail <em>Page</em></h1>
+  <h1 class="banner">How to Build a <em>Dashboard Detail</em> Page</h1>
 </div>
 <main>
+<h1>How to Build a Dashboard Detail Page</h1>
 
-<p>Standards for creating a Dashboard Detail page in the Qatar Airways Dashboard Directory.</p>
-<p>Brand-strict (QR Burgundy + Cool Grey + white). Based on the four reference mockups in this folder</p>
-<p>(<code>qa-dashboard-detail-mockup.html</code>, <code>option1-image</code>, <code>option2-description</code>, <code>option3-compact</code>).</p>
-
-<hr>
-
-<h2>1. Purpose</h2>
-
-<p>A Dashboard Detail page is the landing surface a user reaches after clicking a tile in the directory.</p>
-<p>It must let the user, in under 10 seconds, decide:</p>
-
-<p>1. <strong>Is this the right dashboard for my question?</strong> — title, eyebrow, category, short description / &quot;answers questions like&quot; chips.</p>
-<p>2. <strong>Is the data trustworthy and current?</strong> — owner, source, refresh cadence, SLA status, last refresh.</p>
-<p>3. <strong>What do I do next?</strong> — Open dashboard (primary), Subscribe / Request access (secondary), or browse Related dashboards.</p>
-
-<p>Everything else (usage chart, refresh history) supports steward conversations and operational trust.</p>
+<p>A step-by-step walkthrough. Follow these in order. Reference mockups live in this folder</p>
+<p>(<code>qa-dashboard-detail-mockup.html</code>, <code>option1-image</code>, <code>option2-description</code>, <code>option3-compact</code>) —</p>
+<p>duplicate the closest variant rather than starting from a blank file.</p>
 
 <hr>
 
-<h2>2. Page Anatomy (top → bottom)</h2>
+<h2>Step 1 — Gather inputs from the steward</h2>
+
+<p>Before you open a code editor, collect these from the dashboard owner. Don&#x27;t proceed until every</p>
+<p>field has a value.</p>
 
 <table>
-<tr><th>#</th><th>Region</th><th>Required</th><th>Purpose</th></tr>
-<tr><td>1</td><td><strong>Ribbon</strong></td><td>yes</td><td>Brand bar — &quot;Qatar Airways · Dashboard Directory&quot; + &quot;Internal Use Only&quot;. <code>--ink</code> background, ~6 px tall.</td></tr>
-<tr><td>2</td><td><strong>Action bar</strong></td><td>yes</td><td><code>← Back to directory</code> left; Subscribe / Request access / <strong>Open dashboard ↗</strong> right. White background.</td></tr>
-<tr><td>3</td><td><strong>Title block</strong></td><td>yes</td><td>Burgundy gradient banner. Eyebrow (&quot;Dashboard Detail&quot;), <code>&lt;h1&gt;</code> with one italic <code>&lt;em&gt;</code> highlight, and a category pill on the right.</td></tr>
-<tr><td>4</td><td><strong>Meta bar</strong></td><td>yes</td><td>Six-column key/value strip on white: Owner · Department · Data source · Refresh · Last refresh · Status (SLA pill).</td></tr>
-<tr><td>5</td><td><strong>Main grid</strong> (1.1fr / 1fr)</td><td>yes</td><td>Left column: hero / description / compact card (variant choice — see §6). Right column: Usage card (90-day chart + 3 stats).</td></tr>
-<tr><td>6</td><td><strong>Related dashboards</strong></td><td>yes</td><td>3-up grid of <code>rel-item</code> cards, name + category + 30 d views.</td></tr>
-<tr><td>7</td><td><strong>Refresh history</strong></td><td>yes</td><td>Last 10 runs table — Started · Duration · Rows loaded · Status.</td></tr>
-<tr><td>8</td><td><strong>Footer bar</strong></td><td>yes</td><td>Page indicator (e.g. <code>Page 2 of 3 · Drillthrough</code>) and Power BI mark with last-refresh timestamp.</td></tr>
+<tr><th>Input</th><th>Example</th><th>If missing</th></tr>
+<tr><td>Dashboard title</td><td>OTP &amp; Delay Analysis</td><td>Block — get from steward</td></tr>
+<tr><td>Italic highlight word(s)</td><td>&quot;Delay Analysis&quot;</td><td>Block — pick the noun phrase</td></tr>
+<tr><td>Category</td><td>Flight Ops</td><td>Must match an existing directory category</td></tr>
+<tr><td>Owner (single human)</td><td>Aisha Rahman</td><td>Use department head as fallback</td></tr>
+<tr><td>Department</td><td>IOC Control</td><td>Block — get from steward</td></tr>
+<tr><td>Data source label</td><td>AIMS · SQL Server</td><td>Free-text from steward; never auto-derive from connection string</td></tr>
+<tr><td>Refresh cadence + SLA</td><td>Hourly (SLA 2 hr)</td><td>Block — get from steward</td></tr>
+<tr><td>Description (1–2 paragraphs)</td><td>…</td><td>Block — get from steward</td></tr>
+<tr><td>3 &quot;answers questions like&quot; prompts</td><td>&quot;Flights behind schedule today?&quot;</td><td>Optional; required only for Compact variant</td></tr>
+<tr><td>Hero image (≥1280 px wide)</td><td><code>qatar-qsuite.jpg</code></td><td>Use existing stock photo from this folder</td></tr>
+<tr><td>3 related dashboards</td><td>IDs from the directory</td><td>Auto-pick: same category, then keyword overlap</td></tr>
+<tr><td>Power BI workspace ID + report ID</td><td>for &quot;Open dashboard ↗&quot;</td><td>Block — get from BI platform team</td></tr>
 </table>
-
-<p>The page sits inside <code>.report { max-width: 1280 px; margin: 0 auto }</code> — designed for a Power BI 1280 × 820 page but flows past 820 vertically.</p>
 
 <hr>
 
-<h2>3. Brand Tokens (do not override)</h2>
+<h2>Step 2 — Pick a left-column variant</h2>
 
-<p>Copy this <code>:root</code> block verbatim into every detail page. The legacy variable names are kept so existing component CSS continues to work — only the values changed when we moved to the strict brand kit.</p>
+<p>Decide one variant <em>before</em> writing any HTML. The four reference files differ only in this column.</p>
+
+<pre><code class="lang-">
+┌──────────────────────────────────────────────────────────┐
+│ Steward gave you 1–2 paragraphs + bullets?               │
+│  → Description variant   (option2-description.html)      │
+│                                                          │
+│ Steward gave you only a 2-line summary?                  │
+│  → Compact variant       (option3-compact.html)          │
+│                                                          │
+│ Flagship/exec dashboard, presentation matters?           │
+│  → Hero variant          (qa-dashboard-detail-mockup.html│
+│                           or option1-image.html)         │
+└──────────────────────────────────────────────────────────┘
+</code></pre>
+
+<p>Don&#x27;t stack two variants. Pick one.</p>
+
+<hr>
+
+<h2>Step 3 — Duplicate the closest mockup as your starting file</h2>
+
+<pre><code class="lang-bash">
+cp qa-dashboard-detail-option2-description.html  qa-dashboard-detail-&lt;dashboard-slug&gt;.html
+</code></pre>
+
+<p>Use a kebab-case slug. Open the new file. <strong>Do not</strong> rewrite the <code>&lt;style&gt;</code> block from</p>
+<p>scratch — every page must share the same tokens.</p>
+
+<hr>
+
+<h2>Step 4 — Verify the brand tokens at the top of <code>&lt;style&gt;</code></h2>
+
+<p>Search for <code>:root{</code> in the file. Confirm the block reads exactly:</p>
 
 <pre><code class="lang-css">
 :root{
@@ -114,192 +141,304 @@
 }
 </code></pre>
 
-<p>Mapping to brand names:</p>
-<ul>
-<li><code>--oxblood-0/1/2</code> → QR Deep Burgundy <code>#3C0026</code> / QR Burgundy <code>#64003A</code> / QR Bright Burgundy <code>#780044</code></li>
-<li><code>--amber*</code> → Cloud Grey <code>#6B6C6E</code> / QR Grey <code>#5E6A71</code> / Oryx Grey <code>#818A8F</code> (cool grey accents — NOT amber)</li>
-<li><code>--cream*</code> → white + Cloud Grey 10/15/20</li>
-<li>Semantic green stays <code>#2E7D4F</code>. Semantic &quot;red&quot; is <code>#780044</code> (Bright Burgundy) — we do not use a true red.</li>
-</ul>
+<p>If a value differs, replace it. Legacy variable names (<code>--amber<em></code>, <code>--cream</em></code>, <code>--oxblood*</code>) are</p>
+<p>preserved on purpose so existing component CSS keeps working — only the values changed when we</p>
+<p>moved to the strict brand kit.</p>
 
-<p><strong>Type stack</strong> — body and UI:</p>
+<p>Confirm the body font stack is <code>&#x27;Noto Sans&#x27;,&#x27;Graphik&#x27;,&#x27;Segoe UI&#x27;,sans-serif</code> and that headlines</p>
+<p>use <code>&#x27;Jotia&#x27;,&#x27;Noto Sans&#x27;,sans-serif</code>. The Google Fonts <code>&lt;link&gt;</code> should load Noto Sans only.</p>
 
-<pre><code class="lang-css">
-body{ font-family: &#x27;Noto Sans&#x27;, &#x27;Graphik&#x27;, &#x27;Segoe UI&#x27;, sans-serif; }
-h1, h2, .stat-val, .hero-tagline { font-family: &#x27;Jotia&#x27;, &#x27;Noto Sans&#x27;, sans-serif; }
-</code></pre>
+<hr>
 
-<p><code>Jotia</code> is the official QR display face; users without it fall back to Noto Sans. Italic <code>&lt;em&gt;</code> inside headlines is the brand voice — use it once per heading, not more.</p>
+<h2>Step 5 — Edit the ribbon and <code>&lt;title&gt;</code></h2>
 
-<p>Load fonts via:</p>
 <pre><code class="lang-html">
-&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
-&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;title&gt;Dashboard Detail — &lt;Your Dashboard Name&gt;&lt;/title&gt;
 </code></pre>
 
-<hr>
-
-<h2>4. Layout &amp; Spacing</h2>
-
-<ul>
-<li>Outer page padding: <strong>40 px</strong> left/right on every region (<code>action-bar</code>, <code>title-block</code>, <code>meta-bar</code>, <code>main</code>, <code>related</code>, <code>history</code>).</li>
-<li>Region vertical rhythm: title block <code>28 px / 22 px</code>, meta <code>18 px</code>, main <code>24 px</code>, related <code>0 / 24 px</code>, history <code>0 / 40 px</code>.</li>
-<li>Cards: <code>1 px solid var(--border)</code>, <code>border-radius: 6 px</code>, padding <code>20 px 22 px</code>, white background.</li>
-<li><strong>Never apply line/border to a card via <code>box-shadow</code> only</strong> — keep an explicit border. The brand reads cleaner when surface boundaries are visible.</li>
-<li>Hero / compact image cards may add a soft burgundy shadow: <code>box-shadow: 0 4 px 14 px rgba(60,0,38,0.06–0.08)</code>. Don&#x27;t go further.</li>
-<li>Main grid is <code>grid-template-columns: 1.1fr 1fr; gap: 24 px</code>. Left column gets the descriptive surface; right column is always the Usage card.</li>
-</ul>
+<p>The ribbon stays as the canonical &quot;Qatar Airways · Dashboard Directory&quot; / &quot;Internal Use Only&quot;</p>
+<p>pair. Don&#x27;t customise it.</p>
 
 <hr>
 
-<h2>5. Component Patterns</h2>
+<h2>Step 6 — Wire the action bar</h2>
 
-<h3>5.1 Title block</h3>
+<p>Three buttons, in this order. Don&#x27;t reorder, don&#x27;t add more.</p>
+
+<pre><code class="lang-html">
+&lt;button class=&quot;btn btn-ghost&quot;&gt;Subscribe to updates&lt;/button&gt;
+&lt;button class=&quot;btn btn-ghost&quot;&gt;Request access&lt;/button&gt;
+&lt;button class=&quot;btn btn-primary&quot;&gt;Open dashboard ↗&lt;/button&gt;
+</code></pre>
+
+<p>The <code>Open dashboard ↗</code> href points to the Power BI report URL collected in Step 1. The other two</p>
+<p>ghost buttons are placeholders until the subscription / access-request workflows are live — leave</p>
+<p>them as inert buttons; do not link them to &quot;#&quot;.</p>
+
+<hr>
+
+<h2>Step 7 — Fill the title block</h2>
+
+<pre><code class="lang-html">
+&lt;div class=&quot;eyebrow&quot;&gt;Dashboard Detail&lt;/div&gt;
+&lt;h1&gt;OTP &amp;amp; &lt;em&gt;Delay Analysis&lt;/em&gt;&lt;/h1&gt;
+&lt;span class=&quot;cat-pill&quot;&gt;Flight Ops&lt;/span&gt;
+</code></pre>
+
+<p>Rules:</p>
+
 <ul>
-<li>Burgundy gradient: <code>linear-gradient(135deg, #3C0026 0%, #64003A 55%, #780044 100%)</code>.</li>
-<li>A faint hex/circle SVG pattern overlays the gradient at 10 % opacity (already inlined in the mockups — copy the data-URI as-is).</li>
-<li>Eyebrow: 10 px, 0.3 em letter-spacing, uppercase, Oryx grey, with a 22 px leading rule (<code>::before</code>).</li>
-<li><code>&lt;h1&gt;</code>: Jotia / Noto Sans, 36 px, weight 500. Use one italic span: <code>&lt;h1&gt;OTP &amp;amp; &lt;em&gt;Delay Analysis&lt;/em&gt;&lt;/h1&gt;</code>. The <code>&lt;em&gt;</code> colour is <code>--honey</code> (Cloud Grey 20%).</li>
-<li>Category pill: top-right, uppercase, translucent grey fill <code>rgba(225,225,226,0.2)</code> with <code>0.35</code> border.</li>
+<li>Eyebrow text is always literally <strong>Dashboard Detail</strong>. Don&#x27;t reword.</li>
+<li><code>&lt;h1&gt;</code> uses <strong>one</strong> italic <code>&lt;em&gt;</code> highlight on the noun phrase, never more than one.</li>
+<li>Title in sentence case, max 5 words.</li>
+<li>Category pill must match an existing directory category exactly. If you need a new category, update the directory first.</li>
 </ul>
 
-<h3>5.2 Meta bar</h3>
+<p>Don&#x27;t touch the gradient or the SVG hex pattern — they&#x27;re part of the brand surface.</p>
+
+<hr>
+
+<h2>Step 8 — Fill the meta bar (six columns, all required)</h2>
+
+<pre><code class="lang-html">
+&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Owner&lt;/span&gt;&lt;span class=&quot;meta-v&quot;&gt;Aisha Rahman&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Department&lt;/span&gt;&lt;span class=&quot;meta-v&quot;&gt;IOC Control&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Data source&lt;/span&gt;&lt;span class=&quot;meta-v&quot;&gt;AIMS · SQL Server&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Refresh&lt;/span&gt;&lt;span class=&quot;meta-v&quot;&gt;Hourly (SLA 2 hr)&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Last refresh&lt;/span&gt;&lt;span class=&quot;meta-v&quot;&gt;1 hr 30 min ago&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;meta-item&quot;&gt;&lt;span class=&quot;meta-k&quot;&gt;Status&lt;/span&gt;&lt;span class=&quot;sla ok&quot;&gt;Within SLA&lt;/span&gt;&lt;/div&gt;
+</code></pre>
+
+<p>Rules:</p>
+
 <ul>
-<li>Six equal columns. If a field is unknown, render <code>—</code>, never collapse the column.</li>
-<li><code>meta-k</code> = 9.5 px uppercase, letter-spacing 0.12 em, weight 700.</li>
-<li><code>meta-v</code> = 13 px, weight 500.</li>
-<li>Status uses a pill (<code>.sla.ok</code> green / <code>.sla.stale</code> burgundy-red). Choose state from these rules:</li>
+<li>Render <code>—</code> for unknowns, never collapse a column.</li>
+<li>&quot;Last refresh&quot; is <strong>relative</strong> (<code>1 hr 30 min ago</code>). The footer carries the absolute timestamp.</li>
+<li>Status pill state:</li>
 </ul>
-<p>  - <code>ok</code> — last refresh is within SLA window.</p>
-<p>  - <code>stale</code> — last refresh exceeded SLA OR latest run failed.</p>
+<p>  - <code>&lt;span class=&quot;sla ok&quot;&gt;Within SLA&lt;/span&gt;</code> — last refresh is within SLA window AND the run succeeded.</p>
+<p>  - <code>&lt;span class=&quot;sla stale&quot;&gt;Behind SLA&lt;/span&gt;</code> — last refresh exceeded SLA OR latest run failed.</p>
 
-<h3>5.3 Left column — choose <strong>one</strong> variant per page</h3>
+<hr>
 
-<table>
-<tr><th>Variant</th><th>When to use</th><th>File reference</th></tr>
-<tr><td><strong>Description</strong> (<code>.card</code> with <code>.desc</code>)</td><td>Default. Steward has written 1–2 paragraphs + a short bullet list of &quot;what&#x27;s inside&quot;.</td><td><code>option2-description.html</code></td></tr>
-<tr><td><strong>Hero image</strong> (<code>.hero-card</code>)</td><td>Flagship / executive-facing dashboards where presentation matters more than longform copy. Image at least 1280 px wide, focal point centered.</td><td><code>option1-image.html</code> and <code>qa-dashboard-detail-mockup.html</code></td></tr>
-<tr><td><strong>Compact</strong> (<code>.compact-card</code>)</td><td>When you want both: a small image header + 2–3 sentences + chip row of &quot;answers questions like…&quot;. Best for IOC / ops dashboards with tight scan needs.</td><td><code>option3-compact.html</code></td></tr>
-</table>
+<h2>Step 9 — Fill the chosen left-column variant</h2>
 
-<p>Pick by <strong>content density</strong>, not aesthetics. If steward gave you a paragraph and bullets, use Description. If they only gave you a 2-line summary, use Compact. If they gave you nothing, use Hero with a stock cabin/aircraft photo.</p>
+<h3>Step 9A — If you picked <strong>Description</strong></h3>
 
-<h3>5.4 Right column — Usage card</h3>
+<p>Inside the existing <code>.card.desc</code> block:</p>
+
+<pre><code class="lang-html">
+&lt;h2&gt;About this dashboard &lt;em&gt;· what it answers&lt;/em&gt;&lt;/h2&gt;
+&lt;p&gt;One paragraph of plain English. Refer to systems by business name (AIMS, GoNow, Sabre), not SQL hostnames.&lt;/p&gt;
+&lt;p&gt;An optional second paragraph — only if the steward gave you one.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bullet 1 — under 12 words.&lt;/li&gt;
+  &lt;li&gt;Bullet 2.&lt;/li&gt;
+  &lt;li&gt;Bullet 3.&lt;/li&gt;
+  &lt;li&gt;Bullet 4 — max four bullets.&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<h3>Step 9B — If you picked <strong>Hero image</strong></h3>
+
+<p>Inside <code>.hero-card</code>:</p>
+
+<pre><code class="lang-html">
+&lt;img class=&quot;hero-img&quot; src=&quot;qatar-qsuite.jpg&quot; alt=&quot;Qatar Airways Qsuite Business Class cabin&quot; loading=&quot;lazy&quot;&gt;
+&lt;div class=&quot;hero-overlay&quot;&gt;
+  &lt;div class=&quot;hero-eyebrow&quot;&gt;Qatar Airways&lt;/div&gt;
+  &lt;div class=&quot;hero-tagline&quot;&gt;Going &lt;em&gt;places&lt;/em&gt; together.&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>The image must be ≥1280 px wide with the focal point near the centre. Keep <code>object-fit: cover</code>.</p>
+<p>Don&#x27;t change the tagline — it&#x27;s the brand line.</p>
+
+<h3>Step 9C — If you picked <strong>Compact</strong></h3>
+
+<p>Inside <code>.compact-card</code>:</p>
+
+<pre><code class="lang-html">
+&lt;div class=&quot;compact-img&quot;&gt;
+  &lt;img src=&quot;qatar-qsuite.jpg&quot; alt=&quot;Qatar Airways Qsuite&quot; loading=&quot;lazy&quot;&gt;
+  &lt;div class=&quot;compact-img-overlay&quot;&gt;
+    &lt;div class=&quot;compact-eyebrow&quot;&gt;Qatar Airways&lt;/div&gt;
+    &lt;div class=&quot;compact-tagline&quot;&gt;Going &lt;em&gt;places&lt;/em&gt; together.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;compact-body&quot;&gt;
+  &lt;h2&gt;About &lt;em&gt;· in brief&lt;/em&gt;&lt;/h2&gt;
+  &lt;p class=&quot;compact-desc&quot;&gt;Two sentences max. State what the dashboard tracks and what it attributes.&lt;/p&gt;
+  &lt;div class=&quot;compact-qs&quot;&gt;
+    &lt;span class=&quot;compact-qs-lbl&quot;&gt;Answers questions like&lt;/span&gt;
+    &lt;div class=&quot;compact-chip-row&quot;&gt;
+      &lt;span class=&quot;compact-chip&quot;&gt;Flights behind schedule today?&lt;/span&gt;
+      &lt;span class=&quot;compact-chip&quot;&gt;Weekly OTP trend for DOH?&lt;/span&gt;
+      &lt;span class=&quot;compact-chip&quot;&gt;Highest-delay stations?&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Rules for the chips:</p>
+
 <ul>
-<li>Title: <code>Usage · last 90 days &lt;em&gt;· 90 d&lt;/em&gt;</code>.</li>
-<li>460 × 180 viewBox area chart. Stroke <code>#64003A</code> (QR Burgundy). Fill: vertical gradient from <code>rgba(107,108,110,0.45)</code> to transparent. Keep <code>preserveAspectRatio=&quot;none&quot;</code> so the chart fills the card.</li>
-<li>Three horizontal grid lines at y = 45 / 90 / 135, stroke <code>#E1E1E2</code>.</li>
-<li>Peak marker: 4 px circle, fill <code>#6B6C6E</code>, 2 px white stroke.</li>
-<li>Below chart: month-tick row (4 spans), then a 3-stat row (Views · 30 d, Unique users, Peak slot). <code>stat-val</code> is Jotia 22 px / 600, italic <code>&lt;em&gt;</code> for the small qualifier.</li>
-</ul>
-
-<h3>5.5 Related dashboards</h3>
-<ul>
-<li>Always render exactly 3 cards. If fewer, leave the slot blank rather than padding with unrelated entries.</li>
-<li>Selection logic: same <code>category</code> first; then shared keywords from title + description; tie-break on highest 30 d views.</li>
-<li>Card hover: border → Cloud Grey, background → Cloud Grey 10%.</li>
-<li>Name link uses <code>--oxblood-1</code> underline. Category prefix is uppercased Oryx grey, 9.5 px.</li>
-</ul>
-
-<h3>5.6 Refresh history</h3>
-<ul>
-<li>Last 10 runs only — ever. If fewer runs exist, show what&#x27;s there and don&#x27;t fake rows.</li>
-<li>Columns fixed: Started · Duration · Rows loaded · Status.</li>
-<li>Status colours: <code>.status-ok</code> green, <code>.status-fail</code> Bright Burgundy with the failure reason inline (&quot;Failed · source timeout&quot;).</li>
-<li>Header row uses Cloud Grey 10% (<code>--cream-warm</code>) background, never burgundy.</li>
-</ul>
-
-<h3>5.7 Footer bar</h3>
-<ul>
-<li>Page indicator left (<code>Page 2 of 3 · Drillthrough</code> or variant label).</li>
-<li>Power BI mark right: 10 × 10 yellow square <code>#F2C811</code> (the only non-brand colour on the page; this is Microsoft&#x27;s mark and must stay yellow), italic note with timestamp.</li>
+<li>Exactly <strong>3</strong> chips.</li>
+<li>Phrase as a question users actually ask.</li>
+<li>≤6 words each.</li>
+<li>No yes/no questions.</li>
 </ul>
 
 <hr>
 
-<h2>6. Content Rules</h2>
+<h2>Step 10 — Update the Usage card (right column)</h2>
+
+<p>Don&#x27;t redraw the SVG. Replace only the data path coordinates and the three stat values.</p>
+
+<pre><code class="lang-html">
+&lt;h2&gt;Usage · last 90 days &lt;em&gt;· 90 d&lt;/em&gt;&lt;/h2&gt;
+&lt;!-- area path &quot;d=&quot; — keep the same shape; replace if you have real 90 d view counts --&gt;
+&lt;!-- line path &quot;d=&quot; — must match the area path&#x27;s top edge --&gt;
+&lt;div class=&quot;stat&quot;&gt;&lt;span class=&quot;stat-val&quot;&gt;1,842&lt;/span&gt;&lt;span class=&quot;stat-k&quot;&gt;Views · 30 d&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;stat&quot;&gt;&lt;span class=&quot;stat-val&quot;&gt;312&lt;/span&gt;&lt;span class=&quot;stat-k&quot;&gt;Unique users&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;stat&quot;&gt;&lt;span class=&quot;stat-val&quot;&gt;Mon&lt;em&gt;9 AM&lt;/em&gt;&lt;/span&gt;&lt;span class=&quot;stat-k&quot;&gt;Peak slot&lt;/span&gt;&lt;/div&gt;
+</code></pre>
+
+<p>The peak-slot stat uses an italic <code>&lt;em&gt;</code> for the time. The chart stroke stays <code>#64003A</code> and the</p>
+<p>gradient stops stay <code>#6B6C6E</code> — never tint these.</p>
+
+<p>If you don&#x27;t have real usage data yet, ship the page with the existing placeholder shape and a</p>
+<p>TODO comment; do <strong>not</strong> invent specific numbers.</p>
+
+<hr>
+
+<h2>Step 11 — Fill Related dashboards (exactly 3)</h2>
+
+<pre><code class="lang-html">
+&lt;div class=&quot;rel-item&quot;&gt;
+  &lt;div class=&quot;rel-name&quot;&gt;IOC Live Operations Board&lt;/div&gt;
+  &lt;div class=&quot;rel-meta&quot;&gt;&lt;span class=&quot;rel-cat&quot;&gt;IOC&lt;/span&gt; · 1,562 views 30d&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Selection rules, in order:</p>
+
+<p>1. Same category — pick the highest-traffic peers first.</p>
+<p>2. Then keyword overlap on title + description.</p>
+<p>3. Tie-break on highest 30 d views.</p>
+
+<p>If only 2 candidates exist, <strong>leave the third slot empty</strong>. Don&#x27;t pad with unrelated dashboards.</p>
+
+<hr>
+
+<h2>Step 12 — Fill the Refresh history table (last 10 runs only)</h2>
+
+<pre><code class="lang-html">
+&lt;tr&gt;&lt;td&gt;19 Apr 2026 · 10:00&lt;/td&gt;&lt;td&gt;3 min 12 s&lt;/td&gt;&lt;td&gt;184,212&lt;/td&gt;&lt;td class=&quot;status-ok&quot;&gt;Success&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;19 Apr 2026 · 09:00&lt;/td&gt;&lt;td&gt;3 min 04 s&lt;/td&gt;&lt;td&gt;183,990&lt;/td&gt;&lt;td class=&quot;status-ok&quot;&gt;Success&lt;/td&gt;&lt;/tr&gt;
+&lt;!-- … up to 10 rows total … --&gt;
+&lt;tr&gt;&lt;td&gt;19 Apr 2026 · 05:00&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td&gt;—&lt;/td&gt;&lt;td class=&quot;status-fail&quot;&gt;Failed · source timeout&lt;/td&gt;&lt;/tr&gt;
+</code></pre>
+
+<p>Rules:</p>
 
 <ul>
-<li><strong>Title</strong> — sentence case, max 5 words, one italic <code>&lt;em&gt;</code> highlight on the noun: &quot;OTP &amp; <em>Delay Analysis</em>&quot;.</li>
-<li><strong>Eyebrow</strong> — always literally &quot;Dashboard Detail&quot;. Don&#x27;t reword.</li>
-<li><strong>Category pill</strong> — must match a directory category exactly (e.g. Flight Ops, Commercial, IOC, Crew Control). No new categories without a directory update.</li>
-<li><strong>Description copy</strong> — 1–2 sentences max in Compact, 1–2 paragraphs + ≤4 bullets in Description. Plain English, no Power BI jargon (&quot;dataset&quot;, &quot;model&quot;) in user-facing copy. Refer to systems by their business name (AIMS, GoNow, Sabre) not a SQL hostname.</li>
-<li><strong>&quot;Answers questions like&quot; chips</strong> — phrase as a question users actually ask. 3 chips, ≤6 words each. Avoid yes/no questions.</li>
-<li><strong>Owner</strong> — single human name. If the dashboard has multiple owners, pick the steward; surface backups in Subscribe.</li>
-<li><strong>Refresh cadence</strong> — show frequency + SLA: &quot;Hourly (SLA 2 hr)&quot;, &quot;Daily 02:00 GST (SLA 6 hr)&quot;.</li>
-<li><strong>Last refresh</strong> — relative (&quot;1 hr 30 min ago&quot;), never absolute, in the meta bar. Footer carries the absolute timestamp.</li>
+<li>Cap at 10 rows. Never invent rows to fill the table.</li>
+<li>Failed runs use <code>class=&quot;status-fail&quot;</code> and include the failure reason inline.</li>
+<li>Timestamps in <code>DD MMM YYYY · HH:MM</code> format, GST.</li>
+<li>Source data: Power BI REST API <code>/datasets/{id}/refreshes?$top=10</code>.</li>
 </ul>
 
 <hr>
 
-<h2>7. Data Binding</h2>
+<h2>Step 13 — Update the footer</h2>
 
-<p>The mockups are static HTML. When wiring to real data:</p>
+<pre><code class="lang-html">
+&lt;span class=&quot;page-ind&quot;&gt;Page 2 of 3 · Drillthrough&lt;/span&gt;
+&lt;span class=&quot;pbi-note&quot;&gt;&lt;span class=&quot;pbi-mark&quot;&gt;&lt;/span&gt;Powered by Power BI · Last refresh: 19 Apr 2026, 10:02 AM&lt;/span&gt;
+</code></pre>
 
-<table>
-<tr><th>Field</th><th>Source</th></tr>
-<tr><td>Title, eyebrow, category</td><td>Directory metadata table (single row keyed by dashboard ID)</td></tr>
-<tr><td>Owner, department</td><td>Directory metadata; fall back to Power BI workspace owner</td></tr>
-<tr><td>Data source label</td><td>Free-text from steward; do <strong>not</strong> auto-derive from the dataset connection string</td></tr>
-<tr><td>Refresh cadence + SLA</td><td>Steward-declared, stored alongside the dataset record</td></tr>
-<tr><td>Last refresh, refresh history</td><td>Power BI REST API <code>/datasets/{id}/refreshes?$top=10</code></td></tr>
-<tr><td>Status pill</td><td>Computed: <code>ok</code> if <code>last_refresh + sla_minutes &gt;= now()</code> AND <code>last_refresh.status == &#x27;Completed&#x27;</code> else <code>stale</code></td></tr>
-<tr><td>Usage chart + stats</td><td>Power BI usage metrics (<code>Report views by Date</code>, <code>Unique viewers</code>, <code>Peak hour</code>) for last 90 d</td></tr>
-<tr><td>Related</td><td>Pre-computed nightly: same category + keyword cosine similarity on title + description</td></tr>
-</table>
-
-<p>Render server-side or pre-bake at publish time. Don&#x27;t fetch usage data on page load — it&#x27;s slow and the steward conversations don&#x27;t need second-precision freshness.</p>
+<p>The yellow Power BI mark (<code>#F2C811</code>) is the only non-brand colour on the page. It must stay</p>
+<p>yellow — it&#x27;s Microsoft&#x27;s mark.</p>
 
 <hr>
 
-<h2>8. Accessibility</h2>
+<h2>Step 14 — Run the verification grep</h2>
 
-<ul>
-<li>All images on the page must have meaningful <code>alt</code> text. The Qsuite hero is decorative-ish but still describe the subject (&quot;Qatar Airways Qsuite Business Class cabin&quot;).</li>
-<li>Title gradient + white text contrast ratio is ≥ 4.5 : 1 — verified for <code>#FFFFFF</code> on <code>#64003A</code>. Don&#x27;t let designers darken the title text.</li>
-<li>The category pill on burgundy must use <code>--amber-light</code> (<code>#818A8F</code>) for text — that combination passes AA at 11 px when bold.</li>
-<li>Status pills must not be the only signal — the icon dot + text label is mandatory; never colour-only.</li>
-<li>Buttons keep visible focus rings (browser default is fine; do not <code>outline:none</code> without a replacement).</li>
-</ul>
+<p>From the <code>outputs/qa-assets/</code> folder:</p>
+
+<pre><code class="lang-bash">
+grep -nE &quot;Cormorant|#1F0310|#43061F|#591029|#B8893A|#D9B268|#FBF6EC|#F3EADA|#F7EBD4|#E8DFD0|#D6C9B6&quot; \
+  qa-dashboard-detail-&lt;your-slug&gt;.html
+</code></pre>
+
+<p>Expected output: nothing. Any hit means a v2 amber/cream token leaked in — fix before commit.</p>
 
 <hr>
 
-<h2>9. Build Checklist</h2>
+<h2>Step 15 — Visual QA at 1280 × 820</h2>
 
-<p>Before shipping a new Dashboard Detail page:</p>
+<p>Open the file in a browser sized to <strong>1280 × 820</strong> (the Power BI page size). Confirm:</p>
 
 <ul class="checklist">
-<li><input type="checkbox" disabled> <code>:root</code> token block matches the canonical block in §3 exactly (no extra warm tones, no amber).</li>
-<li><input type="checkbox" disabled> Headline uses Jotia/Noto Sans stack with one italic <code>&lt;em&gt;</code> span.</li>
-<li><input type="checkbox" disabled> Body uses Noto Sans/Graphik/Segoe UI stack.</li>
-<li><input type="checkbox" disabled> Title gradient direction is <code>135 deg</code> and uses the three burgundy stops (not two).</li>
-<li><input type="checkbox" disabled> Hex pattern overlay on the title block uses <code>rgba(107,108,110,0.10)</code> stroke (cool grey, not amber).</li>
-<li><input type="checkbox" disabled> Meta bar shows all six fields; no field is silently dropped.</li>
-<li><input type="checkbox" disabled> SLA pill state matches the §5.2 rules.</li>
-<li><input type="checkbox" disabled> One left-column variant chosen — not two stacked.</li>
-<li><input type="checkbox" disabled> Usage chart strokes are <code>#64003A</code>; gradient stops are <code>#6B6C6E</code>.</li>
-<li><input type="checkbox" disabled> Related grid renders exactly 3 cards.</li>
-<li><input type="checkbox" disabled> History table is capped at 10 rows.</li>
-<li><input type="checkbox" disabled> Footer carries the Power BI yellow mark and an absolute last-refresh timestamp.</li>
-<li><input type="checkbox" disabled> No <code>Cormorant Garamond</code>, no amber hex (<code>#B8893A</code> etc.), no cream hex (<code>#FBF6EC</code> etc.) — verify with grep before commit.</li>
-<li><input type="checkbox" disabled> Page renders cleanly at 1280 × 820 (the Power BI page size) without horizontal scroll.</li>
+<li><input type="checkbox" disabled> No horizontal scroll bar.</li>
+<li><input type="checkbox" disabled> Title gradient runs left-to-right at 135°.</li>
+<li><input type="checkbox" disabled> Hex pattern overlay on the title block is visible but very faint.</li>
+<li><input type="checkbox" disabled> All six meta columns render with values (or <code>—</code>).</li>
+<li><input type="checkbox" disabled> Status pill colour matches its state.</li>
+<li><input type="checkbox" disabled> Left column shows <strong>one</strong> variant only.</li>
+<li><input type="checkbox" disabled> Usage chart line is QR Burgundy <code>#64003A</code>.</li>
+<li><input type="checkbox" disabled> Related grid has exactly 3 cards (or 2 with one empty slot).</li>
+<li><input type="checkbox" disabled> History table has ≤10 rows.</li>
+<li><input type="checkbox" disabled> Footer shows the yellow Power BI mark and an absolute timestamp.</li>
 </ul>
 
 <hr>
 
-<h2>10. References</h2>
+<h2>Step 16 — Commit and push</h2>
+
+<pre><code class="lang-bash">
+cd /tmp/qa-rb
+git pull
+cp /Volumes/Code/pa/outputs/qa-assets/qa-dashboard-detail-&lt;slug&gt;.html .
+git add qa-dashboard-detail-&lt;slug&gt;.html
+git commit -m &quot;Add dashboard detail page: &lt;Dashboard Name&gt;&quot;
+git -c credential.helper=&#x27;!gh auth git-credential&#x27; push origin main
+</code></pre>
+
+<p>Pages rebuilds within ~30 s. The page is then live at:</p>
+
+<pre><code class="lang-">
+https://rbansal42.github.io/qa-dashboard-directory-assets/qa-dashboard-detail-&lt;slug&gt;.html
+</code></pre>
+
+<p>Add a link to it from <code>index.html</code> and <code>implementation-guide.html</code> so the directory tile points</p>
+<p>at the new detail page.</p>
+
+<hr>
+
+<h2>Step 17 — Final accessibility pass</h2>
 
 <ul>
-<li>Brand palette / type — <a href="https://qhub.qatarairways.com.qa/QatarSite/media/Department-Marketing/VSG-QR-Brand-Assets.pdf">Qatar Airways VI Guidelines</a> (internal).</li>
-<li>Existing variants in this folder:</li>
+<li>Every <code>&lt;img&gt;</code> has meaningful <code>alt</code> text — describe the subject (&quot;Qatar Airways Qsuite Business Class cabin&quot;), not &quot;image&quot;.</li>
+<li>Status pills carry both colour <strong>and</strong> the dot icon plus text label — never colour-only.</li>
+<li>Don&#x27;t <code>outline:none</code> on focusable elements without a replacement.</li>
+<li>Title gradient + white text contrast is ≥4.5 : 1 — verified for <code>#FFFFFF</code> on <code>#64003A</code>. Don&#x27;t darken the title text.</li>
 </ul>
-<p>  - <code>qa-dashboard-detail-mockup.html</code> — hero image, full feature set</p>
-<p>  - <code>qa-dashboard-detail-option1-image.html</code> — image-led</p>
-<p>  - <code>qa-dashboard-detail-option2-description.html</code> — description-led</p>
-<p>  - <code>qa-dashboard-detail-option3-compact.html</code> — compact hybrid</p>
-<ul>
-<li>Theme JSON for matching Power BI report visuals — <code>qatar-theme.json</code>.</li>
-</ul>
+
+<hr>
+
+<h2>Quick reference — files in this folder</h2>
+
+<table>
+<tr><th>File</th><th>Use</th></tr>
+<tr><td><code>qa-dashboard-detail-mockup.html</code></td><td>Hero variant, full feature set</td></tr>
+<tr><td><code>qa-dashboard-detail-option1-image.html</code></td><td>Image-led variant</td></tr>
+<tr><td><code>qa-dashboard-detail-option2-description.html</code></td><td>Description-led variant</td></tr>
+<tr><td><code>qa-dashboard-detail-option3-compact.html</code></td><td>Compact hybrid variant</td></tr>
+<tr><td><code>qatar-theme.json</code></td><td>Power BI theme to match the report visuals</td></tr>
+<tr><td><code>qatar-qsuite.jpg</code>, <code>qatar-cabin.jpg</code>, <code>qatar-777-worldcup.jpg</code></td><td>Approved hero photography</td></tr>
+</table>
 
 </main>
 <footer>
